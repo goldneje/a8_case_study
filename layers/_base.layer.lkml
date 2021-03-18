@@ -63,13 +63,8 @@ view: etl_jobs {
   }
 }
 
-explore: events {
-  join: users {
-    type: left_outer
-    sql_on: ${events.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-}
+# Need to join users
+explore: events {}
 view: events {
   sql_table_name: "PUBLIC"."EVENTS"
     ;;
@@ -178,19 +173,8 @@ view: events {
   }
 }
 
-explore: inventory_items {
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
-
-  join: distribution_centers {
-    type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
-}
+# Need to join products and distribution centers
+explore: inventory_items {}
 view: inventory_items {
   sql_table_name: "PUBLIC"."INVENTORY_ITEMS"
     ;;
@@ -282,30 +266,8 @@ view: inventory_items {
   }
 }
 
-explore: order_items {
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
-
-  join: users {
-    type: left_outer
-    sql_on: ${order_items.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
-
-  join: distribution_centers {
-    type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }}
+# Join inventory items, users, products, and distribution centers
+explore: order_items {}
 view: order_items {
     sql_table_name: "PUBLIC"."ORDER_ITEMS"
       ;;
@@ -418,13 +380,8 @@ view: order_items {
     }
   }
 
-explore: products {
-  join: distribution_centers {
-    type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
-}
+# Join distribution centers
+explore: products {}
 view: products {
     sql_table_name: "PUBLIC"."PRODUCTS"
       ;;
