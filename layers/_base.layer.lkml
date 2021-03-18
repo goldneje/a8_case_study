@@ -1,4 +1,4 @@
-explore: distribution_centers {}
+explore: distribution_centers {hidden: yes}
 view: distribution_centers {
   sql_table_name: "PUBLIC"."DISTRIBUTION_CENTERS"
     ;;
@@ -31,7 +31,7 @@ view: distribution_centers {
   }
 }
 
-explore: etl_jobs {}
+explore: etl_jobs {hidden: yes}
 view: etl_jobs {
   sql_table_name: "PUBLIC"."ETL_JOBS"
     ;;
@@ -64,7 +64,7 @@ view: etl_jobs {
 }
 
 # Need to join users
-explore: events {}
+explore: events {hidden: yes}
 view: events {
   sql_table_name: "PUBLIC"."EVENTS"
     ;;
@@ -174,7 +174,7 @@ view: events {
 }
 
 # Need to join products and distribution centers
-explore: inventory_items {}
+explore: inventory_items {hidden: yes}
 view: inventory_items {
   sql_table_name: "PUBLIC"."INVENTORY_ITEMS"
     ;;
@@ -267,7 +267,7 @@ view: inventory_items {
 }
 
 # Join inventory items, users, products, and distribution centers
-explore: order_items {}
+explore: order_items {hidden: yes}
 view: order_items {
     sql_table_name: "PUBLIC"."ORDER_ITEMS"
       ;;
@@ -381,7 +381,7 @@ view: order_items {
   }
 
 # Join distribution centers
-explore: products {}
+explore: products {hidden: yes}
 view: products {
     sql_table_name: "PUBLIC"."PRODUCTS"
       ;;
@@ -440,7 +440,7 @@ view: products {
     }
   }
 
-explore: users {}
+explore: users {hidden: yes}
 view: users {
     sql_table_name: "PUBLIC"."USERS"
       ;;
