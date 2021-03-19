@@ -31,10 +31,12 @@ view: profit_per_order {
     type: number
   }
   measure: profit_per_order_average {
+    group_item_label: "Average"
     type: average
     sql: ${profit_per_order} ;;
   }
   measure: profit_per_order_total {
+    group_item_label: "Total"
     type: sum
     sql: ${profit_per_order} ;;
   }
