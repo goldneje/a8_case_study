@@ -272,11 +272,11 @@ view: +order_items {
 
   # ---- Profit Grouping ----
 
-  measure: average_gross_margin_percent {
+  measure: gross_margin_percent_average {
     group_label: "~Profit"
   }
 
-  measure: total_profit {
+  measure: profit_total {
     group_label: "~Profit"
   }
 }

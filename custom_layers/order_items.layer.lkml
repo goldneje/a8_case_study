@@ -86,7 +86,8 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
   }
 
-  measure: total_profit {
+  measure: profit_total {
+    label: "Total Profit"
     description: "
     Item's sale price minus its cost.
     "
@@ -96,7 +97,8 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
   }
 
-  measure: average_gross_margin_percent {
+  measure: gross_margin_percent_average {
+    label: "Average Gross Margin Percent"
     description: "
     Profit / Sale Price, shows the average percent margin across a grouping
     "
