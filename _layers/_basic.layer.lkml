@@ -151,6 +151,12 @@ view: +events {
 
 view: +inventory_items {
 
+  # ---- Formatting ----
+
+  dimension: cost {
+    value_format_name: usd
+  }
+
   # ---- Hidden Dimensions ----
 
   dimension: id {
@@ -189,6 +195,12 @@ view: +inventory_items {
 }
 
 view: +order_items {
+
+  # ---- Formatting ----
+
+  dimension: sale_price {
+    value_format_name: usd
+  }
 
   # ---- Hidden Dimensions ----
 
