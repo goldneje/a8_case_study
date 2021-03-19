@@ -212,6 +212,14 @@ view: +order_items {
     hidden: yes
   }
 
+  dimension: profit {
+    hidden: yes
+  }
+
+  dimension: gross_margin_percent {
+    hidden: yes
+  }
+
   # ---- ID Grouping ----
 
   dimension: id {
