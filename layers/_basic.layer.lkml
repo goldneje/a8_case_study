@@ -5,6 +5,10 @@
 
 include: "/layers/_base.layer"
 
+##################################################
+#               EXPLORE REFINEMENTS              #
+##################################################
+
 explore: +events {
   hidden: no
   join: users {
@@ -58,5 +62,120 @@ explore: +products {
     type: left_outer
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
+  }
+}
+
+##################################################
+#                 VIEW REFINEMENTS               #
+##################################################
+
+view: +events {
+  view_label: "Website Activity"
+
+  # ---- Hidden dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: user_id {
+    hidden: yes
+  }
+
+  dimension: uri {
+    hidden: yes
+  }
+
+  # ---- ID Grouping ----
+
+  dimension: id {
+    group_label: "~IDs"
+  }
+
+  dimension: session_id {
+    group_label: "~IDs"
+  }
+
+  dimension: user_id {
+    group_label: "~IDs"
+  }
+
+  # ---- ~Locations Grouping ----
+
+  dimension: state {
+    group_label: "~Location"
+  }
+
+  dimension: latitude {
+    group_label: "~Location"
+  }
+
+  dimension: longitude {
+    group_label: "~Location"
+  }
+
+  dimension: country {
+    group_label: "~Location"
+  }
+
+  dimension: city {
+    group_label: "~Location"
+  }
+
+  dimension: zip {
+    group_label: "~Location"
+  }
+}
+
+view: +users {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: first_name {
+    hidden: yes
+  }
+
+  dimension: last_name {
+    hidden: yes
+  }
+
+  # ---- Demographic Grouping ----
+
+  dimension: age {
+    group_label: "~Demographics"
+  }
+
+  dimension: gender {
+    group_label: "~Demographics"
+  }
+
+  # ---- Location Grouping ----
+
+  dimension: state {
+    group_label: "~Location"
+  }
+
+  dimension: latitude {
+    group_label: "~Location"
+  }
+
+  dimension: longitude {
+    group_label: "~Location"
+  }
+
+  dimension: country {
+    group_label: "~Location"
+  }
+
+  dimension: city {
+    group_label: "~Location"
+  }
+
+  dimension: zip {
+    group_label: "~Location"
   }
 }
