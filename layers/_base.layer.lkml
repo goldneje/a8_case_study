@@ -1,3 +1,8 @@
+# This is all machine-generated code,
+# so you'll only need to add "hidden: yes"
+# to the explores. You can unhide via the _basic.layer
+# file as you need them.
+
 explore: distribution_centers {hidden: yes}
 view: distribution_centers {
   sql_table_name: "PUBLIC"."DISTRIBUTION_CENTERS"
@@ -63,7 +68,6 @@ view: etl_jobs {
   }
 }
 
-# Need to join users
 explore: events {hidden: yes}
 view: events {
   sql_table_name: "PUBLIC"."EVENTS"
@@ -173,7 +177,6 @@ view: events {
   }
 }
 
-# Need to join products and distribution centers
 explore: inventory_items {hidden: yes}
 view: inventory_items {
   sql_table_name: "PUBLIC"."INVENTORY_ITEMS"
@@ -266,7 +269,6 @@ view: inventory_items {
   }
 }
 
-# Join inventory items, users, products, and distribution centers
 explore: order_items {hidden: yes}
 view: order_items {
     sql_table_name: "PUBLIC"."ORDER_ITEMS"
@@ -380,7 +382,6 @@ view: order_items {
     }
   }
 
-# Join distribution centers
 explore: products {hidden: yes}
 view: products {
     sql_table_name: "PUBLIC"."PRODUCTS"
