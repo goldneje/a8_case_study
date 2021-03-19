@@ -83,6 +83,7 @@ view: +order_items {
     type: sum
     sql: ${sale_price} ;;
     value_format_name: usd
+    filters: [status: "-Cancelled, -Returned"]
   }
 
   measure: total_profit {
@@ -92,6 +93,7 @@ view: +order_items {
     type: sum
     sql: ${profit} ;;
     value_format_name: usd
+    filters: [status: "-Cancelled, -Returned"]
   }
 
   measure: average_gross_margin_percent {
@@ -101,5 +103,6 @@ view: +order_items {
     type: average
     sql: ${gross_margin_percent} ;;
     value_format_name: percent_0
+    filters: [status: "-Cancelled, -Returned"]
   }
 }
