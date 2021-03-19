@@ -138,6 +138,45 @@ view: +events {
   }
 }
 
+view: +inventory_items {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: product_distribution_center_id {
+    hidden: yes
+  }
+
+  dimension: product_id {
+    hidden: yes
+  }
+
+  dimension: product_sku {
+    hidden: yes
+  }
+
+  # ---- Product Attribute Grouping ----
+
+  dimension: product_brand {
+    group_label: "~Product Attribute"
+  }
+
+  dimension: product_category {
+    group_label: "~Product Attribute"
+  }
+
+  dimension: product_department {
+    group_label: "~Product Attribute"
+  }
+
+  dimension: product_name {
+    group_label: "~Product Attribute"
+  }
+}
+
 view: +order_items {
 
   # ---- Hidden Dimensions ----
@@ -167,6 +206,21 @@ view: +order_items {
   dimension: user_id {
     group_label: "~IDs"
   }}
+
+view: +products {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+  dimension: distribution_center_id {
+    hidden: yes
+  }
+  dimension: sku {
+    hidden: yes
+  }
+}
 
 view: +users {
 
