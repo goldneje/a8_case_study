@@ -368,11 +368,22 @@ view: +users {
 
 view: +profit_per_order {
 
+  # ---- Hidden Dimensions ----
+
   dimension: id {
     hidden: yes
   }
 
   dimension: order_id {
     hidden: yes
+  }
+
+  # ---- Profit Group ----
+
+  measure: profit_per_order_average {
+    group_label: "~Profit per Order"
+  }
+  measure: profit_per_order_total   {
+    group_label: "~Profit per Order"
   }
 }
