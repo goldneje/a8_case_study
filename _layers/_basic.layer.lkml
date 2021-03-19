@@ -216,7 +216,41 @@ view: +order_items {
 
   dimension: user_id {
     group_label: "~IDs"
-  }}
+  }
+
+  # ---- Delivery Duration Grouping ----
+
+  measure: delivery_duration_avg {
+    group_label: "Delivery Duration"
+  }
+
+  measure: delivery_duration_min {
+    group_label: "Delivery Duration"
+  }
+
+  measure: delivery_duration_25th_percentile {
+    group_label: "Delivery Duration"
+  }
+
+  measure: delivery_duration_median {
+    group_label: "Delivery Duration"
+  }
+
+  measure: delivery_duration_75th_percentile {
+    group_label: "Delivery Duration"
+  }
+
+  measure: delivery_duration_max {
+    group_label: "Delivery Duration"
+  }
+
+  # ---- Gross Revenue Grouping ----
+
+  measure: total_gross_revenue {
+    group_label: "Gross Revenue"
+  }
+
+  }
 
 view: +products {
 
