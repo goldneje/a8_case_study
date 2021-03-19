@@ -53,6 +53,7 @@ explore: +order_items {
 }
 
 explore: +products {
+  hidden: no
   join: distribution_centers {
     type: left_outer
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
