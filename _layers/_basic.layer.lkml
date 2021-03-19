@@ -247,10 +247,19 @@ view: +order_items {
   # ---- Gross Revenue Grouping ----
 
   measure: total_gross_revenue {
-    group_label: "Gross Revenue"
+    group_label: "~Revenue"
   }
 
+  # ---- Profit Grouping ----
+
+  dimension: gross_margin_percent {
+    group_label: "~Profit"
   }
+
+  dimension: profit {
+    group_label: "~Profit"
+  }
+}
 
 view: +products {
 
