@@ -84,4 +84,22 @@ view: +order_items {
     sql: ${sale_price} ;;
     value_format_name: usd
   }
+
+  measure: total_profit {
+    description: "
+    Item's sale price minus its cost.
+    "
+    type: sum
+    sql: ${profit} ;;
+    value_format_name: usd
+  }
+
+  measure: average_gross_margin_percent {
+    description: "
+    Profit / Sale Price, shows the average percent margin across a grouping
+    "
+    type: average
+    sql: ${gross_margin_percent} ;;
+    value_format_name: percent_0
+  }
 }
