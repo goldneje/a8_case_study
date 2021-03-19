@@ -4,6 +4,7 @@
 # machine-generated dimensions/measures.
 
 include: "/_layers/_base.layer"
+include: "/derived_table_layers/profit_per_order.layer"
 
 ##################################################
 #       EXPLORE REFINEMENTS AND ADDITIONS        #
@@ -358,5 +359,20 @@ view: +users {
 
   dimension: zip {
     group_label: "~Location"
+  }
+}
+
+#################################################
+#            DERIVED TABLE REFINEMENTS          #
+#################################################
+
+view: +profit_per_order {
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: order_id {
+    hidden: yes
   }
 }
