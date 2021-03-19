@@ -378,6 +378,10 @@ view: +profit_per_order {
     hidden: yes
   }
 
+  dimension: profit_per_order {
+    hidden: yes
+  }
+
   # ---- Profit Group ----
 
   measure: profit_per_order_average {
