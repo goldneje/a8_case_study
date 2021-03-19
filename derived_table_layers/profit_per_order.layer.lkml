@@ -10,7 +10,8 @@ view: +order_items {
   }
 }
 
-# Generating the derived table
+
+# Generating the derived table using our newly-made measure
 view: profit_per_order {
   derived_table: {
     explore_source: order_items {
@@ -19,28 +20,36 @@ view: profit_per_order {
       column: profit_per_order {}
     }
   }
+
   dimension: id {
     primary_key: yes
     type: number
   }
+
   dimension: order_id {
     type: number
   }
+
   dimension: profit_per_order {
     value_format: "$#,##0.00"
     type: number
   }
+
   measure: profit_per_order_average {
     group_item_label: "Average"
     type: average
     sql: ${profit_per_order} ;;
+    value_format_name: usd
   }
+
   measure: profit_per_order_total {
     group_item_label: "Total"
     type: sum
     sql: ${profit_per_order} ;;
+    value_format_name: usd
   }
 }
+
 
 # Joining back my new calculations to the order items explore
 explore: +order_items {
