@@ -3,9 +3,12 @@ connection: "snowlooker"
 # include all the views
 include: "/_layers/_base.layer"
 include: "/_layers/_basic.layer"
+
 include: "/custom_layers/users.layer"
 include: "/custom_layers/order_items.layer"
 include: "/custom_layers/distribution_centers.layer"
+
+include: "/derived_table_layers/profit_per_order.layer"
 
 datagroup: case_studies_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
