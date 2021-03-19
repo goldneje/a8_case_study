@@ -13,6 +13,24 @@ view: +order_items {
     sql_end: ${delivered_raw} ;;
   }
 
+  dimension: profit {
+    description: "
+    Item's sale price minus its cost.
+    "
+    type: number
+    sql: ${sale_price} - ${products.cost} ;;
+    value_format_name: usd
+  }
+
+  dimension: gross_margin_percent {
+    description: "
+    Item's percent margin relative to cost
+    "
+    type: number
+    sql: ${profit} / ${sale_price} ;;
+    value_format_name: percent_1
+  }
+
 ##########################################################
 #                     CUSTOM MEASURES                    #
 ##########################################################
