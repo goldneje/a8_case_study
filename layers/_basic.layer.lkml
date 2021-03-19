@@ -1,3 +1,8 @@
+# Here, you will include any basic explore refinements to handle
+# joins and hiding/unhiding explores. You can also include
+# view refinements to define primary keys and hide any
+# machine-generated dimensions/measures.
+
 include: "/layers/_base.layer"
 
 explore: +events {
