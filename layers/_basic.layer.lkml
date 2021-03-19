@@ -6,7 +6,7 @@
 include: "/layers/_base.layer"
 
 ##################################################
-#               EXPLORE REFINEMENTS              #
+#       EXPLORE REFINEMENTS AND ADDITIONS        #
 ##################################################
 
 explore: +events {
@@ -177,5 +177,36 @@ view: +users {
 
   dimension: zip {
     group_label: "~Location"
+  }
+}
+
+view: +order_items {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: inventory_item_id {
+    hidden: yes
+  }
+
+  # ---- ID Grouping ----
+
+  dimension: id {
+    group_label: "~IDs"
+  }
+
+  dimension: inventory_item_id {
+    group_label: "~IDs"
+  }
+
+  dimension: order_id {
+    group_label: "~IDs"
+  }
+
+  dimension: user_id {
+    group_label: "~IDs"
   }
 }
