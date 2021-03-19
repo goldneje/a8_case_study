@@ -204,6 +204,10 @@ view: +order_items {
 
   # ---- Hidden Dimensions ----
 
+  dimension: gross_margin_percent {
+    hidden: yes
+  }
+
   dimension: id {
     hidden: yes
   }
@@ -216,7 +220,7 @@ view: +order_items {
     hidden: yes
   }
 
-  dimension: gross_margin_percent {
+  measure: profit_per_order {
     hidden: yes
   }
 
