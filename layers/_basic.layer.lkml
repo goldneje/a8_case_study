@@ -1,4 +1,4 @@
-include: /layers/_base.layer
+include: "/layers/_base.layer"
 
 explore: +events {
   hidden: no
