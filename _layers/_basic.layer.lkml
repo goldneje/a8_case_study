@@ -77,6 +77,14 @@ view: +distribution_centers {
     hidden: yes
   }
 
+  dimension: latitude {
+    hidden: yes
+  }
+
+  dimension: longitude {
+    hidden: yes
+  }
+
   # Not enough dimensions to warrant grouping in this view
 }
 
@@ -238,6 +246,14 @@ view: +users {
   }
 
   dimension: last_name {
+    hidden: yes
+  }
+
+  dimension: latitude {
+    hidden: yes
+  }
+
+  dimension: longitude {
     hidden: yes
   }
 
