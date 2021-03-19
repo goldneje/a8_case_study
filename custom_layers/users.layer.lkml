@@ -1,6 +1,10 @@
-include: "/layers/_base.layer"
+include: "/_layers/_basic.layer"
 
 view: +users {
+
+##########################################################
+#                     CUSTOM DIMENSIONS                  #
+##########################################################
 
   dimension: age_cohort {
     group_label: "~Demographics"
@@ -15,7 +19,7 @@ view: +users {
   }
 
 ##########################################################
-#                      MEASURES                          #
+#                     CUSTOM MEASURES                    #
 ##########################################################
 
   measure: age_average {

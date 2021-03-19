@@ -3,7 +3,7 @@
 # view refinements to define primary keys and hide any
 # machine-generated dimensions/measures.
 
-include: "/layers/_base.layer"
+include: "/_layers/_base.layer"
 
 ##################################################
 #       EXPLORE REFINEMENTS AND ADDITIONS        #
