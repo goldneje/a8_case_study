@@ -69,6 +69,17 @@ explore: +products {
 #                 VIEW REFINEMENTS               #
 ##################################################
 
+view: +distribution_centers {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  # Not enough dimensions to warrant grouping in this view
+}
+
 view: +events {
   view_label: "Website Activity"
 
@@ -127,6 +138,36 @@ view: +events {
   }
 }
 
+view: +order_items {
+
+  # ---- Hidden Dimensions ----
+
+  dimension: id {
+    hidden: yes
+  }
+
+  dimension: inventory_item_id {
+    hidden: yes
+  }
+
+  # ---- ID Grouping ----
+
+  dimension: id {
+    group_label: "~IDs"
+  }
+
+  dimension: inventory_item_id {
+    group_label: "~IDs"
+  }
+
+  dimension: order_id {
+    group_label: "~IDs"
+  }
+
+  dimension: user_id {
+    group_label: "~IDs"
+  }}
+
 view: +users {
 
   # ---- Hidden Dimensions ----
@@ -177,36 +218,5 @@ view: +users {
 
   dimension: zip {
     group_label: "~Location"
-  }
-}
-
-view: +order_items {
-
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: inventory_item_id {
-    hidden: yes
-  }
-
-  # ---- ID Grouping ----
-
-  dimension: id {
-    group_label: "~IDs"
-  }
-
-  dimension: inventory_item_id {
-    group_label: "~IDs"
-  }
-
-  dimension: order_id {
-    group_label: "~IDs"
-  }
-
-  dimension: user_id {
-    group_label: "~IDs"
   }
 }
