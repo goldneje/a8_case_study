@@ -86,6 +86,12 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
   }
 
+  measure: profit_per_order {
+    type: number
+    sql: SUM(${profit_total}) OVER(PARTITION BY ${order_id}) ;;
+    value_format_name: usd
+  }
+
   measure: profit_total {
     label: "Total Profit"
     description: "
