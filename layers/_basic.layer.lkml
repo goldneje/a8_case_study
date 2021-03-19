@@ -85,11 +85,8 @@ view: +events {
 
   # ---- Hidden dimensions ----
 
-  dimension: id {
-    hidden: yes
-  }
 
-  dimension: user_id {
+  dimension: id {
     hidden: yes
   }
 
@@ -97,23 +94,33 @@ view: +events {
     hidden: yes
   }
 
+  dimension: user_id {
+    hidden: yes
+  }
+
+
   # ---- ID Grouping ----
 
-  dimension: id {
-    group_label: "~IDs"
-  }
+    dimension: id {
+      group_label: "~IDs"
+    }
 
-  dimension: session_id {
-    group_label: "~IDs"
-  }
+    dimension: session_id {
+      group_label: "~IDs"
+    }
 
-  dimension: user_id {
-    group_label: "~IDs"
-  }
+    dimension: user_id {
+      group_label: "~IDs"
+    }
+
 
   # ---- ~Locations Grouping ----
 
-  dimension: state {
+  dimension: city {
+    group_label: "~Location"
+  }
+
+  dimension: country {
     group_label: "~Location"
   }
 
@@ -125,11 +132,7 @@ view: +events {
     group_label: "~Location"
   }
 
-  dimension: country {
-    group_label: "~Location"
-  }
-
-  dimension: city {
+  dimension: state {
     group_label: "~Location"
   }
 
