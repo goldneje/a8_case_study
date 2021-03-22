@@ -4,7 +4,6 @@ connection: "snowlooker"
 include: "/_layers/_base.layer"
 include: "/_layers/_basic.layer"
 
-include: "/calculations/calculation_selector.layer"
 include: "/calculations/delivery_duration.layer"
 include: "/calculations/profit.layer"
 include: "/calculations/revenue.layer"
@@ -25,6 +24,9 @@ include: "/group_labels/~revenue.group"
 
 include: "/hidden/_hidden_orig.layer"
 include: "/hidden/_hidden_derived.layer"
+
+include: "/parameters_and_filters/calculation_selector.layer"
+include: "/parameters_and_filters/category_filter.layer"
 
 datagroup: case_studies_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
