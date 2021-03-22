@@ -72,226 +72,226 @@ explore: +products {
 #                 VIEW REFINEMENTS               #
 ##################################################
 
-view: +distribution_centers {}
+# view: +distribution_centers {}
 
-view: +events {
-  view_label: "Website Activity"
+# view: +events {
+#   view_label: "Website Activity"
 
-  # ---- ID Grouping ----
+#   # ---- ID Grouping ----
 
-  dimension: id {
-    group_label: "~IDs"
-  }
+#   dimension: id {
+#     group_label: "~IDs"
+#   }
 
-  dimension: session_id {
-    group_label: "~IDs"
-  }
+#   dimension: session_id {
+#     group_label: "~IDs"
+#   }
 
-  dimension: user_id {
-    group_label: "~IDs"
-  }
+#   dimension: user_id {
+#     group_label: "~IDs"
+#   }
 
 
-  # ---- ~Locations Grouping ----
+#   # ---- ~Locations Grouping ----
 
-  dimension: city {
-    group_label: "~Location"
-  }
+#   dimension: city {
+#     group_label: "~Location"
+#   }
 
-  dimension: country {
-    group_label: "~Location"
-  }
+#   dimension: country {
+#     group_label: "~Location"
+#   }
 
-  dimension: latitude {
-    group_label: "~Location"
-  }
+#   dimension: latitude {
+#     group_label: "~Location"
+#   }
 
-  dimension: longitude {
-    group_label: "~Location"
-  }
+#   dimension: longitude {
+#     group_label: "~Location"
+#   }
 
-  dimension: state {
-    group_label: "~Location"
-  }
+#   dimension: state {
+#     group_label: "~Location"
+#   }
 
-  dimension: zip {
-    group_label: "~Location"
-  }
-}
+#   dimension: zip {
+#     group_label: "~Location"
+#   }
+# }
 
-view: +inventory_items {
+# view: +inventory_items {
 
-  # ---- Formatting ----
+#   # ---- Formatting ----
 
-  dimension: cost {
-    value_format_name: usd
-  }
+#   dimension: cost {
+#     value_format_name: usd
+#   }
 
-  # ---- Product Attribute Grouping ----
+#   # ---- Product Attribute Grouping ----
 
-  dimension: product_brand {
-    group_label: "~Product Attribute"
-  }
+#   dimension: product_brand {
+#     group_label: "~Product Attribute"
+#   }
 
-  dimension: product_category {
-    group_label: "~Product Attribute"
-  }
+#   dimension: product_category {
+#     group_label: "~Product Attribute"
+#   }
 
-  dimension: product_department {
-    group_label: "~Product Attribute"
-  }
+#   dimension: product_department {
+#     group_label: "~Product Attribute"
+#   }
 
-  dimension: product_name {
-    group_label: "~Product Attribute"
-  }
-}
+#   dimension: product_name {
+#     group_label: "~Product Attribute"
+#   }
+# }
 
-view: +order_items {
+# view: +order_items {
 
-  # ---- Formatting ----
+#   # ---- Formatting ----
 
-  dimension: sale_price {
-    value_format_name: usd
-  }
+#   dimension: sale_price {
+#     value_format_name: usd
+#   }
 
-  # ---- ID Grouping ----
+#   # ---- ID Grouping ----
 
-  dimension: id {
-    group_label: "~IDs"
-  }
+#   dimension: id {
+#     group_label: "~IDs"
+#   }
 
-  dimension: inventory_item_id {
-    group_label: "~IDs"
-  }
+#   dimension: inventory_item_id {
+#     group_label: "~IDs"
+#   }
 
-  dimension: order_id {
-    group_label: "~IDs"
-  }
+#   dimension: order_id {
+#     group_label: "~IDs"
+#   }
 
-  dimension: user_id {
-    group_label: "~IDs"
-  }
+#   dimension: user_id {
+#     group_label: "~IDs"
+#   }
 
-  # ---- Delivery Duration Grouping ----
+#   # ---- Delivery Duration Grouping ----
 
-  measure: delivery_duration_avg {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_avg {
+#     group_label: "~Delivery Duration"
+#   }
 
-  measure: delivery_duration_min {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_min {
+#     group_label: "~Delivery Duration"
+#   }
 
-  measure: delivery_duration_25th_percentile {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_25th_percentile {
+#     group_label: "~Delivery Duration"
+#   }
 
-  measure: delivery_duration_median {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_median {
+#     group_label: "~Delivery Duration"
+#   }
 
-  measure: delivery_duration_75th_percentile {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_75th_percentile {
+#     group_label: "~Delivery Duration"
+#   }
 
-  measure: delivery_duration_max {
-    group_label: "~Delivery Duration"
-  }
+#   measure: delivery_duration_max {
+#     group_label: "~Delivery Duration"
+#   }
 
-  # ---- Gross Revenue Grouping ----
+#   # ---- Gross Revenue Grouping ----
 
-  measure: total_gross_revenue {
-    group_label: "~Revenue"
-  }
+#   measure: total_gross_revenue {
+#     group_label: "~Revenue"
+#   }
 
-  # ---- Profit Grouping ----
+#   # ---- Profit Grouping ----
 
-  measure: gross_margin_percent_average {
-    group_label: "~Profit"
-  }
+#   measure: gross_margin_percent_average {
+#     group_label: "~Profit"
+#   }
 
-  measure: profit_total {
-    group_label: "~Profit"
-  }
-}
+#   measure: profit_total {
+#     group_label: "~Profit"
+#   }
+# }
 
-view: +products {}
+# view: +products {}
 
-view: +users {
+# view: +users {
 
-  # ---- Demographic Grouping ----
+#   # ---- Demographic Grouping ----
 
-  dimension: age {
-    group_label: "~Demographics"
-  }
+#   dimension: age {
+#     group_label: "~Demographics"
+#   }
 
-  dimension: gender {
-    group_label: "~Demographics"
-  }
+#   dimension: gender {
+#     group_label: "~Demographics"
+#   }
 
-  # ---- Location Grouping ----
+#   # ---- Location Grouping ----
 
-  dimension: state {
-    group_label: "~Location"
-  }
+#   dimension: state {
+#     group_label: "~Location"
+#   }
 
-  dimension: latitude {
-    group_label: "~Location"
-  }
+#   dimension: latitude {
+#     group_label: "~Location"
+#   }
 
-  dimension: longitude {
-    group_label: "~Location"
-  }
+#   dimension: longitude {
+#     group_label: "~Location"
+#   }
 
-  dimension: country {
-    group_label: "~Location"
-  }
+#   dimension: country {
+#     group_label: "~Location"
+#   }
 
-  dimension: city {
-    group_label: "~Location"
-  }
+#   dimension: city {
+#     group_label: "~Location"
+#   }
 
-  dimension: zip {
-    group_label: "~Location"
-  }
-}
+#   dimension: zip {
+#     group_label: "~Location"
+#   }
+# }
 
-#################################################
-#            DERIVED TABLE REFINEMENTS          #
-#################################################
+# #################################################
+# #            DERIVED TABLE REFINEMENTS          #
+# #################################################
 
-view: +profit_per_order {
+# view: +profit_per_order {
 
-  # ---- Profit Group ----
+#   # ---- Profit Group ----
 
-  measure: profit_per_order_average {
-    group_label: "~Profit per Order"
-  }
-  measure: profit_per_order_total   {
-    group_label: "~Profit per Order"
-  }
-}
+#   measure: profit_per_order_average {
+#     group_label: "~Profit per Order"
+#   }
+#   measure: profit_per_order_total   {
+#     group_label: "~Profit per Order"
+#   }
+# }
 
-view: +order_sequence_2 {
-  dimension: order_sequence {
-    group_label: "~Order Sequence"
-  }
-  dimension: has_subsequent_purchase {
-    group_label: "~Order Sequence"
-  }
-  dimension: is_first_order {
-    group_label: "~Order Sequence"
-  }
-  dimension: previous_order_date {
-    group_label: "~Order Sequence"
-  }
-  dimension: subsequent_order_date {
-    group_label: "~Order Sequence"
-  }
-  dimension: days_between_orders {
-    group_label: "~Order Sequence"
-  }
-  dimension: is_repeat_purchase {
-    group_label: "~Order Sequence"
-  }
-}
+# view: +order_sequence_2 {
+#   dimension: order_sequence {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: has_subsequent_purchase {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: is_first_order {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: previous_order_date {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: subsequent_order_date {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: days_between_orders {
+#     group_label: "~Order Sequence"
+#   }
+#   dimension: is_repeat_purchase {
+#     group_label: "~Order Sequence"
+#   }
+# }
