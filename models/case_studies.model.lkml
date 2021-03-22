@@ -8,6 +8,7 @@ include: "/custom_layers/users.layer"
 include: "/custom_layers/order_items.layer"
 include: "/custom_layers/distribution_centers.layer"
 
+include: "/derived_table_layers/order_sequence.layer"
 include: "/derived_table_layers/profit_per_order.layer"
 
 datagroup: case_studies_default_datagroup {
