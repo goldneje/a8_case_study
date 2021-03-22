@@ -6,6 +6,7 @@ include: "/_layers/_basic.layer"
 
 include: "/calculations/delivery_duration.layer"
 include: "/calculations/profit.layer"
+include: "/calculations/revenue.layer"
 
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
