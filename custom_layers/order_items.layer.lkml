@@ -15,7 +15,7 @@ view: +order_items {
 
   dimension: profit {
     description: "
-    Item's sale price minus its cost.
+      Item's sale price minus its cost.
     "
     type: number
     sql: ${sale_price} - ${products.cost} ;;
@@ -24,7 +24,7 @@ view: +order_items {
 
   dimension: gross_margin_percent {
     description: "
-    Item's percent margin relative to cost
+      Item's percent margin relative to cost
     "
     type: number
     sql: ${profit} / ${sale_price} ;;
@@ -78,21 +78,21 @@ view: +order_items {
 
   # ---- End Boxplot Calculations ----
 
-  measure: total_gross_revenue {
+  measure: gross_margin_percent_average {
+    label: "Average Gross Margin Percent"
     description: "
-    Total gross revenue of items that are not returned or cancelled.
-    Calculated as the sum of the sale price of the item.
+      Profit / Sale Price, shows the average percent margin across a grouping
     "
-    type: sum
-    sql: ${sale_price} ;;
-    value_format_name: usd
+    type: average
+    sql: ${gross_margin_percent} ;;
+    value_format_name: percent_0
     filters: [status: "-Cancelled, -Returned"]
   }
 
   measure: profit_total {
     label: "Total Profit"
     description: "
-    Item's sale price minus its cost.
+      Item's sale price minus its cost.
     "
     type: sum
     sql: ${profit} ;;
@@ -100,14 +100,25 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
   }
 
-  measure: gross_margin_percent_average {
-    label: "Average Gross Margin Percent"
+  measure: order_sequence {
     description: "
-    Profit / Sale Price, shows the average percent margin across a grouping
+      Shows the sequence that orders occurred per user,
+      used for creating flags for whether an order is a users' first, whether
+      a user is a return customer, etc.
     "
-    type: average
-    sql: ${gross_margin_percent} ;;
-    value_format_name: percent_0
+    type: number
+    sql: ROW_NUMBER() OVER(PARTITION BY ${user_id} ORDER BY ${created_date}) ;;
+  }
+
+  measure: total_gross_revenue {
+    description: "
+      Total gross revenue of items that are not returned or cancelled.
+      Calculated as the sum of the sale price of the item.
+    "
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
     filters: [status: "-Cancelled, -Returned"]
   }
+
 }
