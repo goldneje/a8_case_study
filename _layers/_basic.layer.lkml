@@ -1,7 +1,8 @@
 # Here, you will include any basic explore refinements to handle
 # joins and hiding/unhiding explores. You can also include
-# view refinements to define primary keys and hide any
-# machine-generated dimensions/measures.
+# view refinements to define primary keys, hide any
+# machine-generated dimensions/measures, and define
+# group labels for dimensions/measures.
 
 include: "/_layers/_base.layer"
 include: "/derived_table_layers/profit_per_order.layer"
