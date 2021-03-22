@@ -56,7 +56,7 @@ view: order_sequence_2 {
   }
 }
 
-# ---- Adding new fields to order_sequence_2
+# ---- Adding new dim/measures to order_sequence_2
 view: +order_sequence_2 {
   dimension: days_between_orders {
     description: "
