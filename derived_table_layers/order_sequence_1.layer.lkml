@@ -31,15 +31,13 @@ view: order_sequence_1 {
   }
   dimension: order_id {
     primary_key: yes
-    hidden: yes
     type: number
   }
   dimension: created_date {
-    hidden: yes
     type: date
   }
   dimension: order_sequence {
-    hidden: yes
+    # hidden: yes
     description: "
     Shows the sequence that orders occurred per user,
     used for creating flags for whether an order is a users' first, whether
@@ -49,7 +47,7 @@ view: order_sequence_1 {
   }
   dimension: user_id {
     label: "derived_user_id"
-    hidden: yes
+    # hidden: yes
     type: number
   }
 }

@@ -84,7 +84,7 @@ view: +order_sequence_2 {
     sql: SUM(CAST(${is_repeat_purchase} AS int)) > 0 ;;
   }
 
-  measure: number_of_orders{
+  measure: number_of_orders {
     type: count
   }
 }
