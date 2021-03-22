@@ -4,8 +4,8 @@ connection: "snowlooker"
 include: "/_layers/_base.layer"
 include: "/_layers/_basic.layer"
 
-include: "/_hidden/_hidden_orig.layer"
-include: "/_hidden/_hidden_derived.layer"
+include: "/hidden/_hidden_orig.layer"
+include: "/hidden/_hidden_derived.layer"
 
 include: "/calculations/calculation_selector.layer"
 include: "/calculations/delivery_duration.layer"
