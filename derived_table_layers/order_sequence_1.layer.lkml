@@ -37,7 +37,6 @@ view: order_sequence_1 {
     type: date
   }
   dimension: order_sequence {
-    # hidden: yes
     description: "
     Shows the sequence that orders occurred per user,
     used for creating flags for whether an order is a users' first, whether
