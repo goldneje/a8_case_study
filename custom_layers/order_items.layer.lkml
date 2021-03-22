@@ -42,7 +42,8 @@ view: +order_items {
     sql: ${days_creation_to_delivery} ;;
   }
 
-  # Boxplot Calculations
+  # ---- Start Boxplot Calculations ----
+
   measure: delivery_duration_min {
     group_item_label: "Minimum"
     type: min
@@ -74,6 +75,8 @@ view: +order_items {
     type: max
     sql: ${days_creation_to_delivery} ;;
   }
+
+  # ---- End Boxplot Calculations ----
 
   measure: total_gross_revenue {
     description: "
