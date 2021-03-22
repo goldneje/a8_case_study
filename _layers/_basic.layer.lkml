@@ -413,7 +413,7 @@ view: +order_sequence_2 {
   dimension: days_between_orders {
     group_label: "~Order Sequence"
   }
-  dimension: is_repeat_purchase_flag {
+  dimension: is_repeat_purchase {
     group_label: "~Order Sequence"
   }
 }
