@@ -100,16 +100,6 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
   }
 
-  measure: order_sequence {
-    description: "
-      Shows the sequence that orders occurred per user,
-      used for creating flags for whether an order is a users' first, whether
-      a user is a return customer, etc.
-    "
-    type: number
-    sql: ROW_NUMBER() OVER(PARTITION BY ${user_id} ORDER BY ${created_date}) ;;
-  }
-
   measure: total_gross_revenue {
     description: "
       Total gross revenue of items that are not returned or cancelled.
