@@ -123,24 +123,6 @@ view: +order_items {
     sql_end: ${delivered_raw} ;;
   }
 
-  dimension: profit {
-    description: "
-    Item's sale price minus its cost.
-    "
-    type: number
-    sql: ${sale_price} - ${products.cost} ;;
-    value_format_name: usd
-  }
-
-  dimension: gross_margin_percent {
-    description: "
-    Item's percent margin relative to cost
-    "
-    type: number
-    sql: ${profit} / ${sale_price} ;;
-    value_format_name: percent_1
-  }
-
 ##########################################################
 #                     CUSTOM MEASURES                    #
 ##########################################################
@@ -187,28 +169,6 @@ view: +order_items {
   }
 
   # ---- End Boxplot Calculations ----
-
-  measure: gross_margin_percent_average {
-    label: "Average Gross Margin Percent"
-    description: "
-    Profit / Sale Price, shows the average percent margin across a grouping
-    "
-    type: average
-    sql: ${gross_margin_percent} ;;
-    value_format_name: percent_0
-    filters: [status: "-Cancelled, -Returned"]
-  }
-
-  measure: profit_total {
-    label: "Total Profit"
-    description: "
-    Item's sale price minus its cost.
-    "
-    type: sum
-    sql: ${profit} ;;
-    value_format_name: usd
-    filters: [status: "-Cancelled, -Returned"]
-  }
 
   measure: total_gross_revenue {
     description: "
