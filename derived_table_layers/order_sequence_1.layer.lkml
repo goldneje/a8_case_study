@@ -54,5 +54,38 @@ view: order_sequence_1 {
   }
 }
 
+# Add custom dimesions/measures to the derived table
+# order_sequence_1 will be hidden at the explore level, so I don't need to hide these measures
+view: +order_sequence_1 {
+  measure: is_first_order {
+    description: "Yes/No flag showing whether an order is a users' first"
+    type: yesno
+    sql: ${order_sequence} = 1 ;;
+  }
+
+  measure: previous_order_date {
+    type: date
+    sql: CASE
+        WHEN LAG(${user_id}, 1) OVER(ORDER BY ${user_id}, ${order_sequence}) = ${user_id}
+          THEN LAG(${created_date}, 1) OVER(ORDER BY ${user_id}, ${order_sequence})
+        ELSE NULL
+        END ;;
+  }
+
+  measure: subsequent_order_date {
+    type: date
+    sql: CASE
+        WHEN LEAD(${user_id}, 1) OVER(ORDER BY ${user_id}, ${order_sequence}) = ${user_id}
+          THEN LEAD(${created_date}, 1) OVER(ORDER BY ${user_id}, ${order_sequence})
+        ELSE NULL
+        END ;;
+  }
+
+  measure: has_subsequent_purchase {
+    type: yesno
+    sql: ${subsequent_order_date} IS NOT NULL ;;
+  }
+}
+
 # Creating a hidden explore used to generate the next derived table
 explore: order_sequence_1 {hidden: yes}
