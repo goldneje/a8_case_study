@@ -34,6 +34,7 @@ view: +order_sequence_1 {
   }
 }
 
+# ---- Generate a new derived table to dimensionalize the measures in the first ----
 view: order_sequence_2 {
   derived_table: {
     explore_source: order_sequence_1 {
@@ -60,7 +61,7 @@ view: order_sequence_2 {
 
 
   dimension: order_sequence {
-    description: "Sequence number showing the order that a customer's purchases took place. Requires user_id and created_date fields"
+    description: "Sequence number showing the order that a customer's purchases took place."
     type: number
   }
 
@@ -86,7 +87,10 @@ view: order_sequence_2 {
   dimension: subsequent_order_date {
     type: date
   }
+}
 
+# ---- Adding new fields to order_sequence_2
+view: +order_sequence_2 {
   dimension: days_between_orders {
     description: "
     Difference between current order date and previous order date (if it exists)
@@ -97,13 +101,9 @@ view: order_sequence_2 {
     value_format_name: decimal_1
   }
 
-  dimension: is_repeat_purchase_flag {
-    type: number
-    sql: CASE
-            WHEN ${days_between_orders} <= 60
-            THEN 1
-            ELSE 0
-            END ;;
+  dimension: is_repeat_purchase {
+    type: yesno
+    sql: ${days_between_orders} < 60 ;;
   }
 }
 
