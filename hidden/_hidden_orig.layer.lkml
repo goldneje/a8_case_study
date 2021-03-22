@@ -68,6 +68,10 @@ view: +order_items {
     hidden: yes
   }
 
+  dimension: sale_price {
+    hidden: yes
+  }
+
   measure: order_sequence {
     hidden: yes
   }
