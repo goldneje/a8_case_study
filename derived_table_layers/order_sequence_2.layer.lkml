@@ -72,6 +72,21 @@ view: +order_sequence_2 {
     type: yesno
     sql: ${days_between_orders} < 60 ;;
   }
+
+  measure: days_between_order_average {
+    type: average
+    sql: ${days_between_orders} ;;
+  }
+
+  measure: has_repeat_purchases {
+    # hidden: yes
+    type: yesno
+    sql: SUM(CAST(${is_repeat_purchase} AS int)) > 0 ;;
+  }
+
+  measure: number_of_orders{
+    type: count
+  }
 }
 
 # Join back to order_items
