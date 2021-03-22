@@ -8,11 +8,12 @@ include: "/custom_layers/users.layer"
 include: "/custom_layers/order_items.layer"
 include: "/custom_layers/distribution_centers.layer"
 
-include: "/derived_table_layers/order_sequence.layer"
+include: "/derived_table_layers/order_sequence_1.layer"
+include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
 
 datagroup: case_studies_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
