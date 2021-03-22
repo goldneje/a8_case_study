@@ -1,4 +1,5 @@
-include: "/_layers/_basic.layer"
+include: "/_layers/_base.layer"
+include: "/calculations/profit.layer"
 
 # Adding profit_per_order to order items because it
 # will be used in this derived table.
