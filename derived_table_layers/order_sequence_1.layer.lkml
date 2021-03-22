@@ -1,3 +1,8 @@
+# Note that this layer gets hidden at the explore level.
+# Anything added here will not be visible to the business users.
+# order_sequence_2 adds new layers and dimensionalizes them for
+# use by business users.
+
 include: "/_layers/_base.layer"
 
 # Adding a new measure to order_items
