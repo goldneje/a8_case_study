@@ -72,57 +72,24 @@ explore: +products {
 #                 VIEW REFINEMENTS               #
 ##################################################
 
-view: +distribution_centers {
-
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: latitude {
-    hidden: yes
-  }
-
-  dimension: longitude {
-    hidden: yes
-  }
-
-  # Not enough dimensions to warrant grouping in this view
-}
+view: +distribution_centers {}
 
 view: +events {
   view_label: "Website Activity"
 
-  # ---- Hidden dimensions ----
-
+  # ---- ID Grouping ----
 
   dimension: id {
-    hidden: yes
+    group_label: "~IDs"
   }
 
-  dimension: uri {
-    hidden: yes
+  dimension: session_id {
+    group_label: "~IDs"
   }
 
   dimension: user_id {
-    hidden: yes
+    group_label: "~IDs"
   }
-
-
-  # ---- ID Grouping ----
-
-    dimension: id {
-      group_label: "~IDs"
-    }
-
-    dimension: session_id {
-      group_label: "~IDs"
-    }
-
-    dimension: user_id {
-      group_label: "~IDs"
-    }
 
 
   # ---- ~Locations Grouping ----
@@ -160,24 +127,6 @@ view: +inventory_items {
     value_format_name: usd
   }
 
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: product_distribution_center_id {
-    hidden: yes
-  }
-
-  dimension: product_id {
-    hidden: yes
-  }
-
-  dimension: product_sku {
-    hidden: yes
-  }
-
   # ---- Product Attribute Grouping ----
 
   dimension: product_brand {
@@ -203,28 +152,6 @@ view: +order_items {
 
   dimension: sale_price {
     value_format_name: usd
-  }
-
-  # ---- Hidden Dimensions ----
-
-  dimension: gross_margin_percent {
-    hidden: yes
-  }
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: inventory_item_id {
-    hidden: yes
-  }
-
-  dimension: profit {
-    hidden: yes
-  }
-
-  measure: profit_per_order {
-    hidden: yes
   }
 
   # ---- ID Grouping ----
@@ -288,44 +215,9 @@ view: +order_items {
   }
 }
 
-view: +products {
-
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-  dimension: distribution_center_id {
-    hidden: yes
-  }
-  dimension: sku {
-    hidden: yes
-  }
-}
+view: +products {}
 
 view: +users {
-
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: first_name {
-    hidden: yes
-  }
-
-  dimension: last_name {
-    hidden: yes
-  }
-
-  dimension: latitude {
-    hidden: yes
-  }
-
-  dimension: longitude {
-    hidden: yes
-  }
 
   # ---- Demographic Grouping ----
 
@@ -369,20 +261,6 @@ view: +users {
 #################################################
 
 view: +profit_per_order {
-
-  # ---- Hidden Dimensions ----
-
-  dimension: id {
-    hidden: yes
-  }
-
-  dimension: order_id {
-    hidden: yes
-  }
-
-  dimension: profit_per_order {
-    hidden: yes
-  }
 
   # ---- Profit Group ----
 
