@@ -97,17 +97,6 @@ view: order_items {
     drill_fields: [detail*]
   }
 
-  measure: total_gross_revenue {
-    description: "
-    Total gross revenue of items that are not returned or cancelled.
-    Calculated as the sum of the sale price of the item.
-    "
-    type: sum
-    sql: ${sale_price} ;;
-    value_format_name: usd
-    filters: [status: "-Cancelled, -Returned"]
-  }
-
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
