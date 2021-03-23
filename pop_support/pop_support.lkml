@@ -28,6 +28,23 @@ view: pop_support {
 
     }
 
+    parameter: current_x_to_date {
+
+      label: "Current x to Date (On/Off)"
+
+      description: "To be used with Period-over-period analysis, will automatically update based on the period.
+      For example, if you are doing day-over-day analysis, it will only calculate up to the current hour; for
+      month-over-month, it will only calculate up do the current day, etc."
+
+      type: unquoted
+
+      allowed_value: {value: "On"}
+
+      allowed_value: {value: "Off"}
+
+      default_value: "Off"
+    }
+
     dimension: periods_ago {hidden:yes type:number}
 
     filter: periods_ago_to_include {
