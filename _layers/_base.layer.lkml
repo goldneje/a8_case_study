@@ -286,6 +286,9 @@ view: order_items {
       timeframes: [
         raw,
         time,
+        day_of_month,
+        hour_of_day,
+        day_of_year,
         date,
         week,
         month,
