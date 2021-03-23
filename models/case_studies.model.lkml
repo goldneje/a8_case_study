@@ -28,6 +28,8 @@ include: "/hidden/_hidden_derived.layer"
 include: "/parameters_and_filters/calculation_selector.layer"
 include: "/parameters_and_filters/category_filter.layer"
 
+include: "/pop_support/pop_support"
+
 datagroup: case_studies_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
