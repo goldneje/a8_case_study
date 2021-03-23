@@ -1,6 +1,3 @@
-
-
-
 include: "/pop_support/pop_support" #include the helper fields that are core to the PoP implementation - meaning: include the file in which you pasted the code as described in Step 1 above.
 
 include: "/_layers/_base.layer" #!Include the file that defines your base view here so you can refine it
@@ -29,8 +26,6 @@ view: +order_items {#!Update to point to your view name (with the '+' making it 
 
                 {%endif%}
 
-// This next line might need to be edited, 'order_items.CREATED_AT' was originally ${EXTENDED} but it couldn't handle the double quotes in the original column name
-
                 {% assign my_date_converted = now_converted_to_date_with_timezone_sql | replace: now_unconverted_sql, 'order_items.CREATED_AT' %}
 
                 {% if pop_support.periods_ago._in_query %}{{ pop_sql_using_now | replace: now_unconverted_sql, my_date_converted }}
@@ -38,7 +33,6 @@ view: +order_items {#!Update to point to your view name (with the '+' making it 
                 {%else%}{{my_date_converted}}
 
                 {%endif%};;#wraps your original sql (i.e. ${EXTENDED}) inside custom pop logic, leveraging the parameterized selected-period-size-or-smart-default (defined below)
-
     }
 
 
@@ -95,16 +89,16 @@ view: +order_items {#!Update to point to your view name (with the '+' making it 
 
 # Optional Validation Support field.  If there's ever any confusion with the results of PoP, it's helpful to see the exact min and max times of your raw data flowing through.
 
-#  measure: pop_validation {
+  measure: pop_validation {
 
-#     view_label: "PoP - VALIDATION - TO BE HIDDEN"
+    view_label: "PoP - VALIDATION - TO BE HIDDEN"
 
-#     label: "Range of Raw Dates Included"
+    label: "Range of Raw Dates Included"
 
-#     description: "Note: does not reflect timezone conversion"
+    description: "Note: does not reflect timezone conversion"
 
-#sql:{%assign base_sql = '${TABLE}.created_at'%}concat(concat(min({{base_sql}}),' to '),max({{base_sql}}));;#!Paste the sql parameter value from the original date fields as the variable value for base_sql
+sql:{%assign base_sql = '${TABLE}.created_at'%}concat(concat(min({{base_sql}}),' to '),max({{base_sql}}));;#!Paste the sql parameter value from the original date fields as the variable value for base_sql
 
-#   }
+  }
 
     }
