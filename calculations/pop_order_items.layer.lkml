@@ -9,8 +9,6 @@ include: "/_layers/_base.layer" #!Include the file that defines your base view h
 
 view: +order_items {#!Update to point to your view name (with the '+' making it a refinement).  That view's file must be included here, and then THIS file must be included in the explore
 
-
-
   #Refine YOUR date field by simply updating the dimension group name to match your base date field
 
   dimension_group: created {
