@@ -65,7 +65,7 @@ explore: +order_items {
   }
 
   #Update this always filter to your base date field to encourage a filter.  Without any filter, 'future' periods will be shown when POP is used (because, for example: today's data is/will be technically 'last year' for next year)
-  always_filter: {filters: [order_items.created_date: "before 0 minutes ago"]}
+  # always_filter: {filters: [order_items.created_date: "before 0 minutes ago"]}
 }
 
 
