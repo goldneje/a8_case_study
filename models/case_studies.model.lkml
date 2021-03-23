@@ -5,6 +5,7 @@ include: "/_layers/_base.layer"
 include: "/_layers/_basic.layer"
 
 include: "/calculations/delivery_duration.layer"
+include: "/calculations/pop_order_items.layer"
 include: "/calculations/profit.layer"
 include: "/calculations/revenue.layer"
 
