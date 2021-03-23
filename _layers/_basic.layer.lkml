@@ -5,7 +5,7 @@
 # group labels for dimensions/measures.
 
 include: "/_layers/_base.layer"
-include: "/derived_table_layers/profit_per_order.layer"
+include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/pop_support/pop_support"
 
@@ -65,9 +65,33 @@ explore: +order_items {
   }
 
   #Update this always filter to your base date field to encourage a filter.  Without any filter, 'future' periods will be shown when POP is used (because, for example: today's data is/will be technically 'last year' for next year)
-  always_filter: {filters: [order_items.created_date: "before 0 minutes ago"]}
-}
+  always_filter: {
+    filters: [
+      order_items.created_date: "before 0 minutes ago"
+    ]
+    }
+  sql_always_where:
 
+        {% if pop_support.current_x_to_date._parameter_value == "Off" %}
+
+          1=1
+
+          {% elsif pop_support.period_size._parameter_value == "Day" %}
+
+            ${created_hour_of_day} < EXTRACT(hour from CURRENT_DATE())
+
+          {% elsif pop_support.period_size._parameter_value == "Month" %}
+
+            ${created_day_of_month} < EXTRACT(day from CURRENT_DATE())
+
+          {% elsif pop_support.period_size._parameter_value == "Year" %}
+
+            ${created_day_of_year} < EXTRACT(doy from CURRENT_DATE())
+
+      {% endif %}
+
+  ;;
+}
 
 explore: +products {
   hidden: no
