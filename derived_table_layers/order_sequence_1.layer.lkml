@@ -22,14 +22,14 @@ view: +order_items {
 view: order_sequence_1 {
   derived_table: {
     explore_source: order_items {
+      column: pk1_order_id {field: order_items.order_id}
       column: order_sequence {}
       column: user_id {}
-      column: order_id {}
       column: created_date {}
     }
     datagroup_trigger: case_studies_default_datagroup
   }
-  dimension: order_id {
+  dimension: pk1_order_id {
     primary_key: yes
     type: number
   }

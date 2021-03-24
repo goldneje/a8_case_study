@@ -7,9 +7,9 @@ explore: distribution_centers {hidden: yes}
 view: distribution_centers {
   sql_table_name: "PUBLIC"."DISTRIBUTION_CENTERS"
     ;;
-  drill_fields: [id]
+  drill_fields: [pk1_distribution_center_id]
 
-  dimension: id {
+  dimension: pk1_distribution_center_id {
     primary_key: yes
     type: number
     sql: ${TABLE}."ID" ;;
@@ -32,7 +32,7 @@ view: distribution_centers {
 
   measure: count {
     type: count
-    drill_fields: [id, name, products.count]
+    drill_fields: [pk1_distribution_center_id, name, products.count]
   }
 }
 
@@ -40,9 +40,9 @@ explore: etl_jobs {hidden: yes}
 view: etl_jobs {
   sql_table_name: "PUBLIC"."ETL_JOBS"
     ;;
-  drill_fields: [id]
+  drill_fields: [pk1_etl_job_id]
 
-  dimension: id {
+  dimension: pk1_etl_job_id {
     primary_key: yes
     type: number
     sql: ${TABLE}."ID" ;;
@@ -64,7 +64,7 @@ view: etl_jobs {
 
   measure: count {
     type: count
-    drill_fields: [id]
+    drill_fields: [pk1_etl_job_id]
   }
 }
 
@@ -72,9 +72,9 @@ explore: events {hidden: yes}
 view: events {
   sql_table_name: "PUBLIC"."EVENTS"
     ;;
-  drill_fields: [id]
+  drill_fields: [pk1_event_id]
 
-  dimension: id {
+  dimension: pk1_event_id {
     primary_key: yes
     type: number
     sql: ${TABLE}."ID" ;;
@@ -173,7 +173,7 @@ view: events {
 
   measure: count {
     type: count
-    drill_fields: [id, users.last_name, users.first_name, users.id]
+    drill_fields: [pk1_event_id, users.last_name, users.first_name, users.id]
   }
 }
 
@@ -181,9 +181,9 @@ explore: inventory_items {hidden: yes}
 view: inventory_items {
   sql_table_name: "PUBLIC"."INVENTORY_ITEMS"
     ;;
-  drill_fields: [id]
+  drill_fields: [pk1_inventory_item_id]
 
-  dimension: id {
+  dimension: pk1_inventory_item_id {
     primary_key: yes
     type: number
     sql: ${TABLE}."ID" ;;
@@ -265,7 +265,7 @@ view: inventory_items {
 
   measure: count {
     type: count
-    drill_fields: [id, product_name, products.id, products.name, order_items.count]
+    drill_fields: [pk1_inventory_item_id, product_name, products.pk1_product_id, products.name, order_items.count]
   }
 }
 
@@ -273,9 +273,9 @@ explore: order_items {hidden: yes}
 view: order_items {
     sql_table_name: "PUBLIC"."ORDER_ITEMS"
       ;;
-    drill_fields: [id]
+    drill_fields: [pk1_order_item_id]
 
-    dimension: id {
+    dimension: pk1_order_item_id {
       primary_key: yes
       type: number
       sql: ${TABLE}."ID" ;;
@@ -375,12 +375,12 @@ view: order_items {
     # ----- Sets of fields for drilling ------
     set: detail {
       fields: [
-        id,
+        pk1_order_item_id,
         inventory_items.product_name,
-        inventory_items.id,
+        inventory_items.pk1_inventory_item_id,
         users.last_name,
         users.first_name,
-        users.id
+        users.pk1_user_id
       ]
     }
   }
@@ -389,9 +389,9 @@ explore: products {hidden: yes}
 view: products {
     sql_table_name: "PUBLIC"."PRODUCTS"
       ;;
-    drill_fields: [id]
+    drill_fields: [pk1_product_id]
 
-    dimension: id {
+    dimension: pk1_product_id {
       primary_key: yes
       type: number
       sql: ${TABLE}."ID" ;;
@@ -440,7 +440,7 @@ view: products {
 
     measure: count {
       type: count
-      drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
+      drill_fields: [pk1_product_id, name, distribution_centers.name, distribution_centers.pk1_distribution_center_id, inventory_items.count]
     }
   }
 
@@ -448,9 +448,9 @@ explore: users {hidden: yes}
 view: users {
     sql_table_name: "PUBLIC"."USERS"
       ;;
-    drill_fields: [id]
+    drill_fields: [pk1_user_id]
 
-    dimension: id {
+    dimension: pk1_user_id {
       primary_key: yes
       type: number
       sql: ${TABLE}."ID" ;;
@@ -533,6 +533,6 @@ view: users {
 
     measure: count {
       type: count
-      drill_fields: [id, last_name, first_name, events.count, order_items.count]
+      drill_fields: [pk1_user_id, last_name, first_name, events.count, order_items.count]
     }
   }

@@ -5,8 +5,8 @@ include: "/derived_table_layers/order_sequence_1.layer"
 view: order_sequence_2 {
   derived_table: {
     explore_source: order_sequence_1 {
+      column: pk1_order_id {}
       column: created_date {}
-      column: order_id {}
       column: order_sequence {}
       column: user_id {}
       column: has_subsequent_purchase {}
@@ -15,7 +15,7 @@ view: order_sequence_2 {
       column: subsequent_order_date {}
     }
   }
-  dimension: order_id {
+  dimension: pk1_order_id {
     primary_key: yes
     hidden: yes
     type: number
@@ -94,7 +94,7 @@ explore: +order_items {
   join: order_sequence_2 {
     view_label: "Order Items"
     type: left_outer
-    sql_on: ${order_items.order_id} = ${order_sequence_2.order_id} ;;
+    sql_on: ${order_items.order_id} = ${order_sequence_2.pk1_order_id} ;;
     relationship: one_to_one
   }
 }

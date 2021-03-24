@@ -15,7 +15,7 @@ view: +order_items {
 view: profit_per_order {
   derived_table: {
     explore_source: order_items {
-      column: id {}
+      column: pk1_order_item_id {}
       column: order_id {}
       column: profit_per_order {}
     }
@@ -49,7 +49,7 @@ view: profit_per_order {
 explore: +order_items {
   join: profit_per_order {
     view_label: "Order Items"
-    sql_on: ${order_items.id} = ${profit_per_order.pk1_order_item_id} ;;
+    sql_on: ${order_items.pk1_order_item_id} = ${profit_per_order.pk1_order_item_id} ;;
     relationship: one_to_one
   }
 }
