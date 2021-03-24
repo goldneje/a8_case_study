@@ -28,6 +28,7 @@ view: order_sequence_2 {
 
 
   dimension: order_sequence {
+    hidden: yes
     description: "Sequence number showing the order that a customer's purchases took place."
     type: number
   }
@@ -82,10 +83,6 @@ view: +order_sequence_2 {
     # hidden: yes
     type: yesno
     sql: SUM(CAST(${is_repeat_purchase} AS int)) > 0 ;;
-  }
-
-  measure: number_of_orders {
-    type: count
   }
 }
 

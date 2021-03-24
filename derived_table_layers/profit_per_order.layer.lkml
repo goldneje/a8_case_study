@@ -28,10 +28,12 @@ view: profit_per_order {
   }
 
   dimension: order_id {
+    hidden: yes
     type: number
   }
 
   dimension: profit_per_order {
+    hidden: yes
     value_format: "$#,##0.00"
     type: number
   }
