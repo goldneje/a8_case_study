@@ -23,9 +23,6 @@ include: "/group_labels/~profit.group"
 include: "/group_labels/~profit_per_order.group"
 include: "/group_labels/~revenue.group"
 
-include: "/hidden/_hidden_orig.layer"
-include: "/hidden/_hidden_derived.layer"
-
 include: "/parameters_and_filters/calculation_selector.layer"
 include: "/parameters_and_filters/category_filter.layer"
 
