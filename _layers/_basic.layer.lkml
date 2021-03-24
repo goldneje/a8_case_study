@@ -1,8 +1,10 @@
 # Here, you will include any basic explore refinements to handle
 # joins and hiding/unhiding explores. You can also include
-# view refinements to define primary keys, hide any
-# machine-generated dimensions/measures, and define
-# group labels for dimensions/measures.
+# view refinements to define primary keys,
+# define view_labels at the view level
+# hide any machine-generated dimensions/measures, and define
+# group labels for dimensions/measures, though groups may
+# be better handled elsewhere for easier group reference
 
 include: "/_layers/_base.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
@@ -102,7 +104,7 @@ explore: +products {
   hidden: no
   join: distribution_centers {
     type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
+    sql_on: ${products.distribution_center_id} = ${distribution_centers.pk1_distribution_center_id} ;;
     relationship: many_to_one
   }
 }
@@ -113,7 +115,9 @@ explore: +products {
 
 view: +distribution_centers {
 
-  dimension: id {
+# ---- Hidden Fields ----
+
+  dimension: pk1_distribution_center_id {
     hidden: yes
   }
 
@@ -130,49 +134,81 @@ view: +distribution_centers {
 view: +events {
   view_label: "Website Activity"
 
-  # ---- ID Grouping ----
+# ---- Hidden Fields ----
 
-  dimension: id {
-    group_label: "~IDs"
+  dimension: pk1_event_id {
+    hidden: yes
   }
 
-  dimension: session_id {
-    group_label: "~IDs"
+  dimension: uri {
+    hidden: yes
   }
 
   dimension: user_id {
-    group_label: "~IDs"
+    hidden: yes
   }
 
+  # # ---- ID Grouping ----
 
-  # ---- ~Locations Grouping ----
+  # dimension: id {
+  #   group_label: "~IDs"
+  # }
 
-  dimension: city {
-    group_label: "~Location"
-  }
+  # dimension: session_id {
+  #   group_label: "~IDs"
+  # }
 
-  dimension: country {
-    group_label: "~Location"
-  }
+  # dimension: user_id {
+  #   group_label: "~IDs"
+  # }
 
-  dimension: latitude {
-    group_label: "~Location"
-  }
 
-  dimension: longitude {
-    group_label: "~Location"
-  }
+  # # ---- ~Locations Grouping ----
 
-  dimension: state {
-    group_label: "~Location"
-  }
+  # dimension: city {
+  #   group_label: "~Location"
+  # }
 
-  dimension: zip {
-    group_label: "~Location"
-  }
+  # dimension: country {
+  #   group_label: "~Location"
+  # }
+
+  # dimension: latitude {
+  #   group_label: "~Location"
+  # }
+
+  # dimension: longitude {
+  #   group_label: "~Location"
+  # }
+
+  # dimension: state {
+  #   group_label: "~Location"
+  # }
+
+  # dimension: zip {
+  #   group_label: "~Location"
+  # }
 }
 
 view: +inventory_items {
+
+# ---- Hidden Fields ----
+
+  dimension: pk1_inventory_item_id {
+    hidden: yes
+  }
+
+  dimension: product_distribution_center_id {
+    hidden: yes
+  }
+
+  dimension: product_id {
+    hidden: yes
+  }
+
+  dimension: product_sku {
+    hidden: yes
+  }
 
   # ---- Formatting ----
 
@@ -180,171 +216,197 @@ view: +inventory_items {
     value_format_name: usd
   }
 
-  # ---- Product Attribute Grouping ----
+  # # ---- Product Attribute Grouping ----
 
-  dimension: product_brand {
-    group_label: "~Product Attribute"
-  }
+  # dimension: product_brand {
+  #   group_label: "~Product Attribute"
+  # }
 
-  dimension: product_category {
-    group_label: "~Product Attribute"
-  }
+  # dimension: product_category {
+  #   group_label: "~Product Attribute"
+  # }
 
-  dimension: product_department {
-    group_label: "~Product Attribute"
-  }
+  # dimension: product_department {
+  #   group_label: "~Product Attribute"
+  # }
 
-  dimension: product_name {
-    group_label: "~Product Attribute"
-  }
+  # dimension: product_name {
+  #   group_label: "~Product Attribute"
+  # }
 }
 
 view: +order_items {
 
-  # ---- Formatting ----
+# ---- Hidden Fields ----
 
-  dimension: sale_price {
-    value_format_name: usd
+  dimension: pk1_order_item_id {
+    hidden: yes
   }
 
-  # ---- ID Grouping ----
-
-  dimension: id {
-    group_label: "~IDs"
+  dimension: gross_margin_percent {
+    hidden: yes
   }
 
   dimension: inventory_item_id {
-    group_label: "~IDs"
+    hidden: yes
   }
 
-  dimension: order_id {
-    group_label: "~IDs"
+  dimension: profit {
+    hidden: yes
   }
 
-  dimension: user_id {
-    group_label: "~IDs"
+  dimension: sale_price {
+    hidden: yes
   }
 
-  # ---- Delivery Duration Grouping ----
-
-  measure: delivery_duration_avg {
-    group_label: "~Delivery Duration"
+  measure: order_sequence {
+    hidden: yes
   }
 
-  measure: delivery_duration_min {
-    group_label: "~Delivery Duration"
+  measure: profit_per_order {
+    hidden: yes
   }
 
-  measure: delivery_duration_25th_percentile {
-    group_label: "~Delivery Duration"
-  }
+  # # ---- Formatting ----
 
-  measure: delivery_duration_median {
-    group_label: "~Delivery Duration"
-  }
+  # dimension: sale_price {
+  #   value_format_name: usd
+  # }
 
-  measure: delivery_duration_75th_percentile {
-    group_label: "~Delivery Duration"
-  }
+  # # ---- ID Grouping ----
 
-  measure: delivery_duration_max {
-    group_label: "~Delivery Duration"
-  }
+  # dimension: id {
+  #   group_label: "~IDs"
+  # }
 
-  # ---- Gross Revenue Grouping ----
+  # dimension: inventory_item_id {
+  #   group_label: "~IDs"
+  # }
 
-  measure: total_gross_revenue {
-    group_label: "~Revenue"
-  }
+  # dimension: order_id {
+  #   group_label: "~IDs"
+  # }
 
-  # ---- Profit Grouping ----
+  # dimension: user_id {
+  #   group_label: "~IDs"
+  # }
 
-  measure: gross_margin_percent_average {
-    group_label: "~Profit"
-  }
+  # # ---- Delivery Duration Grouping ----
 
-  measure: profit_total {
-    group_label: "~Profit"
-  }
+  # measure: delivery_duration_avg {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # measure: delivery_duration_min {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # measure: delivery_duration_25th_percentile {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # measure: delivery_duration_median {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # measure: delivery_duration_75th_percentile {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # measure: delivery_duration_max {
+  #   group_label: "~Delivery Duration"
+  # }
+
+  # # ---- Gross Revenue Grouping ----
+
+  # measure: total_gross_revenue {
+  #   group_label: "~Revenue"
+  # }
+
+  # # ---- Profit Grouping ----
+
+  # measure: gross_margin_percent_average {
+  #   group_label: "~Profit"
+  # }
+
+  # measure: profit_total {
+  #   group_label: "~Profit"
+  # }
 }
 
-view: +products {}
+view: +products {
+
+# ---- Hidden Fields ----
+
+  dimension: pk1_product_id {
+    hidden: yes
+  }
+  dimension: distribution_center_id {
+    hidden: yes
+  }
+  dimension: sku {
+    hidden: yes
+  }
+
+}
 
 view: +users {
 
-  # ---- Demographic Grouping ----
+# ---- Hidden Fields ----
 
-  dimension: age {
-    group_label: "~Demographics"
+  dimension: pk1_user_id {
+    hidden: yes
   }
 
-  dimension: gender {
-    group_label: "~Demographics"
+  dimension: first_name {
+    hidden: yes
   }
 
-  # ---- Location Grouping ----
-
-  dimension: state {
-    group_label: "~Location"
+  dimension: last_name {
+    hidden: yes
   }
 
   dimension: latitude {
-    group_label: "~Location"
+    hidden: yes
   }
 
   dimension: longitude {
-    group_label: "~Location"
+    hidden: yes
   }
 
-  dimension: country {
-    group_label: "~Location"
-  }
+#   # ---- Demographic Grouping ----
 
-  dimension: city {
-    group_label: "~Location"
-  }
+#   dimension: age {
+#     group_label: "~Demographics"
+#   }
 
-  dimension: zip {
-    group_label: "~Location"
-  }
-}
+#   dimension: gender {
+#     group_label: "~Demographics"
+#   }
 
-#################################################
-#            DERIVED TABLE REFINEMENTS          #
-#################################################
+#   # ---- Location Grouping ----
 
-view: +profit_per_order {
+#   dimension: state {
+#     group_label: "~Location"
+#   }
 
-  # ---- Profit Group ----
+#   dimension: latitude {
+#     group_label: "~Location"
+#   }
 
-  measure: profit_per_order_average {
-    group_label: "~Profit per Order"
-  }
-  measure: profit_per_order_total   {
-    group_label: "~Profit per Order"
-  }
-}
+#   dimension: longitude {
+#     group_label: "~Location"
+#   }
 
-view: +order_sequence_2 {
-  dimension: order_sequence {
-    group_label: "~Order Sequence"
-  }
-  dimension: has_subsequent_purchase {
-    group_label: "~Order Sequence"
-  }
-  dimension: is_first_order {
-    group_label: "~Order Sequence"
-  }
-  dimension: previous_order_date {
-    group_label: "~Order Sequence"
-  }
-  dimension: subsequent_order_date {
-    group_label: "~Order Sequence"
-  }
-  dimension: days_between_orders {
-    group_label: "~Order Sequence"
-  }
-  dimension: is_repeat_purchase {
-    group_label: "~Order Sequence"
-  }
+#   dimension: country {
+#     group_label: "~Location"
+#   }
+
+#   dimension: city {
+#     group_label: "~Location"
+#   }
+
+#   dimension: zip {
+#     group_label: "~Location"
+#   }
 }
