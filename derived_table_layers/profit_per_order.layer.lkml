@@ -1,12 +1,11 @@
 include: "/_layers/_base.layer"
-include: "/calculations/profit.layer"
 
 # Adding profit_per_order to order items because it
 # will be used in this derived table.
 view: +order_items {
   measure: profit_per_order {
     type: number
-    sql: SUM(${profit_total}) OVER(PARTITION BY ${order_id}) ;;
+    sql: SUM(${order_items.profit_total}) OVER(PARTITION BY ${order_id}) ;; # Need to fully scope profit_total to avoid errors, defined in profit.layer
     value_format_name: usd
   }
 }
@@ -22,7 +21,8 @@ view: profit_per_order {
     }
   }
 
-  dimension: id {
+  dimension: pk1_order_item_id {
+    hidden: yes
     primary_key: yes
     type: number
   }
@@ -42,13 +42,6 @@ view: profit_per_order {
     sql: ${profit_per_order} ;;
     value_format_name: usd
   }
-
-  measure: profit_per_order_total {
-    group_item_label: "Total"
-    type: sum
-    sql: ${profit_per_order} ;;
-    value_format_name: usd
-  }
 }
 
 
@@ -56,7 +49,7 @@ view: profit_per_order {
 explore: +order_items {
   join: profit_per_order {
     view_label: "Order Items"
-    sql_on: ${order_items.id} = ${profit_per_order.id} ;;
+    sql_on: ${order_items.id} = ${profit_per_order.pk1_order_item_id} ;;
     relationship: one_to_one
   }
 }

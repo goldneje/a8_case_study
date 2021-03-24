@@ -1,4 +1,4 @@
-include: "/_layers/_basic.layer"
+include: "/_layers/_base.layer"
 
 view: +order_items {
 
