@@ -8,6 +8,7 @@ include: "/custom_dims_and_measures/delivery_duration.layer"
 include: "/custom_dims_and_measures/pop_order_items.layer"
 include: "/custom_dims_and_measures/profit.layer"
 include: "/custom_dims_and_measures/revenue.layer"
+include: "/custom_dims_and_measures/users.layer"
 
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
