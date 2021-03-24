@@ -29,6 +29,8 @@ include: "/parameters_and_filters/category_filter.layer"
 
 include: "/pop_support/pop_support"
 
+include: "/top_n_support/top_n_support"
+
 datagroup: case_studies_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
