@@ -5,7 +5,7 @@ view: +events {
 
   # ---- ID Grouping ----
 
-  dimension: id {
+  dimension: pk1_event_id {
     group_label: "~IDs"
   }
 
@@ -19,7 +19,7 @@ view: +events {
 }
 
 view: +order_items {
-  dimension: id {
+  dimension: pk1_order_item_id {
     group_label: "~IDs"
   }
 
