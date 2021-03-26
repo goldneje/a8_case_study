@@ -20,14 +20,6 @@ view: +users {
     sql: CONCAT(${first_name}, ' ', ${last_name}) ;;
   }
 
-  dimension: location {
-    description: "Properly formatted user location, can be used in maps!"
-    group_label: "~Location"
-    type: location
-    sql_latitude: ${latitude} ;;
-    sql_longitude: ${longitude} ;;
-  }
-
 ##########################################################
 #                     CUSTOM MEASURES                    #
 ##########################################################
