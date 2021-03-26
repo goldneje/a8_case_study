@@ -1,7 +1,7 @@
 # Here, you will include any basic explore refinements to handle
 # joins and hiding/unhiding explores. You can also include
 # view refinements to define primary keys,
-# define view_labels at the view level
+# define view_labels at the view level,
 # hide any machine-generated dimensions/measures, and define
 # group labels for dimensions/measures, though groups may
 # be better handled elsewhere for easier group reference
@@ -13,7 +13,7 @@ include: "/derived_table_layers/profit_per_order.layer"
 include: "/pop_support/pop_support"
 
 ##################################################
-#       EXPLORE REFINEMENTS AND ADDITIONS        #
+#               EXPLORE REFINEMENTS              #
 ##################################################
 
 explore: +events {
