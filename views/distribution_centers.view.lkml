@@ -29,23 +29,3 @@ view: distribution_centers {
     drill_fields: [id, name, products.count]
   }
 }
-
-view: +distribution_centers {
-
-##########################################################
-#                     CUSTOM DIMENSIONS                  #
-##########################################################
-
-  dimension: location {
-    group_label: "~Location"
-    type: location
-    sql_latitude: ${latitude} ;;
-    sql_longitude: ${longitude} ;;
-  }
-
-##########################################################
-#                     CUSTOM MEASURES                    #
-##########################################################
-
-
-}
