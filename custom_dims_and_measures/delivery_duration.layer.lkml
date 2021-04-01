@@ -59,4 +59,17 @@ view: +order_items {
   }
 
   # ---- End Boxplot Calculations ----
+
+set: delivery_duration_fields {
+  fields: [
+    days_creation_to_delivery,
+    hours_creation_to_delivery,
+    minutes_creation_to_delivery,
+    months_creation_to_delivery,
+    quarters_creation_to_delivery,
+    seconds_creation_to_delivery,
+    weeks_creation_to_delivery,
+    years_creation_to_delivery
+  ]
+}
 }
