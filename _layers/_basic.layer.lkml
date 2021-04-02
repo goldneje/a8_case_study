@@ -10,6 +10,7 @@ include: "/_layers/_base.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
+include: "/custom_dims_and_measures/delivery_duration.layer"
 include: "/pop_support/pop_support"
 
 ##################################################
@@ -40,6 +41,15 @@ explore: +inventory_items {
 }
 
 explore: +order_items {
+  fields: [ALL_FIELDS*,
+    -order_items.delivery_duration_fields*,
+    -order_items.delivery_duration_avg,
+    -order_items.delivery_duration_min,
+    -order_items.delivery_duration_25th_percentile,
+    -order_items.delivery_duration_median,
+    -order_items.delivery_duration_75th_percentile,
+    -order_items.delivery_duration_max
+  ]
   hidden: no
   join: inventory_items {
     type: left_outer
@@ -108,6 +118,15 @@ explore: +products {
     relationship: many_to_one
   }
 }
+
+##################################################
+#                   NEW EXPLORES                 #
+##################################################
+
+# explore: logistics {
+#   extends: [order_items]
+#   fields: []
+# }
 
 ##################################################
 #                 VIEW REFINEMENTS               #
