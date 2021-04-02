@@ -1,7 +1,6 @@
 include: "/_layers/_base.layer"
 
 view: +order_items {
-
 ##########################################################
 #                     CUSTOM DIMENSIONS                  #
 ##########################################################
@@ -22,6 +21,10 @@ view: +order_items {
     type: number
     sql: ${sale_price} - ${products.cost} ;;
     value_format_name: usd
+  }
+
+  parameter: rank_parameter {
+    type: number
   }
 
 ##########################################################
@@ -48,5 +51,12 @@ view: +order_items {
     sql: ${profit} ;;
     value_format_name: usd
     filters: [status: "-Cancelled, -Returned"]
+  }
+
+  measure: profit_running_total {
+    type: running_total
+    sql: ${profit_total} ;;
+    direction: "column"
+    value_format_name: usd
   }
 }
