@@ -22,4 +22,15 @@ view: +products {
       END
     ;;
   }
+
+  parameter: brand_parameter {
+    type: string
+    suggest_dimension: brand
+  }
+
+  dimension: is_current_brand_parameter {
+    type: yesno
+    sql: {% parameter brand_parameter %} = ${brand} ;;
+  }
+
 }
