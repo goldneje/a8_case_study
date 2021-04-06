@@ -36,14 +36,14 @@ view: event_session_length {
     hidden: yes
     description: "The beginning of a user's website session"
     label: "Session Start"
-    type: number
+    type: date_raw
   }
 
   dimension: session_end {
     hidden: yes
     description: "The end of a user's website session"
     label: "Session End"
-    type: number
+    type: date_raw
   }
 
   dimension_group: session_length {
