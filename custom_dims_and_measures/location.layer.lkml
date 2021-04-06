@@ -9,7 +9,7 @@ view: +distribution_centers {
 ##########################################################
 
   dimension: location {
-    group_label: "~Location"
+    group_label:" Location"
     type: location
     sql_latitude: ${latitude} ;;
     sql_longitude: ${longitude} ;;
@@ -24,7 +24,22 @@ view: +users {
 
   dimension: location {
     description: "Properly formatted user location, can be used in maps!"
-    group_label: "~Location"
+    group_label: " Location"
+    type: location
+    sql_latitude: ${latitude} ;;
+    sql_longitude: ${longitude} ;;
+  }
+}
+
+view: +events {
+
+##########################################################
+#                     CUSTOM DIMENSIONS                  #
+##########################################################
+
+  dimension: location {
+    description: "Properly formatted user location, can be used in maps!"
+    group_label: " Location"
     type: location
     sql_latitude: ${latitude} ;;
     sql_longitude: ${longitude} ;;
