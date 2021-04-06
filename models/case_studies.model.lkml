@@ -11,6 +11,7 @@ include: "/custom_dims_and_measures/profit.layer"
 include: "/custom_dims_and_measures/revenue.layer"
 include: "/custom_dims_and_measures/user_age_and_name.layer"
 
+include: "/derived_table_layers/event_session_length.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
