@@ -8,9 +8,10 @@ view: +users {
 
   dimension: age_cohort {
     description: "Groupings of users by their age. Groupings are 18 and under, 18-24, 25-39, 40-49, 50-64, 65+"
-    group_label: "~Demographics"
+    group_label: " Demographics"
     type: tier
     tiers: [18, 25, 40, 50, 65]
+    style: integer
     sql: ${age} ;;
   }
 
