@@ -3,6 +3,66 @@ include: "/_layers/_base.layer"
 # Creating new measures to be used in derived table
 view: +events {
 
+  dimension: browse_product_id {
+
+  }
+
+  dimension: is_browse_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} IN ('Category', 'Brand') ;;
+  }
+
+  dimension: is_purchase_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} = 'Purchase' ;;
+  }
+
+  dimension: is_cart_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} = 'Cart' ;;
+  }
+
+  dimension: is_product_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} = 'Product' ;;
+  }
+
+  dimension: is_cancel_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} = 'Cancel' ;;
+  }
+
+  measure: number_of_browse_events {
+    type: sum
+    #  boolean yesno column as int to be summed
+    sql: ${is_browse_event}::int ;;
+    # filters: [is_browse_event: "Yes"]
+  }
+
+  measure: number_of_purchase_events {
+    type: sum
+    # Casting boolean yesno column as int to be summed
+    sql: ${is_purchase_event}::int ;;
+    # filters: [is_purchase_event: "Yes"]
+  }
+
+  measure: number_of_cart_events {
+    type: sum
+    sql: ${is_cart_event}::int ;;
+    # filters: [is_cart_event: "Yes"]
+  }
+
+  measure: number_of_cancel_events {
+    type: sum
+    sql: ${is_cancel_event}::int ;;
+    # filters: [is_cancel_event: "Yes"]
+  }
+
   measure: session_start {
     description: "The beginning of a user's website session"
     hidden: yes
@@ -15,6 +75,24 @@ view: +events {
     hidden: yes
     type: date_raw
     sql: MAX(${created_raw}) ;;
+  }
+
+  measure: landing_event_id {
+    description: "
+    The first event id, use with session_id to get the bounce event id
+    Not meant for business users, should be used to derive other fields.
+    "
+    type: min
+    sql: ${pk1_event_id} ;;
+  }
+
+  measure: bounce_event_id {
+    description: "
+    The last event id, use with session_id to get the bounce event id
+    Not meant for business users, should be used to derive other fields.
+    "
+    type: max
+    sql: ${pk1_event_id} ;;
   }
 }
 
