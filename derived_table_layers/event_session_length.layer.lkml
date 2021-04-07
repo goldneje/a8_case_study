@@ -240,6 +240,7 @@ view: event_session_length {
         sql: ${number_of_landing_events} > 0 ;;
         label: "(1) Land"
       }
+      else: "No Funnel Step"
     }
   }
 
