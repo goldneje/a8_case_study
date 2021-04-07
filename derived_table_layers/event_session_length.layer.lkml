@@ -132,6 +132,7 @@ view: +events {
     The first event id, use with session_id to get the bounce event id
     Not meant for business users, should be used to derive other fields.
     "
+    hidden: yes
     type: min
     sql: ${pk1_event_id} ;;
   }
@@ -141,6 +142,7 @@ view: +events {
     The last event id, use with session_id to get the bounce event id
     Not meant for business users, should be used to derive other fields.
     "
+    hidden: yes
     type: max
     sql: ${pk1_event_id} ;;
   }
@@ -153,6 +155,7 @@ view: event_session_length {
       column: pk1_session_id {field: events.session_id}
       column: session_start {}
       column: session_end {}
+      column: number_of_all_events {field:events.count}
       column: number_of_browse_events {}
       column: number_of_purchase_events {}
       column: number_of_product_events {}
@@ -180,6 +183,10 @@ view: event_session_length {
     description: "The end of a user's website session"
     label: "Session End"
     type: date_raw
+  }
+
+  dimension: number_of_all_events {
+    hidden: yes
   }
 
   dimension: number_of_browse_events {
@@ -212,9 +219,25 @@ view: event_session_length {
     type: number
   }
 
-  dimension: landing_event_id {}
+  dimension: is_bounce_session {
+    hidden: yes
+    type: yesno
+    sql: ${number_of_all_events} = 1 ;;
+  }
 
-  dimension: bounce_event_id {}
+  dimension: landing_event_id {
+    description: "
+    The first event id, use with session_id to get the bounce event id
+    Not meant for business users, should be used to derive other fields.
+    "
+  }
+
+  dimension: bounce_event_id {
+    description: "
+    The last event id, use with session_id to get the bounce event id
+    Not meant for business users, should be used to derive other fields.
+    "
+  }
 
   dimension: furthest_funnel_step {
     group_label: " Funnel View"
@@ -317,6 +340,12 @@ view: event_session_length {
     type: average
     sql: ${seconds_session_length};;
     value_format_name: decimal_2
+  }
+
+  measure: number_of_bounce_sessions {
+    description: "Number of sessions that only had 1 event"
+    type: sum
+    sql: ${is_bounce_session}::int ;;
   }
 }
 
