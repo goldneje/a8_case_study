@@ -31,13 +31,15 @@ view: +events {
   }
 
   measure: count_last_30_days {
-    type: count
+    type: count_distinct
     filters: [is_last_30_days: "Yes"]
+    sql: ${session_id} ;;
   }
 
   measure: count_30_to_60_days {
-    type: count
+    type: count_distinct
     filters: [is_between_30_to_60_days: "Yes"]
+    sql: ${session_id} ;;
   }
 
   measure: percent_change_previous_30_day_period {
