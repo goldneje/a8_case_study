@@ -303,7 +303,7 @@ view: event_session_length {
 
   measure: average_seconds_per_session {
     description: "
-    Gives the average session length in minutes
+    Gives the average session length in seconds
     "
     label: "Average Seconds per Session"
     type: average
