@@ -4,7 +4,11 @@ include: "/_layers/_base.layer"
 view: +events {
 
   dimension: browse_product_id {
-
+    type: number
+    sql:
+      CASE
+        WHEN ${event_type} = 'Product' THEN right(${uri},length(${uri}) - 9)
+      END ;;
   }
 
   dimension: is_browse_event {
