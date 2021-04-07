@@ -287,6 +287,14 @@ view: event_session_length {
     description: "Percentage of cart sessions that make it to purchase"
     type: number
     sql: ${count_purchase_or_later} / nullif(${count_cart_or_later}, 0) ;;
+    value_format_name: percent_2
+  }
+
+  measure: conversion_rate {
+    description: "Percentage of all sessions that end with purchase"
+    type: number
+    sql: ${count_purchase_or_later} / nullif(${count_all_sessions}, 0) ;;
+    value_format_name: "percent_2"
   }
 
   dimension_group: session_length {
