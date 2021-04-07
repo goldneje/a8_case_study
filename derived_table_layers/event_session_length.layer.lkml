@@ -155,7 +155,7 @@ view: event_session_length {
       column: pk1_session_id {field: events.session_id}
       column: session_start {}
       column: session_end {}
-      column: number_of_all_events {field:events.count}
+      column: total_events_per_session {field:events.count}
       column: number_of_browse_events {}
       column: number_of_purchase_events {}
       column: number_of_product_events {}
@@ -185,7 +185,8 @@ view: event_session_length {
     type: date_raw
   }
 
-  dimension: number_of_all_events {
+  dimension: total_events_per_session {
+    type: number
     hidden: yes
   }
 
@@ -222,7 +223,7 @@ view: event_session_length {
   dimension: is_bounce_session {
     hidden: yes
     type: yesno
-    sql: ${number_of_all_events} = 1 ;;
+    sql: ${total_events_per_session} = 1 ;;
   }
 
   dimension: landing_event_id {
@@ -346,6 +347,13 @@ view: event_session_length {
     description: "Number of sessions that only had 1 event"
     type: sum
     sql: ${is_bounce_session}::int ;;
+  }
+
+  measure: bounce_rate {
+    description: "Number of bounce sessions divided by the total number of sessions"
+    type: number
+    sql: ${number_of_bounce_sessions} / nullif(${count_all_sessions}, 0) ;;
+    value_format_name: percent_2
   }
 }
 
