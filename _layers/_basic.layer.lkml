@@ -18,6 +18,7 @@ include: "/pop_support/pop_support"
 ##################################################
 
 explore: +events {
+  label: "Website Activity"
   hidden: no
   join: users {
     type: left_outer
