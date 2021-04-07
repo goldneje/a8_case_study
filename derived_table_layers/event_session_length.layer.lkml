@@ -14,6 +14,7 @@ view: +events {
   }
 
   dimension: funnel_step {
+    group_label: " Funnel View"
     type: string
     case: {
       when: {
@@ -69,30 +70,47 @@ view: +events {
     sql: ${event_type} = 'Cancel' ;;
   }
 
+  dimension: is_landing_event {
+    hidden: yes
+    type: yesno
+    sql: ${event_type} IN ('Home', 'Register') ;;
+  }
+
+  measure: number_of_sessions {
+    type: count_distinct
+    sql: ${session_id} ;;
+  }
+
   measure: number_of_browse_events {
     type: sum
-    #  boolean yesno column as int to be summed
+    #  Casting boolean yesno column as int to be summed
     sql: ${is_browse_event}::int ;;
-    # filters: [is_browse_event: "Yes"]
   }
 
   measure: number_of_purchase_events {
     type: sum
     # Casting boolean yesno column as int to be summed
     sql: ${is_purchase_event}::int ;;
-    # filters: [is_purchase_event: "Yes"]
   }
 
   measure: number_of_cart_events {
     type: sum
     sql: ${is_cart_event}::int ;;
-    # filters: [is_cart_event: "Yes"]
+  }
+
+  measure: number_of_landing_events {
+    type: sum
+    sql: ${is_landing_event}::int ;;
   }
 
   measure: number_of_cancel_events {
     type: sum
     sql: ${is_cancel_event}::int ;;
-    # filters: [is_cancel_event: "Yes"]
+  }
+
+  measure: number_of_product_events {
+    type: sum
+    sql: ${is_product_event}::int ;;
   }
 
   measure: session_start {
@@ -133,8 +151,16 @@ view: event_session_length {
   derived_table: {
     explore_source: events {
       column: pk1_session_id {field: events.session_id}
-      column: session_start {field: events.session_start}
-      column: session_end {field: events.session_end}
+      column: session_start {}
+      column: session_end {}
+      column: number_of_browse_events {}
+      column: number_of_purchase_events {}
+      column: number_of_product_events {}
+      column: number_of_cart_events {}
+      column: number_of_cancel_events {}
+      column: number_of_landing_events {}
+      column: landing_event_id {}
+      column: bounce_event_id {}
     }
   }
   dimension: pk1_session_id {
@@ -156,6 +182,68 @@ view: event_session_length {
     type: date_raw
   }
 
+  dimension: number_of_browse_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: number_of_purchase_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: number_of_cart_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: number_of_cancel_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: number_of_product_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: number_of_landing_events {
+    hidden: yes
+    type: number
+  }
+
+  dimension: landing_event_id {}
+
+  dimension: bounce_event_id {}
+
+  dimension: furthest_funnel_step {
+    group_label: " Funnel View"
+    type: string
+    case: {
+      when: {
+        sql: ${number_of_purchase_events} > 0 ;;
+        label: "(5) Purchase"
+      }
+      when: {
+        sql: ${number_of_cart_events} > 0 ;;
+        label: "(4) Add Item to Cart"
+      }
+      when: {
+        sql: ${number_of_product_events} > 0 ;;
+        label: "(3) View Product"
+      }
+      when: {
+        sql: ${number_of_browse_events} > 0 ;;
+        label: "(2) Browse Inventory"
+      }
+      when: {
+        sql: ${number_of_landing_events} > 0 ;;
+        label: "(1) Land"
+      }
+    }
+  }
+
+
   dimension_group: session_length {
     hidden: yes
     type: duration
@@ -168,24 +256,20 @@ view: event_session_length {
     sql_end: ${session_end} ;;
   }
 
-  measure: average_minutes_session_length_by_event_type {
+  measure: average_seconds_per_session {
     description: "
-    Gives the average session length in minutes,
-    use this with the Event Picker parameter to
-    switch between Purchase and Canceled event types.
-    Use with no parameter to average across all event types
+    Gives the average session length in minutes
     "
-    label: "Average Minutes per Session"
+    label: "Average Seconds per Session"
     type: average
-    sql: ${minutes_session_length};;
-    filters: [events.event_type: "Cancel, Purchase"]
+    sql: ${seconds_session_length};;
     value_format_name: decimal_2
   }
 }
 
 explore: +events {
   join: event_session_length {
-    view_label: "Website Activity"
+    view_label: "Sessions"
     type: left_outer
     sql_on: ${event_session_length.pk1_session_id} = ${events.session_id} ;;
     relationship: many_to_one
