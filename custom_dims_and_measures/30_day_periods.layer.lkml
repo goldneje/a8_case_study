@@ -44,7 +44,7 @@ view: +events {
 
   measure: percent_change_previous_30_day_period {
     type: number
-    sql: (${count_last_30_days} - ${count_30_to_60_days}) / ${count_last_30_days} ;;
+    sql: (${count_last_30_days} - ${count_30_to_60_days}) / nullif(${count_last_30_days}, 0) ;;
     value_format_name: percent_2
   }
 }
