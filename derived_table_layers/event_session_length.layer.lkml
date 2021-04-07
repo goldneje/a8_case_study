@@ -1,3 +1,5 @@
+
+
 include: "/_layers/_base.layer"
 
 # Creating new measures to be used in derived table
@@ -9,6 +11,32 @@ view: +events {
       CASE
         WHEN ${event_type} = 'Product' THEN right(${uri},length(${uri}) - 9)
       END ;;
+  }
+
+  dimension: funnel_step {
+    type: string
+    case: {
+      when: {
+        sql: ${event_type} IN ('Home', 'Register') ;;
+        label: "(1) Land"
+      }
+      when: {
+        sql: ${event_type} IN ('Category', 'Brand') ;;
+        label: "(2) Browse Inventory"
+      }
+      when: {
+        sql: ${event_type} = 'Product' ;;
+        label: "(3) View Product"
+      }
+      when: {
+        sql: ${event_type} = 'Cart' ;;
+        label: "(4) Add Item to Cart"
+      }
+      when: {
+        sql: ${event_type} = 'Purchase' ;;
+        label: "(5) Purchase"
+      }
+    }
   }
 
   dimension: is_browse_event {
