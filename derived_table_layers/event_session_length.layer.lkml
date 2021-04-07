@@ -244,6 +244,49 @@ view: event_session_length {
     }
   }
 
+  measure: count_all_sessions {
+    view_label: " Funnel View"
+    label: "(1) All Sessions"
+    description: "Number of sessions"
+    type: count
+  }
+
+  measure: count_browser_or_later {
+    view_label: " Funnel View"
+    label: "(2) Browse Inventory or Later"
+    description: "Number of sessions that ended with Browse Inventory, View Product, Add Item to Cart, or Purchase"
+    type: count
+    filters: [furthest_funnel_step: "(2) Browse Inventory, (3) View Product, (4) Add Item to Cart, (5) Purchase"]
+  }
+
+  measure: count_product_or_later {
+    view_label: " Funnel View"
+    label: "(3) View Product or Later"
+    description: "Number of sessions that ended with View Product, Add Item to Cart, or Purchase"
+    type: count
+    filters: [furthest_funnel_step: "(3) View Product, (4) Add Item to Cart, (5) Purchase"]
+  }
+
+  measure: count_cart_or_later {
+    view_label: " Funnel View"
+    label: "(4) Add Item to Cart or Later"
+    description: "Number of sessions that ended with Add Item to Cart or Purchase"
+    type: count
+    filters: [furthest_funnel_step: "(4) Add Item to Cart, (5) Purchase"]
+  }
+
+  measure: count_purchase_or_later {
+    view_label: " Funnel View"
+    label: "(5) Purchase"
+    description: "Number of sessions that ended with Purchase"
+    type: count
+    filters: [furthest_funnel_step: "(5) Purchase"]
+  }
+
+  measure: cart_to_purchase_percent {
+    description: "Percentage of cart sessions that make it to purchase"
+    type: number
+  }
 
   dimension_group: session_length {
     hidden: yes
