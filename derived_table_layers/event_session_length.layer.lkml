@@ -286,6 +286,7 @@ view: event_session_length {
   measure: cart_to_purchase_percent {
     description: "Percentage of cart sessions that make it to purchase"
     type: number
+    sql: ${count_purchase_or_later} / nullif(${count_cart_or_later}, 0) ;;
   }
 
   dimension_group: session_length {
