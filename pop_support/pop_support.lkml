@@ -28,28 +28,13 @@ view: pop_support {
 
     }
 
-    parameter: current_x_to_date {
-
-      label: "Current x to Date (On/Off)"
-
-      description: "To be used with Period-over-period analysis, will automatically update based on the period.
-      For example, if you are doing day-over-day analysis, it will only calculate up to the current hour; for
-      month-over-month, it will only calculate up do the current day, etc."
-
-      type: unquoted
-
-      allowed_value: {value: "On"}
-
-      allowed_value: {value: "Off"}
-
-      default_value: "Off"
-    }
-
     dimension: periods_ago {hidden:yes type:number}
 
     filter: periods_ago_to_include {
 
-      label: "PoP Periods Ago To Include"
+      hidden: yes
+
+      label: "Periods Ago To Include"
 
       description: "Apply this filter to specify which past periods to compare to. Default: 0 or 1 (meaning 1 period ago and 0 periods ago(current)).  You can also use numeric filtration like Less Than or Equal To 12, etc"
 
@@ -59,9 +44,12 @@ view: pop_support {
 
     }
 
+
     parameter: period_size {
 
-      label: "PoP Period Size"
+      hidden: yes
+
+      label: "Period Size"
 
       description: "The defaults should work intuitively (should align with the selected dimension, i.e. the grain of the rows), but you can use this if you need to specify a different offset amount.  For example, you might want to see daily results, but compare to 52 WEEKS prior"
 
@@ -78,7 +66,6 @@ view: pop_support {
       default_value: "Default"
 
     }
-
 
 
     dimension: now_sql {
