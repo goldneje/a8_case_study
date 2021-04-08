@@ -89,16 +89,16 @@ view: +order_items {#!Update to point to your view name (with the '+' making it 
 
 # Optional Validation Support field.  If there's ever any confusion with the results of PoP, it's helpful to see the exact min and max times of your raw data flowing through.
 
-  measure: pop_validation {
+#   measure: pop_validation {
 
-    view_label: "PoP - VALIDATION - TO BE HIDDEN"
+#     view_label: "PoP - VALIDATION - TO BE HIDDEN"
 
-    label: "Range of Raw Dates Included"
+#     label: "Range of Raw Dates Included"
 
-    description: "Note: does not reflect timezone conversion"
+#     description: "Note: does not reflect timezone conversion"
 
-sql:{%assign base_sql = '${TABLE}.created_at'%}concat(concat(min({{base_sql}}),' to '),max({{base_sql}}));;#!Paste the sql parameter value from the original date fields as the variable value for base_sql
+# sql:{%assign base_sql = '${TABLE}.created_at'%}concat(concat(min({{base_sql}}),' to '),max({{base_sql}}));;#!Paste the sql parameter value from the original date fields as the variable value for base_sql
 
-  }
+#   }
 
     }
