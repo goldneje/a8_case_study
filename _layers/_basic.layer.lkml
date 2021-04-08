@@ -7,10 +7,12 @@
 # be better handled elsewhere for easier group reference
 
 include: "/_layers/_base.layer"
+include: "/custom_dims_and_measures/delivery_duration.layer"
+include: "/custom_dims_and_measures/pop_order_items.layer"
+include: "/custom_dims_and_measures/revenue.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
-include: "/custom_dims_and_measures/delivery_duration.layer"
 include: "/pop_support/pop_support"
 
 ##################################################
@@ -42,12 +44,6 @@ explore: +inventory_items {
 }
 
 explore: +order_items {
-  query: average_order_profit_by_category {
-    description: "Average profit per order by category over the last 30 days"
-    dimensions: [products.category]
-    measures: [profit_per_order.profit_per_order_average]
-    filters: [order_items.created_date: "30 days"]
-  }
   fields: [ALL_FIELDS*,
     -order_items.delivery_duration_fields*,
     -order_items.delivery_duration_avg,
@@ -82,6 +78,28 @@ explore: +order_items {
     view_label: "@{pop_support_view_name}" #(Optionally) Update view label for use in this explore here, rather than in pop_support view. You might choose to align this to your POP date's view label.
     relationship:one_to_one #we are intentionally fanning out, so this should stay one_to_one
     sql:{% if pop_support.periods_ago._in_query%}LEFT JOIN pop_support on 1=1{%endif%};;#join and fannout data for each prior_period included **if and only if** lynchpin pivot field (periods_ago) is selected. This safety measure ensures we dont fire any fannout join if the user selected PoP parameters from pop support but didn't actually select a pop pivot field.
+  }
+
+  query: average_order_profit_by_category {
+    description: "Average profit per order by category over the last 30 days"
+    dimensions: [products.category]
+    measures: [profit_per_order.profit_per_order_average]
+    filters: [order_items.created_date: "30 days"]
+  }
+
+  query: period_over_period_starter_kit {
+    description: "
+    Flexible and user-friendly PoP analysis.
+    You choose the period size and specify the
+    prior periods to include.
+    "
+    # dimensions: [created_date_periods_ago_pivot]
+    measures: [total_gross_revenue]
+    filters: [
+      pop_support.period_size: "Month",
+      pop_support.periods_ago_to_include: "0, 1"
+    ]
+    pivots: [created_date_periods_ago_pivot]
   }
 
   #Update this always filter to your base date field to encourage a filter.  Without any filter, 'future' periods will be shown when POP is used (because, for example: today's data is/will be technically 'last year' for next year)
