@@ -85,36 +85,34 @@ explore: +order_items {
   }
 
   #Update this always filter to your base date field to encourage a filter.  Without any filter, 'future' periods will be shown when POP is used (because, for example: today's data is/will be technically 'last year' for next year)
-  always_filter: {
-    filters: [
-      order_items.created_date: "before 0 minutes ago"
-    ]
-    }
+  # always_filter: {
+  #   filters: [
+  #     order_items.created_date: "before 0 minutes ago"
+  #   ]
+    # }
+
+  # Added date ranges to avoid business user needing to set this manually using a filter. Will need to add
   sql_always_where:
 
-        {% if pop_support.current_x_to_date._parameter_value == "On" %}
+          {% assign period_size = pop_support.period_size._parameter_value | downcase %}
 
-          {% if pop_support.period_size._parameter_value == "Day" %}
+          {% if period_size == "day" %}
 
-            ${created_hour_of_day} < EXTRACT(hour from CURRENT_DATE())
+            ${created_date} >= CURRENT_DATE() AND
 
-            {% elsif pop_support.period_size._parameter_value == "Month" %}
+            ${created_date} < DATEADD({{period_size}}, 1,CURRENT_DATE()) AND
+
+            ${created_hour_of_day} < EXTRACT(hour from CURRENT_TIME())
+
+          {% else %}
+
+              ${created_date} >= DATE_TRUNC({{period_size}}, CURRENT_DATE()) AND
+
+              ${created_date} < DATEADD({{period_size}}, 1, DATE_TRUNC({{period_size}}, CURRENT_DATE())) AND
 
               ${created_day_of_month} < EXTRACT(day from CURRENT_DATE())
 
-            {% elsif pop_support.period_size._parameter_value == "Year" %}
-
-              ${created_day_of_year} < EXTRACT(doy from CURRENT_DATE())
-
-          {% endif %}
-
-        {% else %}
-
-          1=1
-
-        {% endif %}
-
-  ;;
+          {% endif %} ;;
 }
 
 explore: +products {
