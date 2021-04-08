@@ -42,6 +42,12 @@ explore: +inventory_items {
 }
 
 explore: +order_items {
+  query: average_order_profit_by_category {
+    description: "Average profit per order by category over the last 30 days"
+    dimensions: [products.category]
+    measures: [profit_per_order.profit_per_order_average]
+    filters: [order_items.created_date: "30 days"]
+  }
   fields: [ALL_FIELDS*,
     -order_items.delivery_duration_fields*,
     -order_items.delivery_duration_avg,
