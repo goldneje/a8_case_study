@@ -378,6 +378,7 @@ view: +order_items {
   # measure: profit_total {
   #   group_label: "~Profit"
   # }
+
 }
 
 view: +products {
@@ -393,6 +394,15 @@ view: +products {
   dimension: sku {
     hidden: yes
   }
+  dimension: brand {
+    drill_fields: [
+      brand,
+      category,
+      name,
+      sku
+    ]
+  }
+
 
 }
 
