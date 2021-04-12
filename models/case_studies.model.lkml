@@ -4,6 +4,7 @@ connection: "snowlooker"
 include: "/_layers/_base.layer"
 include: "/_layers/_basic.layer"
 
+include: "/custom_dims_and_measures/14_days_prior.layer"
 include: "/custom_dims_and_measures/30_day_periods.layer"
 include: "/custom_dims_and_measures/delivery_duration.layer"
 include: "/custom_dims_and_measures/location.layer"
