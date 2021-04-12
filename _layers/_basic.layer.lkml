@@ -107,7 +107,7 @@ explore: +order_items {
   #   filters: [
   #     order_items.created_date: "before 0 minutes ago"
   #   ]
-    # }
+  #   }
 
   # Added date ranges to avoid business user needing to set this manually using a filter. Will need to add
   sql_always_where:
@@ -121,6 +121,10 @@ explore: +order_items {
             ${created_date} < DATEADD({{period_size}}, 1,CURRENT_DATE()) AND
 
             ${created_hour_of_day} < EXTRACT(hour from CURRENT_TIME())
+
+          {% elsif period_size == "default" %}
+
+            (1=1)
 
           {% else %}
 
