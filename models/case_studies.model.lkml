@@ -17,6 +17,7 @@ include: "/derived_table_layers/event_session_length.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
+include: "/derived_table_layers/total_gross_revenue_rank_by_category.layer"
 
 include: "/group_labels/delivery_duration.group"
 include: "/group_labels/demographics.group"
