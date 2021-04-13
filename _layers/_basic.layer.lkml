@@ -313,6 +313,13 @@ view: +order_items {
     hidden: yes
   }
 
+  dimension: status {
+    link: {
+      label: "Drill into the Status Dashboard"
+      url: "@{link_to_dashboard}"
+    }
+  }
+
   # # ---- Formatting ----
 
   # dimension: sale_price {
@@ -394,6 +401,13 @@ view: +products {
   dimension: sku {
     hidden: yes
   }
+
+  dimension: category {
+    link: {
+      label: "Drill into this Category's Dashboard"
+      url: "@{link_to_dashboard}"
+    }
+  }
   dimension: brand {
     drill_fields: [
       brand,
@@ -401,6 +415,13 @@ view: +products {
       name,
       sku
     ]
+    link: {
+      label: "Drill into this Brand's Dashboard"
+      # Filters in dashboards default to the label of the field,
+      # so we should be able to update the field name dynamically
+      # by using the label and cutting out the automatic view_name that's included with the label
+      url: "@{link_to_dashboard}"
+    }
   }
 
 
