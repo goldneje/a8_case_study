@@ -142,11 +142,11 @@ view: ndt_top_ranking {
   }
 }
 
-explore: +order_items {
-  join: ndt_top_ranking {
-    view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
-    type: inner
-    sql_on: ${products.brand} = ${ndt_top_ranking.brand_name} ;;
-    relationship: many_to_one
-  }
-}
+# explore: +order_items {
+#   join: ndt_top_ranking {
+#     view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
+#     type: inner
+#     sql_on: ${products.brand} = ${ndt_top_ranking.brand_name} ;;
+#     relationship: many_to_one
+#   }
+# }
