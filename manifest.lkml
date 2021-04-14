@@ -48,7 +48,7 @@ constant: link_to_dashboard {
 
       https://analytics8.looker.com/dashboards-next/54?{{filterable_label | slice: view_name_word_count, filterable_label_size | join: ' ' | url_encode }}={{ filterable_value | url_encode }}&Created%20Date=90%20day
 
-      {%comment%} The filterable_label_size is 2, so we only need to return the string right after the view_name. {%endcomment%}
+      {%comment%} The filterable_label_size is 2, so we only need to return the string right after the view_name using an index. {%endcomment%}
       {% else %}
 
       https://analytics8.looker.com/dashboards-next/54?{{filterable_label[view_name_word_count] | url_encode }}={{ filterable_value | url_encode }}&Created%20Date=90%20day
@@ -56,42 +56,3 @@ constant: link_to_dashboard {
       {% endif %}
       "
 }
-
-#   value: "
-#   {%comment%} First, we'll create an array out of the field label, which will always be at least 2 words: [View_name] [Field_name] {%endcomment%}
-
-#   {% assign view_name = _view._name %}
-
-#   {% if view_name contains '_' %}
-
-#     {% assign view_name = view_name | split: '_' %}
-
-#     {% assign view_name_word_count = view_name.size %}
-
-#     {% assign filterable_label = _field._label | split: ' ' %}
-
-#     {% assign filterable_label_size = filterable_label.size
-
-#     {% if filterable_label_size > 2 %}
-
-#       {% assign filterable_label = filterable_label | slice: view_name_word_count, filterable_label_size | join: ' ' %}
-
-#     {% else % }
-#       {% assign filterable_label = filterable_label[1] %}
-
-#   {% else %}
-
-#     {% assign view_name = view_name | capitalize %}
-
-#     {% assign filterable_label = _field._label | remove: view_name | lstrip %}
-
-#   {% endif %}
-
-#   {%comment%} We're going to remove the view_name because we don't need it anymore, so the
-#   filterable_label_size needs to be at least 3 items long {%endcomment%}
-
-#   {% if filterable_label_size > 2 %}
-
-#   https://analytics8.looker.com/dashboards-next/54?{{ filterable_label | url_encode }}={{ filterable_value | url_encode }}&Created%20Date=90%20day
-#   "
-# }
