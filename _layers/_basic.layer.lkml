@@ -10,10 +10,13 @@ include: "/_layers/_base.layer"
 include: "/custom_dims_and_measures/delivery_duration.layer"
 include: "/custom_dims_and_measures/pop_order_items.layer"
 include: "/custom_dims_and_measures/revenue.layer"
+include: "/custom_dims_and_measures/profit.layer"
 include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
+include: "/derived_table_layers/total_gross_revenue_rank_by_category.layer"
 include: "/pop_support/pop_support"
+
 
 ##################################################
 #               EXPLORE REFINEMENTS              #
@@ -320,6 +323,11 @@ view: +order_items {
     }
   }
 
+  dimension: fk4_agg_table{
+    type: string
+    sql: CONCAT(${products.brand}, ${created_date}, ${status}, ${products.category}) ;;
+  }
+
   # # ---- Formatting ----
 
   # dimension: sale_price {
@@ -486,4 +494,59 @@ view: +users {
 #   dimension: zip {
 #     group_label: "~Location"
 #   }
+}
+# Place in `case_studies` model
+  explore: +order_items {
+    aggregate_table: rollup__created_date__products_brand__products_category__status {
+      query: {
+        dimensions: [created_date, aggregate_test_pdt.brand, products.category, status]
+        measures: [profit_per_order.profit_per_order_average]
+        filters: [
+          # order_items.status: "Complete",
+          # products.brand: "\"Levi's\""
+        ]
+      }
+
+      materialization: {
+        datagroup_trigger: case_studies_default_datagroup
+      }
+    }
+  }
+
+# If necessary, uncomment the line below to include explore_source.
+# include: "_base.layer.lkml"
+
+view: aggregate_test_pdt {
+  derived_table: {
+    explore_source: order_items {
+      column: brand { field: products.brand }
+      column: created_date {}
+      column: status {}
+      column: category { field: products.category }
+      column: profit_per_order_average { field: profit_per_order.profit_per_order_average }
+    }
+    datagroup_trigger: case_studies_default_datagroup
+  }
+  dimension: brand {}
+  dimension: created_date {
+    type: date
+  }
+  dimension: status {}
+  dimension: category {}
+  dimension: profit_per_order_average {
+    label: "Order Items Profit per Order Average"
+    value_format: "$#,##0.00"
+    type: number
+  }
+  dimension: pk4_agg_test {
+    type: string
+    sql: CONCAT(${brand}, ${created_date}, ${status}, ${category}) ;;
+  }
+}
+
+explore: +order_items {
+  join: aggregate_test_pdt {
+    relationship: one_to_one
+    sql_on: ${aggregate_test_pdt.pk4_agg_test} = ${order_items.fk4_agg_table} ;;
+  }
 }
