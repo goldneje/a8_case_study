@@ -60,6 +60,20 @@ explore: order_items {
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
   }
+
+  join: order_items_table_1 {
+    type: left_outer
+    relationship: many_to_one
+
+    sql_on: MD5(CONCAT(${products.category}, ${order_items.created_year}, ${order_items.created_week_of_year})) = ${order_items_table_1.pk3_category_year_week_of_year} ;;
+  }
+
+
+  join: order_items_table_2 {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${order_items_table_1.pk3_category_year_week_of_year} = ${order_items_table_2.pk3_category_year_week_of_year} ;;
+  }
 }
 
 explore: products {
