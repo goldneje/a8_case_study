@@ -6,7 +6,7 @@ view: distribution_centers {
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."ID" ;;
+    sql: ${TABLE}."IDs" ;;
   }
 
   dimension: latitude {
