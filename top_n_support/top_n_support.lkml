@@ -8,21 +8,38 @@ view: ndt_top_ranking {
     explore_source: order_items {
       bind_all_filters: yes
       column: brand_name { field: products.brand }
+      column: category { field: products.category }
       column: order_items_count { field: order_items.count }
       column: order_items_gross_margin_average { field: order_items.gross_margin_percent_average}
       column: order_items_profit { field: order_items.profit_total}
       column: order_items_total_revenue { field: order_items.total_gross_revenue }
       derived_column: ranking {
-        sql: rank() over (order by {% parameter rank_by %} desc) ;;
+        sql: rank() over (partition by brand_name order by {% parameter rank_by %} desc) ;;
+      }
+      derived_column: total_amount {
+        sql: sum({% parameter rank_by %}) over(partition by brand_name) ;;
       }
     }
   }
 
-  dimension: brand_name {
+  dimension: pk2_brand_category {
     primary_key: yes
     hidden: yes
     type: string
+    sql: ${brand_name}||${category} ;;
+  }
+
+  dimension: brand_name {
+    # primary_key: yes
+    hidden: yes
+    type: string
     sql: ${TABLE}.brand_name ;;
+  }
+
+  dimension: total_amount {}
+
+  dimension: category {
+    hidden: yes
   }
 
   dimension: ranking {
@@ -39,7 +56,7 @@ view: ndt_top_ranking {
   dimension: order_items_gross_margin_average {
     hidden: yes
     type: number
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   dimension: order_items_profit {
@@ -54,32 +71,63 @@ view: ndt_top_ranking {
     value_format_name: usd
   }
 
-  dimension: brand_name_top_brands {
+  # dimension: brand_name_top_brands {
+  #   view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
+  #   label: "Brands (Top {% if top_n._is_filtered %}{% parameter top_n %}{% else %}N{% endif %})"
+  #   order_by_field: brand_rank_top_brands
+  #   type: string
+  #   sql:
+  #     CASE
+  #       WHEN ${ranking}<={% parameter top_n %} THEN ${brand_name}
+  #       ELSE 'Other'
+  #     END
+  #   ;;
+  # }
+
+  # dimension: brand_rank_top_brands {
+  #   view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
+  #   label: "Rank"
+  #   type: string
+  #   sql:
+  #     CASE
+  #       WHEN ${ranking}<={% parameter top_n %}
+  #         THEN
+  #           CASE
+  #             WHEN ${ranking}<10 THEN  0 || cast(${ranking} as varchar)
+  #             ELSE to_char(${ranking})
+  #           END
+  #       ELSE 'Other'
+  #     END
+  #   ;;
+  # }
+
+  dimension: category_name_top_categories {
     view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
-    label: "Brands (Top {% if top_n._is_filtered %}{% parameter top_n %}{% else %}N{% endif %})"
-    order_by_field: brand_rank_top_brands
+    label: "Categories (Top {% if top_n._is_filtered %}{% parameter top_n %}{% else %}N{% endif %})"
+    order_by_field: category_rank_top_categories
     type: string
     sql:
       CASE
-        WHEN ${ranking}<={% parameter top_n %} THEN ${brand_name}
-        ELSE 'Other'
+        WHEN ${ranking}<={% parameter top_n %} THEN ${category}
+        ELSE NULL
       END
     ;;
   }
 
-  dimension: brand_rank_top_brands {
+  dimension: category_rank_top_categories {
     view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
-    label: "Rank"
+    label: "Category Rank"
     type: string
     sql:
       CASE
         WHEN ${ranking}<={% parameter top_n %}
           THEN
+          -- Format the rank so that it orders properly
             CASE
               WHEN ${ranking}<10 THEN  0 || cast(${ranking} as varchar)
               ELSE to_char(${ranking})
             END
-        ELSE 'Other'
+        ELSE NULL
       END
     ;;
   }
@@ -123,12 +171,12 @@ view: ndt_top_ranking {
 
   measure: dynamic_measure {
     description: "Use this along with the 'Rank by (Drop down selection)' filter to see the amounts for each rank"
-    type: number
+    type: average
     sql:
-      {% if rank_by._parameter_value == 'order_items_total_revenue' %} ${order_items.total_gross_revenue}
-      {% elsif rank_by._parameter_value == 'order_items_count' %} ${order_items.count}
-      {% elsif rank_by._parameter_value == 'order_items_profit' %} ${order_items.profit_total}
-      {% else %} ${order_items.gross_margin_percent_average}
+      {% if rank_by._parameter_value == 'order_items_total_revenue' %} ${order_items_total_revenue}
+      {% elsif rank_by._parameter_value == 'order_items_count' %} ${order_items_count}
+      {% elsif rank_by._parameter_value == 'order_items_profit' %} ${order_items_profit}
+      {% else %} ${order_items_gross_margin_average}
       {% endif %}
     ;;
 
@@ -139,13 +187,35 @@ view: ndt_top_ranking {
       {% else %} {{order_items.gross_margin_percent_average._rendered_value}}
       {% endif %} ;;
   }
+
+  measure: dynamic_percent_of_total {
+    type: average
+    sql:
+      {% if rank_by._parameter_value == 'order_items_total_revenue' %} ${order_items_total_revenue} / NULLIF(${total_amount}, 0)
+      {% elsif rank_by._parameter_value == 'order_items_count' %} ${order_items_count} / NULLIF(${total_amount}, 0)
+      {% elsif rank_by._parameter_value == 'order_items_profit' %} ${order_items_profit} / NULLIF(${total_amount}, 0)
+      {% else %} ${order_items_gross_margin_average} / NULLIF(${total_amount}, 0)
+      {% endif %}
+    ;;
+
+    value_format_name: percent_1
+
+      # html:
+      # {% if rank_by._parameter_value == 'order_items_total_revenue' %} {{order_items.total_gross_revenue | divided_by: ndt_top_ranking.total_amount}}
+      # {% elsif rank_by._parameter_value == 'order_items_count' %} {{order_items.count | divided_by: ndt_top_ranking.total_amount}}
+      # {% elsif rank_by._parameter_value == 'order_items_profit' %} {{order_items.profit_total | divided_by: ndt_top_ranking.total_amount}}
+      # {% else %} {{order_items.gross_margin_percent_average | divided_by: ndt_top_ranking.total_amount}}
+      # {% endif %} ;;
+    }
+
 }
 
 explore: +order_items {
   join: ndt_top_ranking {
     view_label: "@{top_n_ranking_view_name}" # Constant defined in manifest.lkml file
     type: inner
-    sql_on: ${products.brand} = ${ndt_top_ranking.brand_name} ;;
+    sql_on: ${products.brand}||${products.category} = ${ndt_top_ranking.pk2_brand_category} ;;
     relationship: many_to_one
+    sql_where: ${ndt_top_ranking.category_name_top_categories} IS NOT NULL ;;
   }
 }
