@@ -17,4 +17,5 @@ view: +order_items {
     filters: [status: "-Cancelled, -Returned"]
 
   }
+
 }
