@@ -15,6 +15,7 @@ include: "/derived_table_layers/order_sequence_1.layer"
 include: "/derived_table_layers/order_sequence_2.layer"
 include: "/derived_table_layers/profit_per_order.layer"
 include: "/derived_table_layers/total_gross_revenue_rank_by_category.layer"
+include: "/derived_table_layers/total_profit_dt"
 include: "/pop_support/pop_support"
 
 
