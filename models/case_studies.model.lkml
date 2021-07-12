@@ -37,6 +37,8 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  # sql_always_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
+  always_join: [users]
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
@@ -47,6 +49,7 @@ explore: order_items {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
+    sql_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
   }
 
   join: products {
@@ -84,15 +87,15 @@ explore: users {}
 ###############################
 
 # Place in `case_studies` model
-explore: +order_items {
-  aggregate_table: rollup__users.state__users.city {
-    query: {
-      dimensions: [users.state, users.city]
-      measures: [sales_calculations*]
-    }
+# explore: +order_items {
+#   aggregate_table: rollup__users.state__users.city {
+#     query: {
+#       dimensions: [users.state, users.city]
+#       measures: [sales_calculations*]
+#     }
 
-    materialization: {
-      datagroup_trigger: case_studies_default_datagroup
-    }
-  }
-}
+    # materialization: {
+    #   datagroup_trigger: case_studies_default_datagroup
+    # }
+  # }
+# }
