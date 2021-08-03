@@ -11,8 +11,6 @@ view: distribution_centers {
     sql: ${TABLE}."ID" ;;
   }
 
-  # SOMETHING
-
   dimension: latitude {
     type: number
     sql: ${TABLE}."LATITUDE" ;;
