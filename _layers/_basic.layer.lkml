@@ -293,6 +293,20 @@ view: +order_items {
     hidden: yes
   }
 
+  parameter: view_name_change {
+    type: unquoted
+    allowed_value: {
+      label: "Partial Dataset"
+      value: "_DEV"
+    }
+    allowed_value: {
+      label: "Full Dataset"
+      value: ""
+    }
+    default_value: ""
+  }
+
+
   dimension: gross_margin_percent {
     hidden: yes
   }

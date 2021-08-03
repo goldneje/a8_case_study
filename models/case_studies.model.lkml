@@ -32,6 +32,8 @@ include: "/group_labels/revenue.group"
 include: "/parameters_and_filters/calculation_selector.layer"
 include: "/parameters_and_filters/category_filter.layer"
 
+include: "/lookml_dashboards/lookml_test.dashboard"
+
 include: "/pop_support/pop_support"
 
 include: "/top_n_support/top_n_support"

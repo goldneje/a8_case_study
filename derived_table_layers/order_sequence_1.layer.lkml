@@ -22,18 +22,22 @@ view: +order_items {
 view: order_sequence_1 {
   derived_table: {
     explore_source: order_items {
+      bind_filters: {
+        from_field: order_sequence_1.created_date
+        to_field: order_items.created_date
+      }
       column: pk1_order_id {field: order_items.order_id}
       column: order_sequence {}
       column: user_id {}
       column: created_date {}
     }
-    datagroup_trigger: case_studies_default_datagroup
+    # datagroup_trigger: case_studies_default_datagroup
   }
   dimension: pk1_order_id {
     primary_key: yes
     type: number
   }
-  dimension: created_date {
+  filter: created_date {
     type: date
   }
   dimension: order_sequence {
@@ -85,4 +89,6 @@ view: +order_sequence_1 {
 }
 
 # Creating a hidden explore used to generate the next derived table
-explore: order_sequence_1 {hidden: yes}
+explore: order_sequence_1 {
+    hidden: no
+  }

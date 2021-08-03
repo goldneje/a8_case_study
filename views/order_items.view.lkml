@@ -1,5 +1,5 @@
 view: order_items {
-  sql_table_name: "PUBLIC"."ORDER_ITEMS"
+  sql_table_name: "PUBLIC"."ORDER_ITEMS{{view_name_change._parameter_value}}"
     ;;
   drill_fields: [id]
 
@@ -8,6 +8,7 @@ view: order_items {
     type: number
     sql: ${TABLE}."ID" ;;
   }
+
 
   dimension_group: created {
     type: time

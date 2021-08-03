@@ -271,7 +271,7 @@ view: inventory_items {
 
 explore: order_items {hidden: yes}
 view: order_items {
-    sql_table_name: "PUBLIC"."ORDER_ITEMS"
+  sql_table_name: "PUBLIC"."ORDER_ITEMS{{view_name_change._parameter_value}}"
       ;;
     drill_fields: [pk1_order_item_id]
 
