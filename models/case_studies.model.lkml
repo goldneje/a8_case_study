@@ -2,11 +2,17 @@ connection: "snowlooker"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/models/custom_value_formats"
 
 datagroup: case_studies_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
+
+# access_grant: see_sale_price {
+#   allowed_values: ["Eric"]
+#   user_attribute: first_name
+# }
 
 persist_with: case_studies_default_datagroup
 
@@ -15,6 +21,7 @@ explore: distribution_centers {}
 # explore: etl_jobs {}
 
 explore: events {
+  fields: [ALL_FIELDS*, -users.reference_other_views*]
   join: users {
     type: left_outer
     sql_on: ${events.user_id} = ${users.id} ;;
@@ -39,6 +46,10 @@ explore: inventory_items {
 explore: order_items {
   # sql_always_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
   always_join: [users]
+  conditionally_filter: {
+    filters: [created_date: "last 90 days"]
+    unless: [users.state]
+  }
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
@@ -80,7 +91,9 @@ explore: products {
   }
 }
 
-explore: users {}
+explore: users {
+  fields: [ALL_FIELDS*, -users.reference_other_views*]
+}
 
 ###############################
 #      AGGREGATE TABLES       #

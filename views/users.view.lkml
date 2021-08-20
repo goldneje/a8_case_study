@@ -16,6 +16,10 @@ view: users {
     sql: ${TABLE}."AGE" ;;
   }
 
+  dimension: sale_price {
+    sql: ${order_items.sale_price} ;;
+  }
+
   dimension: city {
     type: string
     sql: ${TABLE}."CITY" ;;
@@ -89,5 +93,11 @@ view: users {
   measure: count {
     type: count
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
+  }
+
+  set: reference_other_views {
+    fields: [
+      sale_price
+    ]
   }
 }

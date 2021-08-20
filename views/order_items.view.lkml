@@ -1,3 +1,5 @@
+# include: "/models/custom_value_formats"
+
 view: order_items {
   sql_table_name: "PUBLIC"."ORDER_ITEMS"
     ;;
@@ -11,12 +13,22 @@ view: order_items {
     sql: ${TABLE}."ID" ;;
   }
 
+  parameter: date_selection {
+    type: date
+  }
+
+  dimension: is_date_selection_mtd {
+    type: yesno
+    sql: ${created_day_of_month} <= EXTRACT(day FROM {{date_selection._parameter_value}}) ;;
+  }
+
   dimension_group: created {
     type: time
     timeframes: [
       raw,
       time,
       date,
+      day_of_month,
       week,
       month,
       quarter,
@@ -132,9 +144,14 @@ view: order_items {
     label: "Gross Revenue | Total"
     type: sum
     sql: ${sale_price} ;;
-    value_format_name: usd
+    value_format_name: test
     filters: [status: "-Returned,-Cancelled"]
     drill_fields: [detail*]
+  }
+
+  measure: test {
+    type: number
+    sql: ${total_gross_revenue} / ${average_sale_price} ;;
   }
 
   measure: total_gross_revenue_per_order {
