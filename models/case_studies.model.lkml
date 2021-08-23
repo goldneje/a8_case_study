@@ -81,6 +81,13 @@ explore: order_items {
     sql_on: ${order_items.id} = ${dt_total_sales_by_order.id} ;;
     relationship: one_to_one
   }
+
+  # Table that aggregates across all orders, showing average gross revenue per order across all orders
+  join: dt_2 {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${dt_total_sales_by_order.has_more_than_one_item_in_order} = ${dt_2.has_more_than_one_item_in_order} ;;
+  }
 }
 
 explore: products {
