@@ -16,8 +16,10 @@ view: products {
 
   dimension: category {
     type: string
+    suggestions: ["Accessories","Maternity","Plus"]
     sql: ${TABLE}."CATEGORY" ;;
   }
+
 
   dimension: cost {
     type: number
