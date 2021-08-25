@@ -16,6 +16,11 @@ view: products {
     sql: ${TABLE}."BRAND" ;;
   }
 
+  dimension: brand_avg_highlight {
+    type: string
+    sql: ${TABLE}."BRAND" ;;
+  }
+
   dimension: category {
     type: string
     sql: ${TABLE}."CATEGORY" ;;

@@ -46,10 +46,10 @@ explore: inventory_items {
 explore: order_items {
   # sql_always_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
   always_join: [users]
-  conditionally_filter: {
-    filters: [created_date: "last 90 days"]
-    unless: [users.state]
-  }
+  # conditionally_filter: {
+  #   filters: [created_date: "last 90 days"]
+  #   unless: [users.state]
+  # }
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
@@ -60,7 +60,7 @@ explore: order_items {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
-    sql_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
+    # sql_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
   }
 
   join: products {

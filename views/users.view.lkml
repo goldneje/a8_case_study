@@ -17,6 +17,7 @@ view: users {
   }
 
   dimension: sale_price {
+    type: number
     sql: ${order_items.sale_price} ;;
   }
 
