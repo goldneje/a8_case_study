@@ -2,6 +2,7 @@ connection: "snowlooker"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/derived_tables/*.view"
 
 datagroup: case_studies_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -59,6 +60,12 @@ explore: order_items {
     type: left_outer
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
+  }
+
+  join: order_items_completed_by_year {
+    type: left_outer
+    sql_on:  ${order_items_completed_by_year.id} = ${order_items.id};;
+    relationship: one_to_one
   }
 }
 
