@@ -1,5 +1,6 @@
   view: order_items_completed_by_year {
    derived_table: {
+    #datagroup_trigger: case_studies_default_datagroup - cannot use bind all filters if persisting
         explore_source: order_items {
         bind_all_filters: yes
         column: id {}
