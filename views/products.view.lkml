@@ -59,8 +59,41 @@ view: products {
     sql: ${TABLE}."SKU" ;;
   }
 
+  measure: avg_cost {
+    type: average
+    sql: ${cost} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
+  }
+}
+
+include: "/models/case_studies.model"
+
+view: avg_cost_per_brand_dt {
+  derived_table: {
+    explore_source: order_items {
+      column: brand { field: products.brand }
+      column: avg_cost { field: products.avg_cost }
+    }
+  }
+  dimension: brand {
+    primary_key: yes
+  }
+  dimension: avg_cost {
+    type: number
+  }
+  measure: avg_cost_per_brand {
+    type: average
+    sql: ${avg_cost} ;;
+  }
+}
+
+explore: +order_items {
+  join: avg_cost_per_brand_dt {
+    relationship: many_to_one
+    sql_on: ${products.brand} = ${avg_cost_per_brand_dt.brand} ;;
   }
 }

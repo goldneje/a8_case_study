@@ -15,11 +15,14 @@ view: dt_total_sales_by_order {
       derived_column: total_gross_revenue_per_order {
         sql: sum(total_gross_revenue) OVER(PARTITION BY order_id) ;;
       }
+      derived_column: rank {
+        sql: rank() OVER(ORDER BY total_gross_revenue) ;;
+      }
       filters: [
         order_items.status: "-Cancelled,-Returned"
       ]
-
     }
+    sql_trigger_value: CURRENT_DATE ;;
   }
 
   dimension: id {
@@ -56,6 +59,10 @@ view: dt_total_sales_by_order {
     hidden: yes
     label: "Per Order | Total Gross Revenue"
     value_format: "$#,##0.00"
+    type: number
+  }
+
+  dimension: rank {
     type: number
   }
 

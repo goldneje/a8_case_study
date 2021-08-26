@@ -58,7 +58,7 @@ explore: order_items {
 
   join: users {
     type: left_outer
-    sql_on: ${order_items.user_id} = ${users.id} ;;
+    sql_on: order_items.user_id = users.id ;;
     relationship: many_to_one
     # sql_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
   }
@@ -77,9 +77,11 @@ explore: order_items {
 
   join: dt_total_sales_by_order {
     view_label: "Per Order Derived Table"
-    type: inner
-    sql_on: ${order_items.id} = ${dt_total_sales_by_order.id} ;;
+    type: left_outer
+    sql_on: ${order_items.id} = ${dt_total_sales_by_order.id}
+              AND ${dt_total_sales_by_order.rank} = 1 ;;
     relationship: one_to_one
+    # sql_where: ${dt_total_sales_by_order.rank} = 1 ;;
   }
 
   # Table that aggregates across all orders, showing average gross revenue per order across all orders

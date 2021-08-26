@@ -96,6 +96,11 @@ view: users {
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
   }
 
+  measure: avg_age {
+    type: average
+    sql: ${age} ;;
+  }
+
   set: reference_other_views {
     fields: [
       sale_price
