@@ -15,6 +15,8 @@ view: order_items {
       raw,
       time,
       date,
+      day_of_month,
+      day_of_year,
       week,
       month,
       quarter,
