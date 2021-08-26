@@ -3,6 +3,7 @@ view: order_items {
     ;;
   drill_fields: [id]
 
+
   dimension: id {
     primary_key: yes
     type: number
@@ -216,7 +217,18 @@ view: order_items {
   }
 
 
+  measure: total_revenue_yesterday {
+    type: sum
+    sql: ${sale_price};;
+    filters: [created_date: "yesterday", is_completed_sale: "Yes"]
+    value_format_name: usd
+  }
 
+  measure: total_new_customers_yesterday {
+    type: count_distinct
+    sql: ${users.id};;
+    filters: [users.created_date: "yesterday"]
+  }
 
 
   # ----- Sets of fields for drilling ------
