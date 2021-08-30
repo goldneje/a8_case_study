@@ -13,13 +13,22 @@ view: order_items {
     sql: ${TABLE}."ID" ;;
   }
 
-  parameter: date_selection {
+  filter: date_selection {
     type: date
+  }
+
+  dimension: test_subq {
+    sql: (SELECT ${created_date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} LIMIT 1) ;;
   }
 
   dimension: is_date_selection_mtd {
     type: yesno
-    sql: ${created_day_of_month} <= EXTRACT(day FROM {{date_selection._parameter_value}}) ;;
+    sql: ${created_day_of_month} <= EXTRACT(day FROM (SELECT ${created_date::date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} LIMIT 1)) ;;
+  }
+
+  dimension: date_filter_value {
+    type: yesno
+    sql: {% condition date_selection %} ${created_date} {% endcondition %} ;;
   }
 
   dimension_group: created {
