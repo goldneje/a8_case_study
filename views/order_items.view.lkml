@@ -35,7 +35,9 @@ view: order_items {
       week,
       month,
       quarter,
-      year
+      year,
+      day_of_month,
+      day_of_year
     ]
     sql: ${TABLE}."DELIVERED_AT" ;;
   }
@@ -107,7 +109,7 @@ view: order_items {
     type: average
     sql: ${sale_price} - ${inventory_items.cost};;
     filters: [is_completed_sale: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: average_sale_price {
@@ -115,7 +117,7 @@ view: order_items {
     description: "Average sales price of items sold"
     type: average
     sql: ${sale_price} ;;
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: average_spend_per_customer {
@@ -123,7 +125,7 @@ view: order_items {
     description: "Total Sale Price / Total Customers"
     type: number
     sql: ${total_sale_price} / ${count_customers} ;;
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: count {
@@ -160,7 +162,7 @@ view: order_items {
     label: "Sales Running Total"
     type: running_total
     sql: ${total_sale_price} ;;
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: customer_return_item_pct {
@@ -170,6 +172,16 @@ view: order_items {
     type: number
     sql: ${count_customers_return_items} / ${count_customers} ;;
     value_format_name: percent_2
+  }
+
+  measure: first_order_date {
+    type: date
+    sql: min(${created_date}) ;;
+  }
+
+  measure: last_order_date {
+    type: date
+    sql: max(${created_date}) ;;
   }
 
   measure: gross_margin_pct {
@@ -196,7 +208,7 @@ view: order_items {
     type: sum
     sql: ${sale_price} - ${inventory_items.cost};;
     filters: [is_completed_sale: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: total_gross_revenue {
@@ -205,7 +217,7 @@ view: order_items {
     type: sum
     sql: ${sale_price} ;;
     filters: [is_completed_sale: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: total_sale_price {
@@ -213,15 +225,14 @@ view: order_items {
     description: "Total sales from items sold"
     type: sum
     sql: ${sale_price} ;;
-    value_format_name: usd
+    value_format_name: usd_0
   }
-
 
   measure: total_revenue_yesterday {
     type: sum
     sql: ${sale_price};;
     filters: [created_date: "yesterday", is_completed_sale: "Yes"]
-    value_format_name: usd
+    value_format_name: usd_0
   }
 
   measure: total_new_customers_yesterday {
@@ -230,6 +241,9 @@ view: order_items {
     filters: [users.created_date: "yesterday"]
   }
 
+  parameter: date_filter {
+    type: date
+  }
 
   # ----- Sets of fields for drilling ------
   set: detail {
