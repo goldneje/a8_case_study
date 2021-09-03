@@ -11,6 +11,28 @@ view: products {
     sql: ${TABLE}."ID" ;;
   }
 
+  dimension: cost {
+    type: number
+    sql: ${TABLE}."COST" ;;
+  }
+
+  measure: avg_cost {
+    type: average
+    sql: ${cost} ;;
+  }
+
+  measure: is_above_avg_cost {
+    type: yesno
+    sql: ${avg_cost} > 30 ;;
+  }
+
+  dimension: category {
+    type: string
+    sql: ${TABLE}."CATEGORY" ;;
+    # suggest_dimension: inventory_items.product_category
+    # suggest_explore: order_items
+  }
+
   dimension: brand {
     type: string
     sql: ${TABLE}."BRAND" ;;
@@ -21,15 +43,8 @@ view: products {
     sql: ${TABLE}."BRAND" ;;
   }
 
-  dimension: category {
-    type: string
-    sql: ${TABLE}."CATEGORY" ;;
-  }
 
-  dimension: cost {
-    type: number
-    sql: ${TABLE}."COST" ;;
-  }
+
 
   dimension: department {
     type: string
@@ -57,11 +72,6 @@ view: products {
   dimension: sku {
     type: string
     sql: ${TABLE}."SKU" ;;
-  }
-
-  measure: avg_cost {
-    type: average
-    sql: ${cost} ;;
   }
 
   measure: count {

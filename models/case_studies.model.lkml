@@ -30,9 +30,11 @@ explore: events {
 }
 
 explore: inventory_items {
+  # sql_always_having: ${products.is_above_avg_cost} ;;
   join: products {
     type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    sql_on: ${inventory_items.product_id} = ${products.id};;
+    # sql_where: ${products.category} = 'Jeans' ;;
     relationship: many_to_one
   }
 
