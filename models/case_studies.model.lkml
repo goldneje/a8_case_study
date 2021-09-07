@@ -47,6 +47,7 @@ explore: inventory_items {
 
 explore: order_items {
   # sql_always_where: '{{_user_attributes.first_name | upcase}}' = ${users.first_name} ;;
+  # sql_always_where: {% condition order_items.date_selection %} ${created_date} {% endcondition %} ;;
   always_join: [users]
   # conditionally_filter: {
   #   filters: [created_date: "last 90 days"]
