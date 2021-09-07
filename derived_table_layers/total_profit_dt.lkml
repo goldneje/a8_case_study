@@ -47,6 +47,7 @@ view: total_profit_dt {
 
 explore: +order_items {
   join: total_profit_dt {
+    view_label: "Order Items"
     sql_on: ${products.category} = ${total_profit_dt.category} ;;
     relationship: many_to_one
     type: left_outer
