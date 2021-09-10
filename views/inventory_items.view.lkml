@@ -92,5 +92,11 @@ view: inventory_items {
   measure: count {
     type: count
     drill_fields: [id, product_name, products.id, products.name, order_items.count]
+    html:
+    <table style="width:10px">
+      <tr>
+        <td style="width: 10px; color: red">{{value}}</td>
+      </tr>
+    </table>;;
   }
 }

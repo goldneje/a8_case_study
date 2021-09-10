@@ -13,18 +13,32 @@ view: order_items {
     sql: ${TABLE}."ID" ;;
   }
 
+# This filter will be used in place of the your main date filter
   filter: date_selection {
     type: date
   }
 
-  dimension: date_selection_single_value {
-    type: date_raw
-    sql: (SELECT ${created_date::date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} ORDER BY ${created_date} DESC LIMIT 1) ;;
+  parameter: date_selection_single_value {
+    type: date
+    default_value: "08/31/2021"
   }
 
-  dimension: is_date_selection_mtd {
+# # Extracting the most recent date from the date filter above, Note the ORDER BY and LIMIT, it needs to be a single value
+#   dimension: date_selection_single_value {
+#     type: date_raw
+#     sql: (SELECT ${created_date::date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} ORDER BY ${created_date} DESC LIMIT 1) ;;
+#   }
+
+#################################
+#                               #
+#             FLAGS             #
+#                               #
+#################################
+
+# Creating flags using the single value from above, these are dialect specific for Snowflake, so they may need to be adjusted for BigQuery
+  dimension: is_cmtd {
     type: yesno
-    sql: ${created_day_of_month} <= EXTRACT(day FROM ${date_selection_single_value}) ;;
+    sql: ${created_day_of_month} <= EXTRACT(day FROM ${date_selection_single_value::date}) ;;
   }
 
   dimension: is_current_month_in_current_year {
@@ -67,21 +81,6 @@ view: order_items {
     sql: ${created_day_of_week_index} in (0,1,2,3,4) ;;
   }
 
-  dimension: most_recent_weekday {
-    type: date
-    hidden: yes
-    sql: case
-            when dayname(${date_selection_single_value} -1) in ('Mon','Tue', 'Wed','Thu','Fri') then ${date_selection_single_value} - 1
-            when  dayname(${date_selection_single_value} -1) = 'Sat' then ${date_selection_single_value} - 2
-            when  dayname(${date_selection_single_value} -1) = 'Sun'  then ${date_selection_single_value} - 3
-          end ;;
-  }
-
-  dimension: is_most_recent_weekday {
-    type: yesno
-    sql: ${created_date} <= ${most_recent_weekday} ;;
-  }
-
   dimension_group: created {
     type: time
     timeframes: [
@@ -89,8 +88,10 @@ view: order_items {
       time,
       date,
       day_of_month,
+      month_name,
       day_of_week_index,
       week,
+      week_of_year,
       month,
       month_num,
       quarter,
@@ -199,13 +200,13 @@ view: order_items {
   measure: number_of_items_cmtd {
     type: count
     label: "Number of Items CMTD"
-    filters: [is_current_month_in_current_year: "Yes", is_date_selection_mtd: "Yes"]
+    filters: [is_current_month_in_current_year: "Yes", is_cmtd: "Yes"]
   }
 
   measure: number_of_items_lmtd {
     type: count
     label: "Number of Items LMTD"
-    filters: [is_previous_month: "Yes", is_date_selection_mtd: "Yes"]
+    filters: [is_previous_month: "Yes", is_cmtd: "Yes"]
   }
 
   measure: number_of_items_ly_cm {
@@ -214,11 +215,11 @@ view: order_items {
     filters: [is_current_month_in_previous_year: "Yes"]
   }
 
-  # measure: num_weekdays_passed {
-  #   type: count_distinct
-  #   sql: ${created_date} ;;
-  #   filters: [is_current_month_in_current_year: "Yes", is_weekday: "Yes"]
-  # }
+  measure: num_weekdays_passed {
+    type: count_distinct
+    sql: ${created_date} ;;
+    filters: [is_current_month_in_current_year: "Yes", is_weekday: "Yes"]
+  }
 
   measure: items_per_order {
     type: number
@@ -323,9 +324,86 @@ view: weekdays {
   }
 }
 
+include: "/models/case_studies.model"
+
+explore: +order_items {
+  join: weekdays {
+    sql_on: ${weekdays.created_date} = ${order_items.created_date} ;;
+    fields: [num_weekdays_passed, num_weekdays_total]
+    relationship: many_to_one
+  }
+}
+
+view: weeks_in_month {
+  derived_table: {
+    explore_source: order_items {
+      # column: created_date {}
+      column: created_week {}
+      column: created_month {}
+      column: created_month_name {}
+      column: created_week_of_year {}
+      derived_column: week_num {
+        sql: ROW_NUMBER() OVER(PARTITION BY created_month ORDER BY created_week) ;;
+      }
+      bind_filters: {
+        from_field: order_items.created_month
+        to_field: order_items.created_month
+      }
+    }
+  }
+
+  dimension: created_week {
+    type: date_week
+    primary_key: yes
+  }
+
+  dimension: created_month_name {
+    type: string
+    # hidden: yes
+  }
+
+  dimension: created_month {
+    type: date_month
+    hidden: yes
+  }
+
+  dimension: week_num {
+    type: number
+    hidden: yes
+  }
+
+  dimension: created_month_week_label {
+    sql: concat(${created_month_name}, ' Week ', ${week_num}) ;;
+  }
+}
+
 # explore: +order_items {
-#   join: weekdays {
-#     sql_on: ${weekdays.created_date} = ${order_items.created_date} ;;
-#     fields: [num_weekdays_passed, num_weekdays_total]
+#   join: weeks_in_month {
+#     sql_on: ${order_items.created_week} = ${weeks_in_month.created_week::date} ;;
+#     type: inner
+#     relationship: many_to_one
 #   }
 # }
+
+explore: test {
+  from: order_items
+  # sql_always_where:
+  # {% if test.is_current_month_in_previous_year._in_query %}
+  #   ${is_current_month_in_previous_year} AND
+  # {% endif %}
+
+  # {% if test.is_previous_month._in_query %}
+  #   ${is_previous_month} AND
+  # {% else %}
+  #   1=1 AND
+  # {% endif %}
+
+  # {% if test.is_cmtd._in_query %}
+  #   ${is_cmtd} AND
+  # {% else %}
+  #   1=1 AND
+  # {% endif %}
+  # 1=1
+
+  # ;;
+}
