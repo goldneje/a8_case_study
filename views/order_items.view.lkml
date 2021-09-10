@@ -67,6 +67,11 @@ view: order_items {
     sql: ${TABLE}."SALE_PRICE" ;;
   }
 
+  dimension: is_sold {
+    type: yesno
+    sql: ${status} not in ('Cancelled', 'Returned') ;;
+  }
+
   dimension_group: shipped {
     type: time
     timeframes: [
@@ -95,6 +100,38 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: most_expensive_item {
+    type: max
+    sql: ${sale_price} ;;
+    filters: [is_sold: "Yes"]
+  }
+
+  measure: least_expensive_item {
+    type: min
+    sql: ${sale_price} ;;
+    filters: [is_sold: "Yes"]
+  }
+
+  measure: median_item_price {
+    type: median
+    sql: ${sale_price} ;;
+    filters: [is_sold: "Yes"]
+  }
+
+  measure: percentile_25_item_price {
+    type: percentile
+    percentile: 25
+    sql: ${sale_price} ;;
+    filters: [is_sold: "Yes"]
+  }
+
+  measure: percentile_75_item_price {
+    type: percentile
+    percentile: 75
+    sql: ${sale_price} ;;
+    filters: [is_sold: "Yes"]
   }
 
   # ----- Sets of fields for drilling ------
