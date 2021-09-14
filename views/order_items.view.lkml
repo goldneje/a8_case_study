@@ -67,6 +67,11 @@ view: order_items {
     sql: ${TABLE}."SALE_PRICE" ;;
   }
 
+  dimension: is_sale {
+    type: yesno
+    sql: ${status} not in ('Cancelled', 'Returned') ;;
+  }
+
   dimension_group: shipped {
     type: time
     timeframes: [
@@ -95,6 +100,20 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: total_sales {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [is_sale: "Yes"]
+    value_format_name: usd
+  }
+
+  measure: average_sale_price {
+    type: average
+    sql: ${sale_price} ;;
+    filters: [is_sale: "Yes"]
+    value_format_name: usd
   }
 
   # ----- Sets of fields for drilling ------

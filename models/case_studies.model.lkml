@@ -2,6 +2,7 @@ connection: "snowlooker"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/views/pop_parameters.view.lkml"
 
 # include LookML dashboards
 include: "/dashboards/*.dashboard"
