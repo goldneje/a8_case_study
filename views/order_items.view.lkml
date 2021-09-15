@@ -6,7 +6,8 @@ view: order_items {
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."ID" ;;
+    sql:
+      MD5(${TABLE}."ID") ;;
   }
 
   dimension_group: created {

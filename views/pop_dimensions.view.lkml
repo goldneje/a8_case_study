@@ -307,6 +307,7 @@ view: +order_items {
 
 explore: +order_items {
   sql_always_where:
+  ${EXTENDED} AND
     1=1
     {% if order_items.current_vs_previous_period_snowflake_advanced._in_query %}and ${order_items.current_vs_previous_period_snowflake_advanced} is not null{% endif %}
     {% if parameters.apply_to_date_filter_advanced._is_filtered %}and ${order_items.is_to_date_advanced}{% endif %} ;;

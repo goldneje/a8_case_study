@@ -41,6 +41,7 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  sql_always_where: ${sale_price} > 500 ;;
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
