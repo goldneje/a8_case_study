@@ -35,6 +35,23 @@ view: order_items {
 #                               #
 #################################
 
+  dimension: yesterday {
+    sql: DATE_ADD(day, CURRENT_DATE, -1) ;;
+  }
+
+  dimension: is_yesterday {
+    type: yesno
+    sql: ${created_date} = ${yesterday} ;;
+  }
+
+  dimension: is_previous_year {
+    type: yesno
+    sql: ${created_year} = TO_CHAR(DATEADD(year, -1, DATE_TRUNC(year, CURRENT_DATE)), 'YYYY') ;;
+  }
+
+  # To get previous year yesterday, use the combination of these filters within a measure.
+  # filters: [is_yesterday: 'Yes', is_previous_year: 'Yes']
+
 # Creating flags using the single value from above, these are dialect specific for Snowflake, so they may need to be adjusted for BigQuery
   dimension: is_cmtd {
     type: yesno
@@ -61,7 +78,7 @@ view: order_items {
     sql: ${created_year} = TO_CHAR(${date_selection_single_value}, 'YYYY') ;;
   }
 
-  dimension: is_previous_year {
+  dimension: is_previous_year_orig {
     type: yesno
     sql: ${created_year} = TO_CHAR(DATEADD(year, -1, DATE_TRUNC(year, ${date_selection_single_value})), 'YYYY') ;;
   }
