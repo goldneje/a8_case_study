@@ -23,6 +23,20 @@ view: order_items {
     sql: ${TABLE}."CREATED_AT" ;;
   }
 
+
+  parameter: join_switch {
+    type: string
+    allowed_value: {
+      label: "brand"
+      value: "brand"
+    }
+    allowed_value: {
+      label: "category"
+      value: "category"
+    }
+    default_value: "brand"
+  }
+
   dimension_group: delivered {
     type: time
     timeframes: [

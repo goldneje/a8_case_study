@@ -29,4 +29,7 @@ view: brand_dt0 {
   }
   dimension: cumulative_num_users {}
   dimension: cumulative_num_items {}
+
+
+
 }

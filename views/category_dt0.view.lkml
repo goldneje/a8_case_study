@@ -49,20 +49,10 @@ view: utilization_dt {
       bind_all_filters: yes
     }
   }
+
+
   dimension: c_number_of_items {
     type: number
-  }
-
-  parameter: join_switch {
-    allowed_value: {
-      label: "brand"
-      value: "brand"
-    }
-    allowed_value: {
-      label: "category"
-      value: "category"
-    }
-    default_value: "brand"
   }
   dimension: c_number_of_users {
     type: number

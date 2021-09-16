@@ -83,9 +83,20 @@ explore: order_items {
   }
 
   join: utilization_dt {
+    # sql_on:
+    # IFF({% parameter order_items.join_switch %} = 'brand',
+    #   ${brand_dt0.brand} = ${utilization_dt.brand},
+    #   ${category_dt0.category} = ${utilization_dt.category})
+    # AND ${utilization_dt.cal_date} = ${calendar.cal_date} ;;
     sql_on:
-    ${brand_dt0.brand} = ${utilization_dt.brand} AND ${category_dt0.category} = ${utilization_dt.category}
-        AND ${utilization_dt.cal_date} = ${calendar.cal_date} ;;
+    IFF({% parameter order_items.join_switch %} = 'brand',
+    ${brand_dt0.brand} = ${utilization_dt.brand},
+    ${category_dt0.category} = ${utilization_dt.category})
+    AND ${utilization_dt.cal_date} = ${calendar.cal_date} ;;
+    # sql_on:
+    # ${brand_dt0.brand} = ${utilization_dt.brand}
+    # AND ${category_dt0.category} = ${utilization_dt.category}
+    # AND ${utilization_dt.cal_date} = ${calendar.cal_date} ;;
     relationship: many_to_one
   }
 }
