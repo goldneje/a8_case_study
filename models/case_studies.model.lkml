@@ -4,6 +4,9 @@ connection: "snowlooker"
 include: "/views/**/*.view"
 include: "/models/custom_value_formats"
 
+# include LookML dashboards
+include: "/dashboards/*.dashboard"
+
 datagroup: case_studies_default_datagroup {
   sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
