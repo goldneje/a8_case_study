@@ -50,8 +50,9 @@ view: products {
     sql: ${TABLE}."SKU" ;;
   }
 
-  measure: count {
+  measure: number_of_products {
     type: count
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
   }
+
 }

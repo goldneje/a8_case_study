@@ -86,15 +86,27 @@ view: order_items {
     sql: ${TABLE}."STATUS" ;;
   }
 
+  dimension: is_sale {
+    type: yesno
+    sql: ${status} not in ('Cancelled', 'Returned') ;;
+  }
+
   dimension: user_id {
     type: number
     # hidden: yes
     sql: ${TABLE}."USER_ID" ;;
   }
 
-  measure: count {
+  measure: number_of_items {
+    label: "Number of Items in Order"
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [is_sale: "Yes"]
   }
 
   # ----- Sets of fields for drilling ------
