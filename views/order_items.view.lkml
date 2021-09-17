@@ -7,7 +7,7 @@ view: order_items {
     primary_key: yes
     type: number
     sql:
-      MD5(${TABLE}."ID") ;;
+      ${TABLE}."ID" ;;
   }
 
   dimension_group: created {
