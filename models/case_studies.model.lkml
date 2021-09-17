@@ -1,5 +1,10 @@
 connection: "snowlooker"
 
+# access_grant: first_name {
+#   allowed_values: ["Josh"]
+#   user_attribute: first_name
+# }
+
 # include all the views
 include: "/views/**/*.view"
 
@@ -42,7 +47,7 @@ explore: inventory_items {
 explore: order_items {
   join: inventory_items {
     type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
+    sql_on: ${order_items.inventory_item_id_unmasked} = ${inventory_items.id} ;;
     relationship: many_to_one
   }
 
