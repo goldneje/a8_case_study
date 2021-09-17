@@ -23,7 +23,7 @@ view: products {
   dimension: brand {
     type: string
     sql:
-    '{delivery_date: [2021-08-21], shipped_date: [2021-08-13], tracking_ids: [23432432, 34343424, 513513]}' ;;
+    '{delivery_date: [2021-08-21], shipped_date: [2021-08-13], tracking_ids: [23432432, 34343424, 513513], products: [pillow, sour cream, golf ball]}' ;;
     html:
     {% comment %} Gotta clean up the json string first {% endcomment %}
     {% assign json_level_1 = value | replace: '"', '' | replace: '], ', '|' | replace: ': [', '|' | replace: '{', '' | replace: ']}', '' | split: '|' %}
