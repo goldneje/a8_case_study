@@ -35,13 +35,23 @@ view: order_items {
 #                               #
 #################################
 
-  dimension: yesterday {
+  dimension_group: yesterday {
+    type: time
+    timeframes: [
+      date,
+      month
+    ]
     sql: DATE_ADD(day, CURRENT_DATE, -1) ;;
   }
 
-  dimension: is_yesterday {
+  dimension: is_yesterday_day {
     type: yesno
-    sql: ${created_date} = ${yesterday} ;;
+    sql: ${created_date} = ${yesterday_date} ;;
+  }
+
+  dimension: is_yesterday_month {
+    type: yesno
+    sql: ${created_month} = ${yesterday_month} ;;
   }
 
   dimension: is_previous_year {
