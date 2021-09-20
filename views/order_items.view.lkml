@@ -3,6 +3,18 @@ view: order_items {
     ;;
   drill_fields: [id]
 
+  parameter: join_on_this_value {
+    type: string
+    allowed_value: {
+      label: "Jeans"
+      value: "Jeans"
+    }
+    allowed_value: {
+      label: "Accessories"
+      value: "Accessories"
+    }
+  }
+
   dimension: id {
     primary_key: yes
     type: number

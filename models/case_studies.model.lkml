@@ -40,6 +40,9 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  sql_always_having:
+  1=1
+  AND {% if order_items.join_on_this_value._parameter_value == "'Jeans'" %} ${products.count} <> 0 {% endif %};;
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
@@ -54,7 +57,8 @@ explore: order_items {
 
   join: products {
     type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    sql_on:
+    ${inventory_items.product_id} = ${products.id};;
     relationship: many_to_one
   }
 
@@ -74,3 +78,7 @@ explore: products {
 }
 
 explore: users {}
+
+# explore: +order_items {
+
+# }
