@@ -51,7 +51,8 @@ view: products {
   }
 
   measure: number_of_products {
-    type: count
+    type: number
+    sql: COALESCE(COUNT(id), 0) ;;
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
   }
 

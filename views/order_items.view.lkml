@@ -113,14 +113,32 @@ view: order_items {
 
   measure: number_of_items {
     label: "Number of Items in Order"
-    type: count
+    type: number
+    sql: COALESCE(COUNT(DISTINCT ${id}), 0) ;;
     drill_fields: [detail*]
   }
 
-  measure: total_sale_price {
+  parameter: metric {
+    allowed_value: {
+      label: "Sales"
+      value: "sales"
+    }
+    allowed_value: {
+      label: "Cost"
+      value: "cost"
+    }
+  }
+
+  measure: dynamic_measure {
     type: sum
-    sql: ${sale_price} ;;
-    filters: [is_sale: "Yes"]
+    sql: {% if order_items.metric._parameter_value == 'sales' %} ${sale_price}
+        {% else %} ${products.cost}
+        {% endif %};;
+  }
+
+  measure: running_total {
+    type: running_total
+    sql: ${dynamic_measure} ;;
   }
 
   # ----- Sets of fields for drilling ------
