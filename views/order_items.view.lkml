@@ -18,16 +18,16 @@ view: order_items {
     type: date
   }
 
-  parameter: date_selection_single_value {
-    type: date
-    default_value: "08/31/2021"
-  }
+  # parameter: date_selection_single_value {
+  #   type: date
+  #   default_value: "08/31/2021"
+  # }
 
-# # Extracting the most recent date from the date filter above, Note the ORDER BY and LIMIT, it needs to be a single value
-#   dimension: date_selection_single_value {
-#     type: date_raw
-#     sql: (SELECT ${created_date::date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} ORDER BY ${created_date} DESC LIMIT 1) ;;
-#   }
+# Extracting the most recent date from the date filter above, Note the ORDER BY and LIMIT, it needs to be a single value
+  dimension: date_selection_single_value {
+    type: date_raw
+    sql: (SELECT ${created_date::date} FROM ${order_items.SQL_TABLE_NAME} WHERE {% condition date_selection %} ${created_date} {% endcondition %} ORDER BY ${created_date} DESC LIMIT 1) ;;
+  }
 
 #################################
 #                               #
@@ -65,7 +65,7 @@ view: order_items {
 # Creating flags using the single value from above, these are dialect specific for Snowflake, so they may need to be adjusted for BigQuery
   dimension: is_cmtd {
     type: yesno
-    sql: ${created_day_of_month} <= EXTRACT(day FROM ${date_selection_single_value::date}) ;;
+    sql: ${created_day_of_month} <= EXTRACT(day FROM ${date_selection_single_value}) ;;
   }
 
   dimension: is_current_month_in_current_year {
