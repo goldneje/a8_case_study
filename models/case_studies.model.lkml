@@ -52,15 +52,15 @@ explore: order_items {
     relationship: many_to_one
   }
 
-  join: products {
+  join: products_with_order_items {
     type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    sql_on: ${inventory_items.product_id} = ${products_with_order_items.id} ;;
     relationship: many_to_one
   }
 
   join: distribution_centers {
     type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
+    sql_on: ${products_with_order_items.distribution_center_id} = ${distribution_centers.id} ;;
     relationship: many_to_one
   }
 }
