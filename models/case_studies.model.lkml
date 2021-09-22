@@ -52,6 +52,7 @@ explore: order_items {
     relationship: many_to_one
   }
 
+# This view has a field that uses order_items, so it should only be used when order items is included in the join somewhere
   join: products_with_order_items {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products_with_order_items.id} ;;
