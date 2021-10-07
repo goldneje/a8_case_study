@@ -94,7 +94,7 @@ view: order_items {
 
   measure: count {
     type: count
-    drill_fields: [detail*]
+    drill_fields: [products.category, count]
   }
 
   # ----- Sets of fields for drilling ------
