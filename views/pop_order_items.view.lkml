@@ -1,7 +1,11 @@
+### EDIT THIS SECTION ######################
+
 include: "/views/order_items.view"
 
 view: +order_items {
 
+# Then anywhere '${created_date}' shows up
+############################################
 
   filter: current_date_range {
     type: date
