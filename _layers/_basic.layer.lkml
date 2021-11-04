@@ -78,11 +78,11 @@ explore: +order_items {
     sql_on: ${inventory_items.product_distribution_center_id} = ${distribution_centers.pk1_distribution_center_id} ;;
     relationship: many_to_one
   }
-  # join: pop_support {
-  #   view_label: "@{pop_support_view_name}" #(Optionally) Update view label for use in this explore here, rather than in pop_support view. You might choose to align this to your POP date's view label.
-  #   relationship:one_to_one #we are intentionally fanning out, so this should stay one_to_one
-  #   sql:{% if pop_support.periods_ago._in_query%}LEFT JOIN pop_support on 1=1{%endif%};;#join and fannout data for each prior_period included **if and only if** lynchpin pivot field (periods_ago) is selected. This safety measure ensures we dont fire any fannout join if the user selected PoP parameters from pop support but didn't actually select a pop pivot field.
-  # }
+  join: pop_support {
+    view_label: "@{pop_support_view_name}" #(Optionally) Update view label for use in this explore here, rather than in pop_support view. You might choose to align this to your POP date's view label.
+    relationship:one_to_one #we are intentionally fanning out, so this should stay one_to_one
+    sql:{% if pop_support.periods_ago._in_query%}LEFT JOIN pop_support on 1=1{%endif%};;#join and fannout data for each prior_period included **if and only if** lynchpin pivot field (periods_ago) is selected. This safety measure ensures we dont fire any fannout join if the user selected PoP parameters from pop support but didn't actually select a pop pivot field.
+  }
 
   query: average_order_profit_by_category {
     description: "Average profit per order by category over the last 30 days"
@@ -91,20 +91,20 @@ explore: +order_items {
     filters: [order_items.created_date: "30 days"]
   }
 
-  # query: period_over_period_starter_kit {
-  #   description: "
-  #   Flexible and user-friendly PoP analysis.
-  #   You choose the period size and specify the
-  #   prior periods to include.
-  #   "
-  #   # dimensions: [created_date_periods_ago_pivot]
-  #   measures: [total_gross_revenue]
-  #   filters: [
-  #     pop_support.period_size: "Month",
-  #     pop_support.periods_ago_to_include: "0, 1"
-  #   ]
-  #   pivots: [created_date_periods_ago_pivot]
-  # }
+  query: period_over_period_starter_kit {
+    description: "
+    Flexible and user-friendly PoP analysis.
+    You choose the period size and specify the
+    prior periods to include.
+    "
+    # dimensions: [created_date_periods_ago_pivot]
+    measures: [total_gross_revenue]
+    filters: [
+      pop_support.period_size: "Month",
+      pop_support.periods_ago_to_include: "0, 1"
+    ]
+    pivots: [created_date_periods_ago_pivot]
+  }
 
   #Update this always filter to your base date field to encourage a filter.  Without any filter, 'future' periods will be shown when POP is used (because, for example: today's data is/will be technically 'last year' for next year)
   # always_filter: {
@@ -114,31 +114,31 @@ explore: +order_items {
   #   }
 
   # Added date ranges to avoid business user needing to set this manually using a filter. Will need to add
-#   sql_always_where:
+  sql_always_where:
 
-#           {% assign period_size = pop_support.period_size._parameter_value | downcase %}
+          {% assign period_size = pop_support.period_size._parameter_value | downcase %}
 
-#           {% if period_size == "day" %}
+          {% if period_size == "day" %}
 
-#             ${created_date} >= CURRENT_DATE() AND
+            ${created_date} >= CURRENT_DATE() AND
 
-#             ${created_date} < DATEADD({{period_size}}, 1,CURRENT_DATE()) AND
+            ${created_date} < DATEADD({{period_size}}, 1,CURRENT_DATE()) AND
 
-#             ${created_hour_of_day} < EXTRACT(hour from CURRENT_TIME())
+            ${created_hour_of_day} < EXTRACT(hour from CURRENT_TIME())
 
-#           {% elsif period_size == "default" %}
+          {% elsif period_size == "default" %}
 
-#             (1=1)
+            (1=1)
 
-#           {% else %}
+          {% else %}
 
-#               ${created_date} >= DATE_TRUNC({{period_size}}, CURRENT_DATE()) AND
+              ${created_date} >= DATE_TRUNC({{period_size}}, CURRENT_DATE()) AND
 
-#               ${created_date} < DATEADD({{period_size}}, 1, DATE_TRUNC({{period_size}}, CURRENT_DATE())) AND
+              ${created_date} < DATEADD({{period_size}}, 1, DATE_TRUNC({{period_size}}, CURRENT_DATE())) AND
 
-#               ${created_day_of_month} < EXTRACT(day from CURRENT_DATE())
+              ${created_day_of_month} < EXTRACT(day from CURRENT_DATE())
 
-#           {% endif %} ;;
+          {% endif %} ;;
 }
 
 explore: +products {
