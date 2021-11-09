@@ -117,6 +117,24 @@ view: +order_items {
         ;;
   }
 
+  dimension: date_end {
+    sql: {% date_end current_date_range %} ;;
+  }
+
+  dimension: is_current_period_to_date {
+    type: yesno
+    description: "Use this to filter only up to the max day of the date range filter (excludes last day in filter)"
+    sql:
+    {% if compare_to._parameter_value == 'Week' %}
+      ${date_in_period_day_of_week_index} < EXTRACT(dow FROM CURRENT_DATE)
+    {% elsif compare_to._parameter_value == 'Month' %}
+      ${date_in_period_day_of_month} < EXTRACT(day FROM CURRENT_DATE)
+    {% elsif compare_to._parameter_value == 'Year' %}
+      ${date_in_period_day_of_year} < EXTRACT(year FROM CURRENT_DATE)
+    {% endif %}
+    ;;
+  }
+
 
 ## ------------------ DIMENSIONS TO PLOT ------------------ ##
 
@@ -178,10 +196,18 @@ view: +order_items {
   }
 
   measure: example_filtered_measure_last_period {
-    label: "Last {% parameter compare_to %} Sale Price"
+    label: "Last {% parameter compare_to %} Total Sales"
     description: "Using the PoP above to create a filtered measure"
     type: sum
     sql: ${sale_price} ;;
     filters: [period_filtered_measures: "last"]
+  }
+
+  measure: example_filtered_measure_this_period {
+    label: "This {% parameter compare_to %} Total Sales"
+    description: "Using the PoP above to create a filtered measure"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [period_filtered_measures: "this"]
   }
 }
