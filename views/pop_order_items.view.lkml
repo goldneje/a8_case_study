@@ -1,11 +1,9 @@
-### EDIT THIS SECTION WITH THE VIEW YOU'RE ADDING PoP TO##########
 
+## EDIT ME, CHANGE THE INCLUDE STATEMENT TO POINT AT THE VIEW FILE YOU WANT TO PERFORM PoP ON
 include: "/views/order_items.view"
 
+## EDIT ME, CHANGE 'order_items' TO THE VIEW YOU WANT TO PERFORM PoP ON
 view: +order_items {
-
-# Then anywhere '${created_date}' shows up. (Lines 90-93,
-############################################
 
   filter: current_date_range {
     type: date
@@ -117,24 +115,36 @@ view: +order_items {
         ;;
   }
 
-  dimension: date_end {
-    sql: {% date_end current_date_range %} ;;
-  }
-
-  dimension: is_current_period_to_date {
+  filter: is_current_period_to_date {
     type: yesno
-    description: "Use this to filter only up to the max day of the date range filter (excludes last day in filter)"
+    view_label: " PoP"
+    label: "3. Is Current Period To Date (Yes/No)"
+    description: "Use this to filter only up to the max day of the date range filter (excludes last day in filter). Must be used with the compare_to parameter."
     sql:
     {% if compare_to._parameter_value == 'Week' %}
       ${date_in_period_day_of_week_index} < EXTRACT(dow FROM CURRENT_DATE)
     {% elsif compare_to._parameter_value == 'Month' %}
       ${date_in_period_day_of_month} < EXTRACT(day FROM CURRENT_DATE)
+    {% elsif compare_to._parameter_value == 'Quarter' %}
+      ${date_in_period_month_of_quarter} < ${current_month_of_quarter}
     {% elsif compare_to._parameter_value == 'Year' %}
       ${date_in_period_day_of_year} < EXTRACT(year FROM CURRENT_DATE)
+    {% else %}
+      1=1
     {% endif %}
     ;;
   }
 
+  dimension: current_month_of_quarter {
+    hidden: yes
+    type: number
+    sql:
+      case
+        when EXTRACT(MONTH FROM CURRENT_DATE) IN (1,4,7,10) THEN 1
+        when EXTRACT(MONTH FROM CURRENT_DATE) IN (2,5,8,11) THEN 2
+        else 3
+      end ;;
+  }
 
 ## ------------------ DIMENSIONS TO PLOT ------------------ ##
 
@@ -156,6 +166,21 @@ view: +order_items {
       month_name,
       month_num,
       year]
+  }
+
+  dimension: date_in_period_month_of_quarter {
+    view_label: " PoP"
+    group_label: "Current Period Date"
+    type: number
+    group_item_label: "Month of Quarter"
+
+    sql:
+      case
+        when ${date_in_period_month_num} IN (1,4,7,10) THEN 1
+        when ${date_in_period_month_num} IN (2,5,8,11) THEN 2
+        else 3
+      end
+    ;;
   }
 
 ## EDIT ME, UPDATE ${created_date} TO YOUR DATE FIELD
@@ -195,6 +220,7 @@ view: +order_items {
         {% else %} NULL {% endif %} ;;
   }
 
+## EDIT ME, UPDATE ${sale_price} TO A NUMBER YOU WANT TO SUM
   measure: example_filtered_measure_last_period {
     label: "Last {% parameter compare_to %} Total Sales"
     description: "Using the PoP above to create a filtered measure"
@@ -203,6 +229,7 @@ view: +order_items {
     filters: [period_filtered_measures: "last"]
   }
 
+## EDIT ME, UPDATE ${sale_price} TO A NUMBER YOU WANT TO SUM
   measure: example_filtered_measure_this_period {
     label: "This {% parameter compare_to %} Total Sales"
     description: "Using the PoP above to create a filtered measure"
