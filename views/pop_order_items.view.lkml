@@ -1,10 +1,10 @@
-### EDIT THIS SECTION ######################
+### EDIT THIS SECTION WITH THE VIEW YOU'RE ADDING PoP TO##########
 
 include: "/views/order_items.view"
 
 view: +order_items {
 
-# Then anywhere '${created_date}' shows up
+# Then anywhere '${created_date}' shows up. (Lines 90-93,
 ############################################
 
   filter: current_date_range {
@@ -80,6 +80,8 @@ view: +order_items {
         {% endif %};;
   }
 
+
+## EDIT ME, UPDATE ${created_date} TO YOUR DATE FIELD
   dimension: day_in_period {
     hidden: yes
     description: "Gives the number of days since the start of each period. Use this to align the event dates onto the same axis, the axes will read 1,2,3, etc."
@@ -97,6 +99,7 @@ view: +order_items {
     ;;
   }
 
+## EDIT ME, UPDATE ${created_date} TO YOUR DATE FIELD
   dimension: order_for_period {
     hidden: yes
     type: number
@@ -137,7 +140,7 @@ view: +order_items {
       year]
   }
 
-
+## EDIT ME, UPDATE ${created_date} TO YOUR DATE FIELD
   dimension: period {
     view_label: " PoP"
     label: "Period"
@@ -161,6 +164,7 @@ view: +order_items {
 
 ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
 
+## EDIT ME, UPDATE ${created_date} TO YOUR DATE FIELD
   dimension: period_filtered_measures {
     hidden: yes
     description: "We just use this for the filtered measures"
@@ -171,5 +175,13 @@ view: +order_items {
             WHEN {% condition current_date_range %} ${created_date} {% endcondition %} THEN 'this'
             WHEN ${created_date} between ${period_2_start} and ${period_2_end} THEN 'last' END
         {% else %} NULL {% endif %} ;;
+  }
+
+  measure: example_filtered_measure_last_period {
+    label: "Last {% parameter compare_to %} Sale Price"
+    description: "Using the PoP above to create a filtered measure"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [period_filtered_measures: "last"]
   }
 }
