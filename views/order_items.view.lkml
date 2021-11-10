@@ -92,15 +92,31 @@ view: order_items {
     sql: ${TABLE}."USER_ID" ;;
   }
 
+  dimension: is_complete {
+    type: yesno
+    sql: ${status} = 'Complete' ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
   }
 
   measure: sum_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+
+  measure: sum_sale_price_complete {
     label: "Total Sales"
     type: sum
     sql: ${sale_price} ;;
+    filters: [is_complete: "Yes"]
+  }
+
+  measure: percent_of_total {
+    type: number
+    sql: ${sum_sale_price_complete} / ${sum_sale_price} ;;
   }
 
   # ----- Sets of fields for drilling ------
