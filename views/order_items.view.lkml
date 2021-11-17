@@ -3,6 +3,15 @@ view: order_items {
     ;;
   drill_fields: [id]
 
+  parameter: color_above {
+    type: number
+  }
+
+  dimension: color_above_value {
+    type: number
+    sql: {% parameter color_above %} ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number

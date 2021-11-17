@@ -3,6 +3,16 @@ view: products {
     ;;
   drill_fields: [id]
 
+  parameter: brand_highlight {
+    type: string
+    suggest_dimension: brand
+  }
+
+  dimension: brand_highlight_value {
+    type: string
+    sql: {% parameter brand_highlight %} ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number
