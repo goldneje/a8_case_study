@@ -63,6 +63,7 @@ view: order_items {
   }
 
   dimension: sale_price {
+    hidden: yes
     type: number
     sql: ${TABLE}."SALE_PRICE" ;;
   }
@@ -90,6 +91,11 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}."USER_ID" ;;
+  }
+
+  measure: gross_sales {
+    type: sum
+    sql: ${sale_price} ;;
   }
 
   measure: count {
