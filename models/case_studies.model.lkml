@@ -53,6 +53,7 @@ explore: order_items {
   }
 
   join: products {
+    from: products_plus_order_items
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one

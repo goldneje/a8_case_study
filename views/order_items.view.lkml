@@ -9,12 +9,20 @@ view: order_items {
     sql: ${TABLE}."ID" ;;
   }
 
+  filter: date_filter {
+    type: date
+  }
+
+  dimension: created_date {
+    type: date
+    sql: ${TABLE}."CREATED_AT" ;;
+  }
+
   dimension_group: created {
     type: time
     timeframes: [
       raw,
       time,
-      date,
       week,
       month,
       quarter,
