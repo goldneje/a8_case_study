@@ -40,6 +40,7 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  sql_always_where: ${users.first_name} = '{{ _user_attributes["first_name"] | upcase }}' ;;
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
