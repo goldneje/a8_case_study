@@ -81,9 +81,14 @@ view: order_items {
     sql: ${TABLE}."SHIPPED_AT" ;;
   }
 
+# Can use another field's drill menu, which will filter by whatever dimension value you select.
   dimension: status {
     type: string
     sql: ${TABLE}."STATUS" ;;
+    link: {
+      label: "Drill to Detail"
+      url: "{{count._link}}"
+    }
   }
 
   dimension: user_id {
