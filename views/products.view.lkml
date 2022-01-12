@@ -78,4 +78,5 @@ view: products_plus_order_items_plus_distribution_centers {
     type: count
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
   }
+
 }
