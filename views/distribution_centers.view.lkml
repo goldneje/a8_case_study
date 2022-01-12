@@ -22,6 +22,8 @@ view: distribution_centers {
   dimension: name {
     type: string
     sql: ${TABLE}."NAME" ;;
+
+    # Can link to a measure field's drill menu. Note this only works for measures and will filter by the field you selected.
     link: {
       label: "Drill to Cancelled Orders Detail"
       url: "{{ order_items.number_cancelled._link }}"
