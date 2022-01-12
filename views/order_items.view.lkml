@@ -99,6 +99,12 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+    link: {
+      label: "Brand Look ({{ products.brand._value }})"
+      url: "https://analytics8.looker.com/looks/191?f[products.brand]={{ products.brand._value }}
+      &f[order_items.created_date]={{ _filters['order_items.created_date'] | url_encode }}
+      &f[distribution_centers.name]={{ _filters['distribution_centers.name'] | url_encode }}"
+    }
   }
 
   # ----- Sets of fields for drilling ------
