@@ -81,14 +81,10 @@ view: order_items {
     sql: ${TABLE}."SHIPPED_AT" ;;
   }
 
-# Can use another field's drill menu, which will filter by whatever dimension value you select.
   dimension: status {
     type: string
     sql: ${TABLE}."STATUS" ;;
-    link: {
-      label: "Drill to Detail"
-      url: "{{count._link}}"
-    }
+    drill_fields: [created_date, order_id, users.id, inventory_items.id, order_detail*]
   }
 
   dimension: user_id {
@@ -102,6 +98,12 @@ view: order_items {
     drill_fields: [products.category, count]
   }
 
+  measure: number_cancelled {
+    type: count
+    filters: [status : "Cancelled"]
+    drill_fields: [order_detail*]
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
@@ -111,6 +113,15 @@ view: order_items {
       users.last_name,
       users.first_name,
       users.id
+    ]
+  }
+
+  set: order_detail {
+    fields: [
+      created_date,
+      order_id,
+      users.id,
+      inventory_items.id
     ]
   }
 }
