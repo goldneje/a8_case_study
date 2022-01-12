@@ -14,12 +14,6 @@ view: products {
   dimension: brand {
     type: string
     sql: ${TABLE}."BRAND" ;;
-    # link: {
-    #   label: "Brand Look ({{ value }})"
-    #   url: "https://analytics8.looker.com/looks/191?f[products.brand]={{ filterable_value }}
-    #   &f[order_items.created_date]={{ _filters['order_items.created_date'] | url_encode }}
-    #   &f[distribution_centers.name]={{ _filters['distribution_centers.name'] | url_encode }}"
-    # }
   }
 
   dimension: category {
@@ -59,8 +53,9 @@ view: products {
   }
 }
 
-view: products_plus_order_items {
+view: products_plus_order_items_plus_distribution_centers {
   extends: [products]
+
   measure: count {
     type: count
     drill_fields: [id, name, distribution_centers.name, distribution_centers.id, inventory_items.count]
