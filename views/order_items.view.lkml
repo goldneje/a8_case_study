@@ -13,15 +13,11 @@ view: order_items {
     type: date
   }
 
-  dimension: created_date {
-    type: date
-    sql: ${TABLE}."CREATED_AT" ;;
-  }
-
   dimension_group: created {
     type: time
     timeframes: [
       raw,
+      date,
       time,
       week,
       month,
