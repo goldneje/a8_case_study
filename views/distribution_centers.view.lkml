@@ -22,6 +22,10 @@ view: distribution_centers {
   dimension: name {
     type: string
     sql: ${TABLE}."NAME" ;;
+    link: {
+      label: "Drill to Cancelled Orders Detail"
+      url: "{{ order_items.number_cancelled._link }}"
+    }
   }
 
   measure: count {
