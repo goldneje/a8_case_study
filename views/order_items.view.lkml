@@ -96,6 +96,9 @@ view: order_items {
     sql: ${TABLE}."USER_ID" ;;
   }
 
+# Note that using a value in a link like we see below will make this measure aggregate at the grain of the value in our link.
+# In this case, the count will now fan out to the products.brand level. This is generally not what we want, so links that leverage a value should
+# be used in dimensions.
   measure: count {
     type: count
     drill_fields: [detail*]
