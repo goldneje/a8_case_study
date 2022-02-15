@@ -1,4 +1,5 @@
 view: order_items {
+  view_label: "Order Items"
   sql_table_name: "PUBLIC"."ORDER_ITEMS"
     ;;
   drill_fields: [id]

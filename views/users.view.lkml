@@ -1,4 +1,5 @@
 view: users {
+  view_label: "Customers"
   sql_table_name: "PUBLIC"."USERS"
     ;;
   drill_fields: [id]
