@@ -63,6 +63,7 @@ view: order_items {
   }
 
   dimension: sale_price {
+    hidden: yes
     type: number
     sql: ${TABLE}."SALE_PRICE" ;;
   }
@@ -95,6 +96,20 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: sum_sale_price {
+    label: "Sale Price"
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: avg_sale_price {
+    label: "Average Sale Price"
+    type: average
+    sql: ${sale_price} ;;
+    value_format_name: decimal_2
   }
 
   # ----- Sets of fields for drilling ------
