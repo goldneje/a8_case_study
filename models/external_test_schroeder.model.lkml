@@ -4,7 +4,8 @@ connection: "snowlooker"
 include: "/views/**/*.view"
 
 # include LookML dashboards
-include: "/dashboards/*.dashboard"
+# No dashboards added yet
+# include: "/dashboards/*.dashboard"
 
 datagroup: case_studies_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
