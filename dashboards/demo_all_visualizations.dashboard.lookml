@@ -5,7 +5,7 @@
   elements:
   - title: Column
     name: Column
-    model: e_commerce
+    model: case_studies
     explore: order_items
     type: looker_column
     fields: [users.age_tier, order_items.created_month, order_items.count]
