@@ -4,7 +4,8 @@ connection: "looker_partner_demo"
 include: "/views/**/*.view"
 
 # include LookML dashboards
-include: "/dashboards/*.dashboard"
+# No dashboards added yet
+# include: "/dashboards/*.dashboard"
 
 datagroup: case_studies_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -46,7 +47,9 @@ explore: order_items {
     relationship: many_to_one
   }
 
+# Note we've updated the 'from' to be from the users_with_access_grants view
   join: users {
+    from: users_with_access_grants
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
@@ -73,4 +76,7 @@ explore: products {
   }
 }
 
-explore: users {}
+# Note we've updated the 'from' to be from the users_with_access_grants view
+explore: users {
+  from: users_with_access_grants
+}
