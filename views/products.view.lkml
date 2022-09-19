@@ -11,18 +11,6 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
-# This wouldn't work because it would always need to be joined to order_items and distribution_centers
-  dimension: brand {
-    type: string
-    sql: ${TABLE}."BRAND" ;;
-    # link: {
-    #   label: "Brand Look ({{ products.brand._value }})"
-    #   url: "https://analytics8.looker.com/looks/191?f[products.brand]={{ products.brand._value }}
-    #   &f[order_items.created_date]={{ _filters['order_items.created_date'] | url_encode }}
-    #   &f[distribution_centers.name]={{ _filters['distribution_centers.name'] | url_encode }}"
-    # }
-  }
-
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
@@ -65,7 +53,7 @@ view: products_plus_order_items_plus_distribution_centers {
 
   dimension: brand {
     type: string
-    sql: ${TABLE}."BRAND" ;;
+    sql: ${TABLE}.brand ;;
     link: {
       label: "Brand Look ({{ products.brand._value }})"
       url: "https://analytics8.looker.com/looks/191?f[products.brand]={{ value | url_encode }}

@@ -103,10 +103,13 @@ view: order_items {
     type: count
     drill_fields: [detail*]
     link: {
-      label: "Brand Look ({{ products.brand._value }})"
-      url: "https://analytics8.looker.com/looks/191?f[products.brand]={{ products.brand._value }}
-      &f[order_items.created_date]={{ _filters['order_items.created_date'] | url_encode }}
-      &f[distribution_centers.name]={{ _filters['distribution_centers.name'] | url_encode }}"
+      label: "This will go to a new page"
+      url: "https://analytics8.looker.com/explore/case_studies/order_items?fields=order_items.count,products.brand&limit=10&query_timezone=America%2FLos_Angeles&vis=%7B%7D&filter_config=%7B%7D&origin=drill-menu"
+    }
+    link: {
+      label: "This will open up the drill modal"
+      # Replaced everything from the beginning to the `?` with {{ link }}
+      url: "{{ link }}&fields=order_items.count,products.brand&limit=10&query_timezone=America%2FLos_Angeles&vis=%7B%7D&filter_config=%7B%7D&origin=share-expanded"
     }
   }
 
