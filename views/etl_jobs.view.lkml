@@ -1,12 +1,12 @@
 view: etl_jobs {
-  sql_table_name: "PUBLIC"."ETL_JOBS"
+  sql_table_name: `looker-partners.thelook.etl_jobs`
     ;;
   drill_fields: [id]
 
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."ID" ;;
+    sql: ${TABLE}.id ;;
   }
 
   dimension_group: completed {
@@ -20,7 +20,7 @@ view: etl_jobs {
       quarter,
       year
     ]
-    sql: ${TABLE}."COMPLETED_AT" ;;
+    sql: ${TABLE}.completed_at ;;
   }
 
   measure: count {

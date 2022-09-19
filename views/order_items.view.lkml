@@ -1,12 +1,12 @@
 view: order_items {
-  sql_table_name: "PUBLIC"."ORDER_ITEMS"
+  sql_table_name: `looker-partners.thelook.order_items`
     ;;
   drill_fields: [id]
 
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."ID" ;;
+    sql: ${TABLE}.id ;;
   }
 
   filter: date_filter {
@@ -24,7 +24,7 @@ view: order_items {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED_AT" ;;
+    sql: ${TABLE}.created_at ;;
   }
 
   dimension_group: delivered {
@@ -38,18 +38,18 @@ view: order_items {
       quarter,
       year
     ]
-    sql: ${TABLE}."DELIVERED_AT" ;;
+    sql: ${TABLE}.delivered_at ;;
   }
 
   dimension: inventory_item_id {
     type: number
     # hidden: yes
-    sql: ${TABLE}."INVENTORY_ITEM_ID" ;;
+    sql: ${TABLE}.inventory_item_id ;;
   }
 
   dimension: order_id {
     type: number
-    sql: ${TABLE}."ORDER_ID" ;;
+    sql: ${TABLE}.order_id ;;
   }
 
   dimension_group: returned {
@@ -63,12 +63,12 @@ view: order_items {
       quarter,
       year
     ]
-    sql: ${TABLE}."RETURNED_AT" ;;
+    sql: ${TABLE}.returned_at ;;
   }
 
   dimension: sale_price {
     type: number
-    sql: ${TABLE}."SALE_PRICE" ;;
+    sql: ${TABLE}.sale_price ;;
   }
 
   dimension_group: shipped {
@@ -82,18 +82,18 @@ view: order_items {
       quarter,
       year
     ]
-    sql: ${TABLE}."SHIPPED_AT" ;;
+    sql: ${TABLE}.shipped_at ;;
   }
 
   dimension: status {
     type: string
-    sql: ${TABLE}."STATUS" ;;
+    sql: ${TABLE}.status ;;
   }
 
   dimension: user_id {
     type: number
     # hidden: yes
-    sql: ${TABLE}."USER_ID" ;;
+    sql: ${TABLE}.user_id ;;
   }
 
 # Note that using a value in a link like we see below will make this measure aggregate at the grain of the value in our link.
