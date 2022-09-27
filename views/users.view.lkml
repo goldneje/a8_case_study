@@ -1,28 +1,28 @@
 view: users {
-  sql_table_name: "PUBLIC"."USERS"
+  sql_table_name: `looker-partners.thelook.users`
     ;;
   drill_fields: [id]
 
   dimension: id {
     primary_key: yes
     type: number
-    sql: ${TABLE}."ID" ;;
+    sql: ${TABLE}.id ;;
   }
 
   dimension: age {
     type: number
-    sql: ${TABLE}."AGE" ;;
+    sql: ${TABLE}.age ;;
   }
 
   dimension: city {
     type: string
-    sql: ${TABLE}."CITY" ;;
+    sql: ${TABLE}.city ;;
   }
 
   dimension: country {
     type: string
     map_layer_name: countries
-    sql: ${TABLE}."COUNTRY" ;;
+    sql: ${TABLE}.country ;;
   }
 
   dimension_group: created {
@@ -36,52 +36,52 @@ view: users {
       quarter,
       year
     ]
-    sql: ${TABLE}."CREATED_AT" ;;
+    sql: ${TABLE}.created_at ;;
   }
 
   dimension: email {
     type: string
-    sql: ${TABLE}."EMAIL" ;;
+    sql: ${TABLE}.email ;;
   }
 
   dimension: first_name {
     type: string
-    sql: ${TABLE}."FIRST_NAME" ;;
+    sql: ${TABLE}.first_name ;;
   }
 
   dimension: gender {
     type: string
-    sql: ${TABLE}."GENDER" ;;
+    sql: ${TABLE}.gender ;;
   }
 
   dimension: last_name {
     type: string
-    sql: ${TABLE}."LAST_NAME" ;;
+    sql: ${TABLE}.last_name ;;
   }
 
   dimension: latitude {
     type: number
-    sql: ${TABLE}."LATITUDE" ;;
+    sql: ${TABLE}.latitude ;;
   }
 
   dimension: longitude {
     type: number
-    sql: ${TABLE}."LONGITUDE" ;;
+    sql: ${TABLE}.longitude ;;
   }
 
   dimension: state {
     type: string
-    sql: ${TABLE}."STATE" ;;
+    sql: ${TABLE}.state ;;
   }
 
   dimension: traffic_source {
     type: string
-    sql: ${TABLE}."TRAFFIC_SOURCE" ;;
+    sql: ${TABLE}.traffic_source ;;
   }
 
   dimension: zip {
     type: zipcode
-    sql: ${TABLE}."ZIP" ;;
+    sql: ${TABLE}.zip ;;
   }
 
   measure: count {

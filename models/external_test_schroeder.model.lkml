@@ -1,4 +1,4 @@
-connection: "looker_partner_demo"
+connection: "snowlooker"
 
 # include all the views
 include: "/views/**/*.view"
@@ -53,7 +53,6 @@ explore: order_items {
   }
 
   join: products {
-    from: products_plus_order_items
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
@@ -62,12 +61,6 @@ explore: order_items {
   join: distribution_centers {
     type: left_outer
     sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
-
-  join: order_items_totals_dt {
-    type: left_outer
-    sql_on: 1=1 ;;
     relationship: many_to_one
   }
 }
