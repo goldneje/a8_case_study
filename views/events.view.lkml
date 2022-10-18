@@ -3,6 +3,11 @@ view: events {
     ;;
   drill_fields: [id]
 
+  dimension:city  {
+    type: string
+    sql: ${TABLE}.city ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number
@@ -12,11 +17,6 @@ view: events {
   dimension: browser {
     type: string
     sql: ${TABLE}.browser ;;
-  }
-
-  dimension: city {
-    type: string
-    sql: ${TABLE}.city ;;
   }
 
   dimension: country {
