@@ -3,6 +3,47 @@ view: order_items {
     ;;
   drill_fields: [id]
 
+# Goal is to create a parameter that switches between count and sum_sale_price
+# when we change the parameter value on an explore/look/dashboard
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+
+  measure: sum_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+  }
+# SUM(sale_price)
+
+# Creating a parameter that lets us choose between multiple measure options
+# The parameter itself doesn't do anything, we still have to build the dynamic measure below
+  parameter: dynamic_measure_selection {
+    type: unquoted
+    allowed_value: {
+      label: "Count" # Front end, what the user sees
+      value: "count_measure" # back end, how to reference this in Looker
+    }
+    allowed_value: {
+      label: "Sum Sale Price"
+      value: "sum_sale_price_measure"
+    }
+    # add as many allowed_values as needed for the different measures
+    default_value: "count_measure"
+  }
+
+# Create the dynamic measure, change the sql: value of this dynamic measure depending on the parameter selection
+  measure: dynamic_measure {
+    type: number # this is important if we're passing through existing measure values
+    label: "Dynamic Measure" # TODO: use liquid to set the label name in the visualization
+    sql:
+    {% if dynamic_measure_selection._parameter_value == 'count_measure' %} ${count}
+    {% elsif dynamic_measure_selection._parameter_value == 'sum_sale_price_measure' %} ${sum_sale_price}
+    {% else %} ${count}
+    {% endif %}
+    ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number
@@ -92,10 +133,6 @@ view: order_items {
     sql: ${TABLE}.user_id ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
 
   # ----- Sets of fields for drilling ------
   set: detail {
