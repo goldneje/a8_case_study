@@ -38,10 +38,6 @@ view: products {
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
-    link: {
-      label: "Product info"
-      url: "https://analytics8.looker.com/dashboards/146"
-    }
   }
 
   dimension: retail_price {
@@ -52,10 +48,6 @@ view: products {
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;
-    link: {
-      label: "SKU breakdown"
-      url: "https://analytics8.looker.com/looks/221"
-    }
   }
 
   measure: count {
