@@ -90,10 +90,6 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
-    link: {
-      label: "In depth User ID Breakdown"
-      url: "https://analytics8.looker.com/explore/case_studies/order_items?fields=users.first_name,users.last_name,users.age,users.city,users.country,users.state={{ value }}&sorts=users.age+desc&limit=500&query_timezone=America%2FChicago&vis=%7B%7D&filter_config=%7B%7D&dynamic_fields=%5B%5D&origin=share-expanded"
-    }
   }
 
   measure: count {
