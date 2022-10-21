@@ -48,6 +48,10 @@ view: products {
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;
+    link: {
+      label: "SKU breakdown"
+      url: "https://analytics8.looker.com/looks/221"
+    }
   }
 
   measure: count {
