@@ -67,7 +67,6 @@ view: order_items {
   }
 
   dimension: sale_price {
-    label: "BANANA2"
     type: number
     sql: ${TABLE}.sale_price ;;
   }
