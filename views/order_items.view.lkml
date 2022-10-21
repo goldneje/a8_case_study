@@ -22,23 +22,23 @@ view: order_items {
     type: unquoted
     allowed_value: {
       label: "Count" # Front end, what the user sees
-      value: "count_measure" # back end, how to reference this in Looker
+      value: "count" # back end, how to reference this in Looker
     }
     allowed_value: {
       label: "Sum Sale Price"
-      value: "sum_sale_price_measure"
+      value: "sum_sale_price"
     }
     # add as many allowed_values as needed for the different measures
-    default_value: "count_measure"
+    default_value: "count"
   }
 
 # Create the dynamic measure, change the sql: value of this dynamic measure depending on the parameter selection
   measure: dynamic_measure {
     type: number # this is important if we're passing through existing measure values
-    label: "Dynamic Measure" # TODO: use liquid to set the label name in the visualization
+    label_from_parameter: dynamic_measure_selection # use this to use labels from the parameter
     sql:
-    {% if dynamic_measure_selection._parameter_value == 'count_measure' %} ${count}
-    {% elsif dynamic_measure_selection._parameter_value == 'sum_sale_price_measure' %} ${sum_sale_price}
+    {% if dynamic_measure_selection._parameter_value == 'count' %} ${count}
+    {% elsif dynamic_measure_selection._parameter_value == 'sum_sale_price' %} ${sum_sale_price}
     {% else %} ${count}
     {% endif %}
     ;;
