@@ -97,6 +97,8 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
