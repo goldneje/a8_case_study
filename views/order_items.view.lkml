@@ -121,6 +121,14 @@ view: order_items {
     value_format_name: usd_0
   }
 
+  measure: total_gross_revenue {
+    label: "Total Gross Revenue"
+    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [status: "-Cancelled, -Returned"]
+    value_format_name: usd_0
+  }
 
   # ----- Sets of fields for drilling ------
   set: detail {
