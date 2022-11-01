@@ -89,5 +89,4 @@ view: users {
     drill_fields: [id, last_name, first_name, events.count, order_items.count]
   }
 
-
 }
