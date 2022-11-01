@@ -88,4 +88,21 @@ view: inventory_items {
     drill_fields: [id, product_name, products.id, products.name, order_items.count]
   }
 
+  measure: total_cost {
+    label: "Total Cost"
+    description: "Total cost of items sold from inventory"
+    type: sum
+    sql: ${cost} ;;
+    value_format_name: usd_0
+  }
+
+  measure: average_cost {
+    label: "Average Cost"
+    description: "Average cost of items sold from inventory"
+    type: average
+    sql: ${cost} ;;
+    value_format_name: usd_0
+  }
+
+
 }
