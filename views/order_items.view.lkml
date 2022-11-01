@@ -157,6 +157,22 @@ view: order_items {
     value_format_name: percent_1
   }
 
+  measure: number_of_items_returned {
+    label: "Number of items returned"
+    description: "Number of items that were returned by dissatisfied customers"
+    type: count
+    drill_fields: [detail*]
+    filters: [status: "Returned"]
+  }
+
+  measure: item_return_rate {
+    label: "Item Return Rate"
+    description: "Number of Items Returned / total number of items sold"
+    type: number
+    sql: ${number_of_items_returned} / NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
