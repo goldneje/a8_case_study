@@ -134,9 +134,27 @@ view: order_items {
     label: "Total Gross Margin Amount"
     description: "Total difference between the total revenue from completed sales and the cost of the goods that were sold"
     type: sum
+    #sql: ${total_gross_revenue} - ${inventory_items.total_cost} ;;
     sql: ${sale_price} - ${inventory_items.cost} ;;
     filters: [status: "-Cancelled, -Returned"]
     value_format_name: usd_0
+  }
+
+  measure: average_gross_amount {
+    label: "Average Gross Amount"
+    description: "Average difference between the total revenue from completed sales and the cost of the goods that were sold"
+    type: average
+    sql: ${sale_price} - ${inventory_items.cost} ;;
+    filters: [status: "-Cancelled, -Returned"]
+    value_format_name: usd_0
+  }
+
+  measure: gross_margin_percent {
+    label: "Gross Margin Percent"
+    description: "Total Gross Margin Amount / Total Gross Revenue"
+    type: number
+    sql: ${total_gross_margin_amount} / ${total_gross_revenue} ;;
+    value_format_name: percent_1
   }
 
   # ----- Sets of fields for drilling ------
