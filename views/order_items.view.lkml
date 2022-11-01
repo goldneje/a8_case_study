@@ -194,7 +194,7 @@ view: order_items {
     description: "Total Sale Price / total number of customers"
     type: number
     sql: ${order_items.total_sales_price} / NULLIF(${users.count}, 0) ;;
-    value_format_name: percent_1
+    value_format_name: usd_0
   }
 
   # ----- Sets of fields for drilling ------
