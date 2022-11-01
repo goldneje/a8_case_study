@@ -173,6 +173,14 @@ view: order_items {
     value_format_name: percent_1
   }
 
+  measure: number_of_customers_returning_items {
+    label: "Number of Customers Returning Items"
+    description: "Number of users who have returned an item at some point"
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [order_items.status: "Returned"]
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

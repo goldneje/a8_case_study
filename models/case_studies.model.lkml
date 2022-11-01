@@ -23,6 +23,7 @@ explore: events {
     sql_on: ${events.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
+
 }
 
 explore: inventory_items {
@@ -85,4 +86,5 @@ explore: users {
     sql: ${users.id} = ${order_items.user_id} ;;
     relationship: many_to_one
   }
+
 }
