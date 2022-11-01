@@ -46,6 +46,12 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: is_new_customer {
+    type: yesno
+    sql: ((( users.created_at  ) >= ((TIMESTAMP(DATETIME_ADD(DATETIME(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY, 'America/Los_Angeles'), 'America/Los_Angeles'), INTERVAL -89 DAY), 'America/Los_Angeles'))) AND ( users.created_at  ) < ((TIMESTAMP(DATETIME_ADD(DATETIME(TIMESTAMP(DATETIME_ADD(DATETIME(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY, 'America/Los_Angeles'), 'America/Los_Angeles'), INTERVAL -89 DAY), 'America/Los_Angeles'), 'America/Los_Angeles'), INTERVAL 90 DAY), 'America/Los_Angeles'))))) ;;
+
+  }
+
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
