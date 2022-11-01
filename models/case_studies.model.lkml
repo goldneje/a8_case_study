@@ -79,4 +79,10 @@ explore: users {
     sql_on: ${users.id} = ${order_items.user_id} ;;
     relationship: many_to_one
   }
+
+  join: inventory_items {
+    type: left_outer
+    sql: ${users.id} = ${order_items.user_id} ;;
+    relationship: many_to_one
+  }
 }

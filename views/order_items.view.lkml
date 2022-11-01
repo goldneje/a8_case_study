@@ -130,6 +130,15 @@ view: order_items {
     value_format_name: usd_0
   }
 
+  measure: total_gross_margin_amount {
+    label: "Total Gross Margin Amount"
+    description: "Total difference between the total revenue from completed sales and the cost of the goods that were sold"
+    type: sum
+    sql: ${sale_price} - ${inventory_items.cost} ;;
+    filters: [status: "-Cancelled, -Returned"]
+    value_format_name: usd_0
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
