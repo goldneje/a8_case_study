@@ -181,6 +181,22 @@ view: order_items {
     filters: [order_items.status: "Returned"]
   }
 
+  measure: percent_of_users_with_returns {
+    label: "Percent of users with returns"
+    description: "Number of Customer Returning Items / total number of customers"
+    type: number
+    sql: ${number_of_customers_returning_items} / NULLIF(${users.count}, 0) ;;
+    value_format_name: percent_1
+  }
+
+  measure: average_spend_per_customer {
+    label: "Average spent per customer"
+    description: "Total Sale Price / total number of customers"
+    type: number
+    sql: ${order_items.total_sales_price} / NULLIF(${users.count}, 0) ;;
+    value_format_name: percent_1
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
