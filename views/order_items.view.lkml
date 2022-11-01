@@ -105,6 +105,14 @@ view: order_items {
     value_format_name: usd_0
   }
 
+  measure: average_sales_price {
+    label: "Average Sales Price"
+    description: "Average sale price of items sold"
+    type: average
+    sql: ${sale_price} ;;
+    value_format_name: usd_0
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
