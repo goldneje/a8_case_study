@@ -75,7 +75,7 @@ explore: products {
 }
 
 explore: users {
-  #label: "Customers"
+  label: "Customers"
   join: order_items {
     type: left_outer
     sql_on: ${users.id} = ${order_items.user_id} ;;
