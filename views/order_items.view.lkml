@@ -92,11 +92,11 @@ view: order_items {
     sql: ${TABLE}.user_id ;;
   }
 
-  dimension: is_mtd {
-    type:  yesno
+  #dimension: is_mtd {
+   # type:  yesno
     #sql:  ${created_month} = EXTRACT(Month from CURRENT_DATE()) ;;
-    sql: ${created_month} = DATE_TRUNC('month', GETDATE()) ;;
-  }
+    #sql: ${created_month} = DATE_TRUNC('month', GETDATE()) ;;
+  #}
 
   measure: count {
     type: count
