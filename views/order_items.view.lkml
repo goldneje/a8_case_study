@@ -92,6 +92,11 @@ view: order_items {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: is_before_mtd {
+    type:  yesno
+    sql:  EXTRACT(Month from ${created_date} < EXTRACT(Month from CURRENT_DATE) ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
