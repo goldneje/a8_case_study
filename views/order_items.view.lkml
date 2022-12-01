@@ -94,7 +94,7 @@ view: order_items {
 
   dimension: is_before_mtd {
     type:  yesno
-    sql:  EXTRACT(Month from ${created_date} < EXTRACT(Month from CURRENT_DATE) ;;
+    sql:  EXTRACT(Month from ${created_date} < EXTRACT(Month from CURRENT_DATE()) ;;
   }
 
   measure: count {
