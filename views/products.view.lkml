@@ -18,6 +18,11 @@ view: products {
       url: "https://www.google.com/search?q={{ value }}"
       icon_url: "https://google.com/favicon.ico"
     }
+    link: {
+      label: "Facebook"
+      url: "https://www.facebook.com/public/{{ value }}"
+      #icon_url: ""
+    }
   }
 
   dimension: category {
