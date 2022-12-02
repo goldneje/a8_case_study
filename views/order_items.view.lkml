@@ -144,7 +144,7 @@ view: order_items {
     sql: ${sale_price} - ${inventory_items.cost} ;;
     filters: [status: "-Cancelled, -Returned"]
     value_format_name: usd_0
-
+    drill_fields: [products.category, products.brand]
   }
 
   measure: average_gross_amount {
