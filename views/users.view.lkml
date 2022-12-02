@@ -86,6 +86,7 @@ view: users {
     type: string
     map_layer_name: us_states
     sql: ${TABLE}.state ;;
+    drill_fields: [product.category, product.brand]
   }
 
   dimension: traffic_source {
