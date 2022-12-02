@@ -121,7 +121,7 @@ view: order_items {
 
   measure: cumulative_total_sales {
     label: "Cumulative Total Sales"
-    description: "Cumulative total sales from items sole (also known as running total"
+    description: "Cumulative total sales from items sole (also known as running total)"
     type: running_total
     sql: ${sale_price} ;;
     value_format_name: usd_0
