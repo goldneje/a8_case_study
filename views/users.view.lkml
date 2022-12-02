@@ -46,10 +46,6 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: first_order {
-    type: date
-    sql: min(${created_date}) ;;
-  }
 
   dimension: is_new_customer {
     type: yesno
