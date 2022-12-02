@@ -90,6 +90,7 @@ view: users {
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
+    drill_fields: [age_tier, gender]
   }
 
   dimension: zip {
