@@ -30,6 +30,12 @@ view: Customer_lifetime{
     sql: ${count} ;;
   }
 
+  dimension: is_repeat_customer {
+    label: ""
+    type: yesno
+    sql: ${count} > 1 ;;
+  }
+
   measure: average_lifetime_orders {
     label: "Average Lifetime Orders"
     type: average
