@@ -89,3 +89,7 @@ explore: users {
   }
 
 }
+
+explore: Customer_lifetime {
+
+}
