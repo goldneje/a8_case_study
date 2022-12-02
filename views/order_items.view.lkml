@@ -204,7 +204,7 @@ view: order_items {
     value_format_name: usd_0
   }
 
-  measure: order_count {
+  measure: user_order_count {
     type: count
     drill_fields: [user_id]
   }
