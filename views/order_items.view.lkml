@@ -209,6 +209,7 @@ view: order_items {
     drill_fields: [user_id]
   }
 
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
