@@ -2,11 +2,12 @@
 
 # include: "case_studies.model.lkml"
 
-view: Customer_lifetime {
+view: Customer_lifetime{
   derived_table: {
     explore_source: users {
       column: id {}
-      column: count { field: order_items.count }
+      column: count {}
+      column: total_gross_revenue { field: order_items.total_gross_revenue }
     }
   }
   dimension: id {
@@ -14,15 +15,12 @@ view: Customer_lifetime {
     type: number
   }
   dimension: count {
-    label: "Customer Lifetime Orders"
     description: ""
     type: number
   }
-  dimension: count_tier {
-    label: "Customer Order Tiers"
-    type: tier
-    tiers: [1,2,3,6,10]
-    style: integer
-    sql: ${count} ;;
+  dimension: total_gross_revenue {
+    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
+    value_format: "$#,##0"
+    type: number
   }
 }
