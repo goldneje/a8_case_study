@@ -204,6 +204,11 @@ view: order_items {
     value_format_name: usd_0
   }
 
+  measure: order_count {
+    type: count
+    drill_fields: [user_id]
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
