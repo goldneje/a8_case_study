@@ -84,12 +84,19 @@ explore: users {
 
   join: inventory_items {
     type: left_outer
-    sql: ${users.id} = ${order_items.user_id} ;;
+    sql_on: ${users.id} = ${order_items.user_id} ;;
     relationship: many_to_one
   }
 
 }
 
 explore: Customer_lifetime {
-
+#  join: user_order_dates{
+#    type: left_outer
+#    sql_on: ${Customer_lifetime.id} = ${user_order_dates.id} ;;
+#    relationship: many_to_one
+#  }
 }
+explore: user_order_dates {}
+
+explore: updated_user_order_dates {}

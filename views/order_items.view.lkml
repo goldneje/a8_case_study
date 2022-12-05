@@ -23,6 +23,20 @@ view: order_items {
     sql: ${TABLE}.created_at ;;
   }
 
+  measure: minimum_date {
+    label: "First Date"
+    description: "The first created order date"
+    type: string
+    sql: min(${created_date}) ;;
+  }
+
+  measure: maximim_date {
+    label: "Latest Date"
+    description: "The latest created order date"
+    type: string
+    sql: max(${created_date}) ;;
+  }
+
   dimension_group: delivered {
     type: time
     timeframes: [
