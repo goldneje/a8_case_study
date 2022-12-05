@@ -31,7 +31,7 @@ view: Customer_lifetime{
   }
 
   dimension: is_repeat_customer {
-    label: ""
+    label: "Repeat Customer"
     type: yesno
     sql: ${count} > 1 ;;
   }
